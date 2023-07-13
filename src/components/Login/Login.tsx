@@ -15,8 +15,8 @@ function Login() {
       <button type="submit">Se connecter</button>
       <p>Ou</p>
       <p>
-        Vous n&apos;avez pas de compte{' '}
-        <a href="/signup">se créer un compte Jobmemo</a>
+        Vous n&apos;avez pas de compte
+        <a href="/signup">Créer un compte Jobmemo</a>
       </p>
     </div>
   );
