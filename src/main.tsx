@@ -1,3 +1,4 @@
+// Set Up React Router (no Outlet yet)
 import { RouterProvider } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 
