@@ -1,3 +1,3 @@
 # projet-jobmemo-front
 #Sprint 1
-* Création su projet react et installation des dépendances 
+* Création du projet react et installation des dépendances 
