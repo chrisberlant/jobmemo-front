@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 // import { useLayoutEffect, useRef } from 'react';
-import logo from '/src/assets/images/logo.svg';
+import logo from '../../assets/images/logo.svg';
 import './Login.scss';
 
 function Login() {
