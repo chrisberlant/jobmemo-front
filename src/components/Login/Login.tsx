@@ -5,45 +5,69 @@ import logo from '../../assets/images/logo.svg';
 import './Login.scss';
 
 function Login() {
+  // ANIMATION ////////////////////////////////////////////////////
+
+  // Animation des champs email et mot de passe avec GSAP >>
+  // Animation lorsqu'il y'a une action sur le champ
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    const label = e.target.parentNode.querySelector('label');
-    const line = e.target.parentNode.querySelector('.line');
-    gsap.to(label, {
-      duration: 0.2,
-      y: -16,
-      color: '#4a65ff',
-    });
-    gsap.to(line, {
-      scaleX: 1,
-    });
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const label = e.target.parentNode.querySelector('label');
-    const line = e.target.parentNode.querySelector('.line');
-
-    if (e.target.value === '') {
+    const label = e.target.parentNode?.querySelector('label');
+    const line = e.target.parentNode?.querySelector('.line');
+    if (label && line) {
       gsap.to(label, {
-        duration: 0.1,
-        y: 0,
-        color: '#999',
+        duration: 0.2,
+        y: -16,
+        color: '#4a65ff',
       });
       gsap.to(line, {
-        scaleX: 0,
+        scaleX: 1,
       });
     }
   };
+  // Animation lorsque l'on sort du champ
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const label = e.target.parentNode?.querySelector('label');
+    const line = e.target.parentNode?.querySelector('.line');
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    if (label && line) {
+      if (e.target.value === '') {
+        gsap.to(label, {
+          duration: 0.1,
+          y: 0,
+          color: '#999',
+        });
+        gsap.to(line, {
+          scaleX: 0,
+        });
+      }
+    }
+  };
+  // FIN ANIMATION /////////////////////////////////////////////////////
+
+  // Login form submit
+  const handleSubmit = async (
+    e: React.ChangeEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
 
     const form = e.target;
     const formData = new FormData(form);
+    const plainFormData = Object.fromEntries(formData.entries());
+    const formDataJson = JSON.stringify(plainFormData);
 
-    // fetch('/some-api', { method: form.method, body: formData });
-
-    const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
+    try {
+      const fetchParams = {
+        method: 'POST',
+        body: formDataJson,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const response = await fetch('http://localhost:3000/login', fetchParams);
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
