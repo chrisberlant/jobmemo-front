@@ -1,4 +1,4 @@
-import './ResetPassword.scss';
+import './ChangePassword.scss';
 
 function ResetPassword() {
   return (

@@ -1,8 +1,8 @@
-import './SignUp.scss';
+import './Register.scss';
 
-function SignUp() {
+function Register() {
   return (
-    <div className="SignUp">
+    <div className="Register">
       <h3>Se créer un compte</h3>
       <form className="form">
         <p>Email</p>
@@ -21,4 +21,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Register;

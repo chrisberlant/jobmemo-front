@@ -4,11 +4,12 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './components/App/App';
 import Login from './components/Login/Login';
-import SignUp from './components/SignUp/SignUp';
-import Logout from './components/LogOut/Logout';
+import Register from './components/Register/Register';
+import Logout from './components/Logout/Logout';
+import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Account from './components/Account/Account';
 import DeleteAccount from './components/Account/DeleteAccount/DeleteAccount';
-import ResetPassword from './components/Account/ResetPassword/ResetPassword';
+import ChangePassword from './components/Account/ChangePassword/ChangePassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import RecycleBin from './components/RecycleBin/RecycleBin';
 import Contacts from './components/Contacts/Contacts';
@@ -16,7 +17,7 @@ import Contact from './components/Contacts/Contact/Contact';
 import Docs from './components/Docs/Docs';
 import Doc from './components/Docs/Doc/Doc';
 import Card from './components/Card/Card';
-import Cards from './components/Card/Cards/Cards';
+import Cards from './components/Cards/Cards';
 
 // Add all routes to begin with
 export const router = createBrowserRouter([
@@ -29,12 +30,16 @@ export const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: '/signup',
-    element: <SignUp />,
+    path: '/register',
+    element: <Register />,
   },
   {
     path: '/logout',
     element: <Logout />,
+  },
+  {
+    path: '/forgotPassword',
+    element: <ForgotPassword />,
   },
   {
     path: '/account',
@@ -45,8 +50,8 @@ export const router = createBrowserRouter([
     element: <DeleteAccount />,
   },
   {
-    path: '/account/resetPassword',
-    element: <ResetPassword />,
+    path: '/account/changePassword',
+    element: <ChangePassword />,
   },
   {
     path: '/dashboard',
@@ -73,7 +78,7 @@ export const router = createBrowserRouter([
     element: <Doc />,
   },
   {
-    path: '/card',
+    path: '/card/:id',
     element: <Card />,
   },
   {
