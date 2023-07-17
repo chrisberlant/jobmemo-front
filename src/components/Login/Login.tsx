@@ -51,16 +51,11 @@ function Login() {
 
     const form = e.target;
     const formData = new FormData(form);
-    const plainFormData = Object.fromEntries(formData.entries());
-    const formDataJson = JSON.stringify(plainFormData);
 
     try {
       const fetchParams = {
         method: 'POST',
-        body: formDataJson,
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        body: formData,
       };
       const response = await fetch('http://localhost:3000/login', fetchParams);
       const data = await response.json();
