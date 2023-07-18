@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 // import { useLayoutEffect, useRef } from 'react';
