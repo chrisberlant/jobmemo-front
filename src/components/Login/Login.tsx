@@ -4,11 +4,13 @@ import { gsap } from 'gsap';
 // import { useLayoutEffect, useRef } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './Login.scss';
-import { useAppDispatch } from '../hook/redux';
+import { useAppDispatch, useAppSelector } from '../hook/redux';
 import { modifyInfos } from '../../store/reducers/user';
 
 function Login() {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  console.log(user);
 
   const navigate = useNavigate();
   // ANIMATION ////////////////////////////////////////////////////
@@ -67,6 +69,7 @@ function Login() {
       const data = await response.json();
       if (response.status === 200) {
         dispatch(modifyInfos(data));
+        console.log('connexion ok');
         navigate('/Dashboard');
       }
     } catch (error) {

@@ -1,41 +1,28 @@
 import { useEffect, useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../hook/redux';
 import './Dashboard.scss';
-
-interface User {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  password: string;
-  avatar_url: string;
-}
+import Card from '../Card/Card';
+import { CardType } from '../../@types/jobmemo';
 
 function Dashboard() {
-  const [users, setUsers] = useState([]);
+  const user = useAppSelector((state) => state.user);
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/users')
+    fetch(`http://localhost:3000/userCards/${user.id}`)
       .then((response) => response.json())
       .then((data) => {
-        setUsers(data.slice(2));
+        setCards(data);
       });
-  }, []);
+  }, [user.id]);
+
+  const cardsItems = cards.map((card: CardType) => (
+    <Card key={card.id} {...card} />
+  ));
 
   return (
     <div className="Dashboard">
-      <br />
-      {users.map((user: User) => (
-        <div key={user.id}>
-          <h3>Hello {user.first_name} </h3>
-          <p>Votre id est : {user.id}</p>
-          <p>votre prénom est {user.first_name}</p>
-          <p>votre nom est {user.last_name}</p>
-          <p>Votre mot de passe est {user.password}</p>
-          <img src={user.avatar_url} alt={user.first_name} />
-          <br />
-        </div>
-      ))}
-      ,
+      <div>{cardsItems}</div>
     </div>
   );
 }

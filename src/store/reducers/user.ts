@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { createAction, createReducer } from '@reduxjs/toolkit';
 
 interface User {
@@ -21,7 +21,12 @@ export const modifyInfos = createAction<User>('user/MODIFY_INFOS');
 
 const userReducer = createReducer(initialValue, (builder) => {
   builder.addCase(modifyInfos, (state, action) => {
-    state = action.payload;
+    const { id, email, first_name, last_name, avatar_url } = action.payload;
+    state.id = id;
+    state.email = email;
+    state.first_name = first_name;
+    state.last_name = last_name;
+    state.avatar_url = avatar_url;
   });
 });
 
