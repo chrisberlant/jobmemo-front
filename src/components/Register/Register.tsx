@@ -54,22 +54,20 @@ function Register() {
     const form = e.target;
     const formData = new FormData(form);
 
-    // A virer (pour tester le contenu du formulaire dans la console)
-    const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
-
-    // Appel à l'API
-    // try {
-    //   const fetchParams = {
-    //     method: 'POST',
-    //     body: formData,
-    //   };
-    //   const response = await fetch('http://localhost:3000/login', fetchParams);
-    //   const data = await response.json();
-    //   console.log(data);
-    // } catch (error) {git branch
-    //   console.error(error);
-    // }
+    try {
+      const fetchParams = {
+        method: 'POST',
+        body: formData,
+      };
+      const response = await fetch(
+        'http://localhost:3000/register',
+        fetchParams
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
