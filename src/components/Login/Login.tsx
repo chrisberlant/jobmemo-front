@@ -1,11 +1,16 @@
 /* eslint-disable no-console */
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 // import { useLayoutEffect, useRef } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './Login.scss';
+import { useAppDispatch } from '../hook/redux';
+import { modifyInfos } from '../../store/reducers/user';
 
 function Login() {
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
   // ANIMATION ////////////////////////////////////////////////////
 
   // Animation des champs email et mot de passe avec GSAP >>
@@ -60,7 +65,10 @@ function Login() {
       };
       const response = await fetch('http://localhost:3000/login', fetchParams);
       const data = await response.json();
-      console.log(data);
+      if (response.status === 200) {
+        dispatch(modifyInfos(data));
+        navigate('/Dashboard');
+      }
     } catch (error) {
       console.error(error);
     }
