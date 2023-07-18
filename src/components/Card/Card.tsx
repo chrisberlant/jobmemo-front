@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Card.scss';
 
 interface CardItem {
@@ -22,11 +22,13 @@ interface CardItem {
 function Card() {
   const [card, setCard] = useState([]);
 
-  fetch('http://localhost:3000/userCards/1')
-    .then((response) => response.json())
-    .then((data) => {
-      setCard(data);
-    });
+  useEffect(() => {
+    fetch('http://localhost:3000/userCards/1')
+      .then((response) => response.json())
+      .then((data) => {
+        setCard(data);
+      });
+  }, []);
 
   return (
     <div className="Card">

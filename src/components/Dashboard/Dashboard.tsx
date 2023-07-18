@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Dashboard.scss';
 
 interface User {
@@ -13,11 +13,13 @@ interface User {
 function Dashboard() {
   const [users, setUsers] = useState([]);
 
-  fetch('http://localhost:3000/users')
-    .then((response) => response.json())
-    .then((data) => {
-      setUsers(data.slice(2));
-    });
+  useEffect(() => {
+    fetch('http://localhost:3000/users')
+      .then((response) => response.json())
+      .then((data) => {
+        setUsers(data.slice(2));
+      });
+  }, []);
 
   return (
     <div className="Dashboard">
