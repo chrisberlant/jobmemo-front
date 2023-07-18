@@ -67,7 +67,7 @@ function Register() {
     //   const response = await fetch('http://localhost:3000/login', fetchParams);
     //   const data = await response.json();
     //   console.log(data);
-    // } catch (error) {
+    // } catch (error) {git branch
     //   console.error(error);
     // }
   };
@@ -79,25 +79,25 @@ function Register() {
         <img className="logo" src={logo} alt="logo" />
         <form method="post" onSubmit={handleSubmit}>
           <div className="input-wrap">
-            <label htmlFor="firstname">Prénom : </label>
+            <label htmlFor="first_name">Prénom : </label>
             <input
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
-              name="firstname"
-              id="firstname"
+              name="first_name"
+              id="first_name"
               autoComplete="new-password"
             />
             <div className="line" />
           </div>
           <div className="input-wrap">
-            <label htmlFor="lastname">Nom : </label>
+            <label htmlFor="last_name">Nom : </label>
             <input
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
-              name="lastname"
-              id="lastname"
+              name="last_name"
+              id="last_name"
               autoComplete="new-password"
             />
             <div className="line" />
@@ -127,13 +127,13 @@ function Register() {
             <div className="line" />
           </div>
           <div className="input-wrap">
-            <label htmlFor="confirmPassword">Confirmez mot de passe : </label>
+            <label htmlFor="confirm_password">Confirmez mot de passe : </label>
             <input
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="password"
-              name="confirmPassword"
-              id="confirmPassword"
+              name="confirm_password"
+              id="confirm_password"
               autoComplete="new-password"
             />
             <div className="line" />
