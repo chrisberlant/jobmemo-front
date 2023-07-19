@@ -9,7 +9,7 @@ import Columns from '../Columns/Columns';
 
 function Dashboard() {
   const user = useAppSelector((state) => state.user);
-  const cards = useAppSelector((state) => state.cards);
+  const cards = useAppSelector((state) => state.cards.list);
   const cardsOffres = cards.filter(
     (card: CardType) => card.category === 'Mes offres'
   );
@@ -22,7 +22,7 @@ function Dashboard() {
   //     });
   // }, [user.id]);
 
-  const cardsItems = cards.map((card: CardType) => (
+  const cardsItems = cardsOffres.map((card: CardType) => (
     <Card key={card.id} {...card} />
   ));
 

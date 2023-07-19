@@ -75,7 +75,7 @@ function Login() {
         localStorage.setItem('token', userData.token);
         dispatch(modifyUserInfos(userData));
         const cardsResponse = await fetch(
-          `http://localhost:3000/userCards/${user.id}`,
+          `http://localhost:3000/userCards/${userData.user.id}`,
           {
             method: 'GET',
             headers: {
@@ -85,6 +85,7 @@ function Login() {
         );
         if (cardsResponse.status === 200) {
           const cardsData = await cardsResponse.json();
+          console.log(cardsData);
           dispatch(getAllCards(cardsData));
           console.log('stockage cartes dans le store');
         }
