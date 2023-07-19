@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import logo from '../../assets/images/logo.svg';
 import './Login.scss';
 import { useAppDispatch, useAppSelector } from '../hook/redux';
-import { modifyInfos } from '../../store/reducers/user';
+import { modifyUserInfos } from '../../store/reducers/user';
 
 function Login() {
   const dispatch = useAppDispatch();
@@ -68,7 +68,7 @@ function Login() {
       const response = await fetch('http://localhost:3000/login', fetchParams);
       const data = await response.json();
       if (response.status === 200) {
-        dispatch(modifyInfos(data));
+        dispatch(modifyUserInfos(data));
         console.log('connexion ok');
         navigate('/Dashboard');
       }

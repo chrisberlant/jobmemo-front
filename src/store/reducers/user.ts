@@ -17,10 +17,10 @@ const initialValue: User = {
   avatar_url: '',
 };
 
-export const modifyInfos = createAction<User>('user/MODIFY_INFOS');
+export const modifyUserInfos = createAction<User>('user/MODIFY_USER_INFOS');
 
 const userReducer = createReducer(initialValue, (builder) => {
-  builder.addCase(modifyInfos, (state, action) => {
+  builder.addCase(modifyUserInfos, (state, action) => {
     const { id, email, first_name, last_name, avatar_url } = action.payload;
     state.id = id;
     state.email = email;

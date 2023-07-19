@@ -1,6 +1,15 @@
 @use '../../styles/variables' as v;
 
 .Card {
-	text-align: center;
+	background-color: #fff2cc;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 8px;
+	border-radius: 4px;
+	padding: 8px;
 
+	h3 {
+		margin: 0;
+	}
 }

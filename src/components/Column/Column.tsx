@@ -1,10 +1,12 @@
 import CardButton from '../CardButton/CardButton';
+import { ColumnType } from '../../@types/jobmemo';
 import './Column.scss';
 
-function Column() {
+function Column({ title, id }: ColumnType) {
   return (
     <div className="Column">
-      <h1>Hello Column</h1>
+      {title}
+      {id}
       <CardButton />
     </div>
   );
