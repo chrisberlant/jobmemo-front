@@ -6,13 +6,14 @@ import logo from '../../assets/images/logo.svg';
 import './Login.scss';
 import { useAppDispatch, useAppSelector } from '../hook/redux';
 import { modifyUserInfos } from '../../store/reducers/user';
+import { getAllCards } from '../../store/reducers/cards';
 
 function Login() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
-  console.log(user);
 
   const navigate = useNavigate();
+
   // ANIMATION ////////////////////////////////////////////////////
 
   // Animation des champs email et mot de passe avec GSAP >>
@@ -61,14 +62,32 @@ function Login() {
     const formData = new FormData(form);
 
     try {
-      const fetchParams = {
+      const fetchUserParams = {
         method: 'POST',
         body: formData,
       };
-      const response = await fetch('http://localhost:3000/login', fetchParams);
-      const data = await response.json();
-      if (response.status === 200) {
-        dispatch(modifyUserInfos(data));
+      const userResponse = await fetch(
+        'http://localhost:3000/login',
+        fetchUserParams
+      );
+      if (userResponse.status === 200) {
+        const userData = await userResponse.json();
+        localStorage.setItem('token', userData.token);
+        dispatch(modifyUserInfos(userData));
+        const cardsResponse = await fetch(
+          `http://localhost:3000/userCards/${user.id}`,
+          {
+            method: 'GET',
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        );
+        if (cardsResponse.status === 200) {
+          const cardsData = await cardsResponse.json();
+          dispatch(getAllCards(cardsData));
+          console.log('stockage cartes dans le store');
+        }
         console.log('connexion ok');
         navigate('/Dashboard');
       }

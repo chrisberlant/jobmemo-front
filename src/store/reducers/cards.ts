@@ -25,7 +25,7 @@ const initialValue: CardType = {
   user_id: 0,
 };
 
-export const getAllCards = createAction<CardType>('cards/GET_ALL_CARDS');
+export const getAllCards = createAction<CardType[]>('cards/GET_ALL_CARDS');
 
 const cardsReducer = createReducer(initialValue, (builder) => {
   builder.addCase(getAllCards, (state, action) => {
