@@ -1,6 +1,35 @@
 @use '../../styles/variables' as v;
 
 .Header {
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	width: 80vh;
+  position: absolute;
+  left: 40%;
+	top: 0; 
+	padding: 10px;
+	margin: 10px; 
 
+	.Search-bar{
+		display: flex;
+		align-items: center;
+		background-color: white;
+		width: 100%;
+		border-radius: 10px;
+		height: 2.5rem;
+		padding: 0 10px;
+
+		input {
+			background-color: transparent;
+			border: none; 
+			font-size: 1rem;
+			width: 100%;
+			margin-left: 5px;
+			outline: none;
+		}
+
+		.Search-icons {
+			font-size: 1rem;
+		}
+	}
 }
