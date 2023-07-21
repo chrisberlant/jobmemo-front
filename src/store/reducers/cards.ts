@@ -4,6 +4,7 @@ import {
   createReducer,
   createAsyncThunk,
 } from '@reduxjs/toolkit';
+
 import { CardType } from '../../@types/jobmemo';
 
 interface CardTable {
