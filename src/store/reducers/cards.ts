@@ -18,7 +18,7 @@ const initialValue: CardTable = {
 
 export const getAllCards = createAsyncThunk('cards/GET_ALL_CARDS', async () => {
   // TODO Gestion d'erreurs
-  const data = await securedFetch('/userCards', 'GET', null);
+  const data = await securedFetch('/userCards');
   return data;
 });
 
