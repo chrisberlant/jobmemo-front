@@ -34,6 +34,7 @@ export const login = createAsyncThunk(
       method: 'POST',
       body: credentials,
     };
+    // TODO Gestion d'erreurs
     const data = await fetch(`${baseUrl}/login`, fetchLoginParams);
     const userData = await data.json();
     return userData;
