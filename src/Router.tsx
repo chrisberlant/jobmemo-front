@@ -17,7 +17,7 @@ import Contact from './components/Contacts/Contact/Contact';
 import Docs from './components/Docs/Docs';
 import Doc from './components/Docs/Doc/Doc';
 import Card from './components/Card/Card';
-import Cards from './components/Cards/Cards';
+// import Cards from './components/Cards/Cards';
 
 // Add all routes to begin with
 export const router = createBrowserRouter([
@@ -81,9 +81,9 @@ export const router = createBrowserRouter([
     path: '/card/:id',
     element: <Card />,
   },
-  {
-    path: '/cards/category/:id',
-    element: <Cards />,
-  },
+  // {
+  //   path: '/cards/category/:id',
+  //   element: <Cards />,
+  // },
 ]);
    
