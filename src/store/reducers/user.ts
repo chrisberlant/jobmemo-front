@@ -4,6 +4,8 @@ import {
   createAsyncThunk,
 } from '@reduxjs/toolkit';
 
+import { baseUrl } from '../../securedFetch';
+
 interface User {
   id: number;
   email: string;
@@ -32,7 +34,7 @@ export const login = createAsyncThunk(
       method: 'POST',
       body: credentials,
     };
-    const data = await fetch('http://localhost:3000/login', fetchLoginParams);
+    const data = await fetch(`${baseUrl}/login`, fetchLoginParams);
     const userData = await data.json();
     return userData;
   }
