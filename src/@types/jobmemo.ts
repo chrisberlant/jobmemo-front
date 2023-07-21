@@ -3,22 +3,22 @@ export interface CardType {
   title: string;
   category: string;
   index: number;
-  enterprise_name: string;
-  logo_url: string;
-  enterprise_activity: string;
-  contract_type: string;
+  enterpriseName: string;
+  logoUrl: string;
+  enterpriseActivity: string;
+  contractType: string;
   description: string;
-  offer_url: string;
+  offerUrl: string;
   location: string;
   salary: string;
-  job_title: string;
+  jobTitle: string;
   notation: number;
   color: string;
-  is_deleted: boolean;
+  isDeleted: boolean;
   notes: string;
-  created_at: string;
+  createdAt: string;
   reminder: Date;
-  user_id: number;
+  userId: number;
 }
 
 export interface ColumnType {

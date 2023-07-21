@@ -4,29 +4,29 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 interface User {
   id: number;
   email: string;
-  first_name: string;
-  last_name: string;
-  avatar_url: string;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
 }
 
 const initialValue: User = {
   id: 0,
   email: '',
-  first_name: '',
-  last_name: '',
-  avatar_url: '',
+  firstName: '',
+  lastName: '',
+  avatarUrl: '',
 };
 
 export const modifyUserInfos = createAction<User>('user/MODIFY_USER_INFOS');
 
 const userReducer = createReducer(initialValue, (builder) => {
   builder.addCase(modifyUserInfos, (state, action) => {
-    const { id, email, first_name, last_name, avatar_url } = action.payload;
+    const { id, email, firstName, lastName, avatarUrl } = action.payload;
     state.id = id;
     state.email = email;
-    state.first_name = first_name;
-    state.last_name = last_name;
-    state.avatar_url = avatar_url;
+    state.firstName = firstName;
+    state.lastName = lastName;
+    state.avatarUrl = avatarUrl;
   });
 });
 

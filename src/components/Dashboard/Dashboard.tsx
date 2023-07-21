@@ -6,6 +6,7 @@ import { CardType } from '../../@types/jobmemo';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Columns from '../Columns/Columns';
+import Navbar from '../Navbar/Navbar';
 
 function Dashboard() {
   const user = useAppSelector((state) => state.user);
@@ -31,6 +32,7 @@ function Dashboard() {
       <div>{cardsItems}</div>
       <Header />
       <Columns />
+      <Navbar />
       <Footer />
     </div>
   );

@@ -10,7 +10,7 @@ function Columns() {
       <Column title="Mes Relances" id={2} />
       <Column title="Mes Entretiens" id={3} />
       <Column title="Mes Archives" id={4} />
-      <RecycleBin />
+      {/* <RecycleBin /> */}
     </div>
   );
 }
