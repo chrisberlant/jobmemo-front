@@ -1,6 +1,20 @@
 @use '../../styles/variables' as v;
 
 .CardButton {
-	text-align: center;
+	
+	button {
+		text-align: center;
+		width: 100%;
+		background: #6c757d;
+		border: none;
+		color: #fff;
+		font-weight: 700;
+		min-height: 32px;
+		cursor: pointer;
 
+		&:hover {
+			background: #000;
+			
+		}
+	}
 }
