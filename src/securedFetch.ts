@@ -1,6 +1,6 @@
 export const baseUrl = 'http://localhost:3000';
 
-async function securedFetch(route: string, method: string, body?: FormData) {
+async function securedFetch(route: string, method?: string, body?: FormData) {
   try {
     const response = await fetch(baseUrl + route, {
       method,
