@@ -1,8 +1,10 @@
+import Navbar from '../Navbar/Navbar';
 import './Account.scss';
 
 function Account() {
   return (
     <div className="Account">
+      <Navbar />
       <h1>Hello Account</h1>
     </div>
   );
