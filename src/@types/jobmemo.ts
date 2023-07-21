@@ -25,3 +25,11 @@ export interface ColumnType {
   id: number;
   title: string;
 }
+
+export interface UserType {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+}

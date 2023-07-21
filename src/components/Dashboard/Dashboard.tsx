@@ -30,10 +30,10 @@ function Dashboard() {
   return (
     <div className="Dashboard">
       <div>{cardsItems}</div>
-      {/* <Header />  */}
+      <Header />
       <Columns />
       <Navbar />
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
