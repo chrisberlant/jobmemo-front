@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import logo from '../../assets/images/logo.svg';
 import './Login.scss';
 import { useAppDispatch, useAppSelector } from '../hook/redux';
-import { modifyUserInfos } from '../../store/reducers/user';
+import { modifyUserInfos, login } from '../../store/reducers/user';
 import { getAllCards } from '../../store/reducers/cards';
 
 function Login() {
@@ -53,48 +53,58 @@ function Login() {
   // FIN ANIMATION /////////////////////////////////////////////////////
 
   // Login form submit
-  const handleSubmit = async (
-    e: React.ChangeEvent<HTMLFormElement>
-  ): Promise<void> => {
+  // const handleSubmit = async (
+  //   e: React.ChangeEvent<HTMLFormElement>
+  // ): Promise<void> => {
+  //   e.preventDefault();
+
+  //   const form = e.target;
+  //   const formData = new FormData(form);
+
+  //   try {
+  //     const fetchUserParams = {
+  //       method: 'POST',
+  //       body: formData,
+  //     };
+  //     const userResponse = await fetch(
+  //       'http://localhost:3000/login',
+  //       fetchUserParams
+  //     );
+  //     if (userResponse.status === 200) {
+  //       const userData = await userResponse.json();
+  //       localStorage.setItem('token', userData.token);
+  //       dispatch(modifyUserInfos(userData));
+  //       const cardsResponse = await fetch(
+  //         `http://localhost:3000/userCards/${userData.user.id}`,
+  //         {
+  //           method: 'GET',
+  //           headers: {
+  //             authorization: `Bearer ${localStorage.getItem('token')}`,
+  //           },
+  //         }
+  //       );
+  //       if (cardsResponse.status === 200) {
+  //         const cardsData = await cardsResponse.json();
+  //         console.log(cardsData);
+  //         dispatch(getAllCards(cardsData));
+  //         console.log('stockage cartes dans le store');
+  //       }
+  //       console.log('connexion ok');
+  //       navigate('/Dashboard');
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = e.target;
     const formData = new FormData(form);
-
-    try {
-      const fetchUserParams = {
-        method: 'POST',
-        body: formData,
-      };
-      const userResponse = await fetch(
-        'http://localhost:3000/login',
-        fetchUserParams
-      );
-      if (userResponse.status === 200) {
-        const userData = await userResponse.json();
-        localStorage.setItem('token', userData.token);
-        dispatch(modifyUserInfos(userData));
-        const cardsResponse = await fetch(
-          `http://localhost:3000/userCards/${userData.user.id}`,
-          {
-            method: 'GET',
-            headers: {
-              authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          }
-        );
-        if (cardsResponse.status === 200) {
-          const cardsData = await cardsResponse.json();
-          console.log(cardsData);
-          dispatch(getAllCards(cardsData));
-          console.log('stockage cartes dans le store');
-        }
-        console.log('connexion ok');
-        navigate('/Dashboard');
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    dispatch(login(formData));
+    dispatch(getAllCards());
+    navigate('/Dashboard');
   };
 
   return (
