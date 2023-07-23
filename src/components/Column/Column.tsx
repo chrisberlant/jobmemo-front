@@ -21,7 +21,7 @@ interface CardProps {
 // Il utilise ensuite ces accessoires pour définir le droppableId du composant Droppable et restituer une liste de composants Card basée sur le tableau column.items
 
 function Column({ droppableId, column }: ColumnProps) {
-  const isNotRecycleBin = column.className !== 'trash';
+  const isNotRecycleBin = column.className !== 'recycle-bin';
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
       {(provided, snapshot) => {
@@ -30,17 +30,19 @@ function Column({ droppableId, column }: ColumnProps) {
             {...provided.droppableProps}
             ref={provided.innerRef}
             className="column"
-            style={{
-              background: snapshot.isDraggingOver
-                ? 'lightsteelblue'
-                : 'lavender',
-            }}
+            // style={{
+            //   background: snapshot.isDraggingOver
+            //     ? 'lightsteelblue'
+            //     : 'lavender',
+            // }}
           >
             {column?.items?.map((item: { id: React.Key }, index: number) => {
               return <Card key={item.id} item={item} index={index} />;
             })}
             {provided.placeholder}
+            {!isNotRecycleBin && <div>Recycle Bin</div>}
             {isNotRecycleBin && <CardButton />}
+            {/* <CardButton /> */}
           </div>
         );
       }}

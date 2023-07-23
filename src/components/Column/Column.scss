@@ -1,17 +1,32 @@
 @use '../../styles/variables' as v;
 
 .column {
-  position: relative;
-  padding: 4px;
+  // background: lightsteelblue;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   min-width: 200px;
-  min-height: 200px;
-  margin: 8px;
+  // &:not(:last-child) {
+  //   min-width: 200px;
+  // }
+  &:last-child {
+    // background: yellow;
+    // height: 200px;
+  }
+
+  .card {
+    background: slateblue;
+    height: 160px;
+  }
+
+
 }
 
-.trash {
-  background-color: 'red';
-  // position: absolute;
-  // bottom: 0;
-  // right: 50px;
-  height: 200px;
-}
+// .recycle-bin .card-button{
+//   background: yellow;
+//   height: 200px;
+
+//   .card-button {
+//     background: red;
+//   }
+// }

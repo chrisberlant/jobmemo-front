@@ -1,5 +1,34 @@
 @use '../../styles/variables' as v;
 
-.Dashboard {
-  // position: relative;
+
+
+.dashboard {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  min-height: 100vh;
+  text-align: center;
+
+  width: 100%; //A virer
+
+  .navbar-container {
+    width: 248px;
+  }
+
+  .kanban-container {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+
+    // .header {
+    //   height: 100px;
+    //   display: flex;
+    //   flex-direction: column;
+    //   justify-content: center;
+    //   align-items: center;
+    // }
+    // .footer {
+    //   height: 50px;
+    // }
+  }
 }
+

@@ -10,7 +10,7 @@ function Navbar() {
   // Show/Hide Menu
   const [sideMenu, setSideMenu] = useState(false);
   const showsideMenu = () => {
-    setSideMenu(!sideMenu);yarn
+    setSideMenu(!sideMenu);
     // console.log(sideMenu);
   };
   //

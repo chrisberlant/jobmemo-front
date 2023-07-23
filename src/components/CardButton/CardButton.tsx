@@ -2,7 +2,7 @@ import './CardButton.scss';
 
 function CardButton() {
   return (
-    <div className="CardButton">
+    <div className="card-button">
       <button type="submit">+</button>
     </div>
   );

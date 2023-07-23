@@ -3,7 +3,7 @@ import './Footer.scss';
 
 function Footer() {
   return (
-    <div className="Footer">
+    <div className="footer">
       <NavLink to="#">Nous contacter</NavLink>
     </div>
   );

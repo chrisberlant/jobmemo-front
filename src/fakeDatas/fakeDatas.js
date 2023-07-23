@@ -72,7 +72,7 @@ export const status = {
     name: 'Corbeille',
     color: '#eee',
     items: [],
-    className: 'trash',
+    className: 'recycle-bin',
   },
 };
 

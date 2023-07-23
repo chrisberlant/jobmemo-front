@@ -1,16 +1,14 @@
 @use '../../styles/variables' as v;
 
-.Header {
-	display: flex;
-	justify-content: center;
-	width: 80vh;
-  position: absolute;
-  left: 40%;
-	top: 0; 
-	padding: 10px;
-	margin: 10px; 
+.header {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+	padding: 0 16px;
 
-	.Search-bar{
+	.search-bar{
 		display: flex;
 		align-items: center;
 		background-color: white;
@@ -28,7 +26,7 @@
 			outline: none;
 		}
 
-		.Search-icons {
+		.search-icons {
 			font-size: 1rem;
 		}
 	}

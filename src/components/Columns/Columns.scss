@@ -1,8 +1,10 @@
 @use '../../styles/variables' as v;
 
 .columns {
-  display: flex;
-  justify-content: center;
-  height: 100% ;
-  border: 1px solid mediumslateblue;
+  // background: lightslategray;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 16px;
+  margin: 0 16px;
+  overflow-x: scroll;
 }

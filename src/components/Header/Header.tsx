@@ -24,9 +24,9 @@ function Header() {
   };
 
   return (
-    <div className="Header">
-      <div className="Search-bar">
-        <MaIcons.MdSearch className="Search-icons" />
+    <div className="header">
+      <div className="search-bar">
+        <MaIcons.MdSearch className="search-icons" />
         <input
           type="text"
           placeholder="Recherche"

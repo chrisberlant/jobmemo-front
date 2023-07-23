@@ -40,7 +40,7 @@ const onDragEnd = (result, columns, setColumns) => {
     // Insert the dragged item at the destination index in the destination items array
     destItems.splice(destination.index, 0, removed);
 
-    if (destColumn.className !== 'trash') {
+    if (destColumn.className !== 'recycle-bin') {
       // Update the state with the modified columns, replacing the source and destination columns
       setColumns({
         ...columns,
@@ -63,7 +63,12 @@ const onDragEnd = (result, columns, setColumns) => {
           items: sourceItems,
         },
       });
-      console.log(destItems[0].title, '- id : ', destItems[0].id, ' trashed');
+      console.log(
+        destItems[0].title,
+        'is removed - ( id : ',
+        destItems[0].id,
+        ')'
+      );
     }
   } else {
     // If the source and destination droppableIds are the same
@@ -94,23 +99,23 @@ function Columns() {
   const [columns, setColumns] = useState(status);
 
   return (
-    <div className="columns">
-      <DragDropContext
-        // Call the onDragEnd function with the result, columns, and setColumns arguments
-        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-      >
+    <DragDropContext
+      // Call the onDragEnd function with the result, columns, and setColumns arguments
+      onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+    >
+      <div className="columns">
         {Object.entries(columns).map(([columnId, column]) => {
           return (
-            <div key={columnId} className={column.className}>
-              <h2>{column.name}</h2>
+            <div key={columnId} className={`column ${column.className}`}>
+              <h3>{column.name}</h3>
               <div>
                 <Column droppableId={columnId} key={columnId} column={column} />
               </div>
             </div>
           );
         })}
-      </DragDropContext>
-    </div>
+      </div>
+    </DragDropContext>
   );
 }
 
