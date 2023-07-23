@@ -14,11 +14,8 @@
 		"@reduxjs/toolkit": "^1.9.5",
 		"gsap": "^3.12.2",
 		"react": "^18.2.0",
-<<<<<<< HEAD
 		"react-calendar": "^4.4.0",
-=======
 		"react-beautiful-dnd": "^13.1.1",
->>>>>>> 2d0172e58634361c46f4451e8b25722c9fd1d306
 		"react-dom": "^18.2.0",
 		"react-icons": "^4.10.1",
 		"react-redux": "^8.1.1",

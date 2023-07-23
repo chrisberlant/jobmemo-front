@@ -48,21 +48,31 @@ export const status = {
     name: 'Mes Offres',
     color: '#eee',
     items: fakeItems,
+    className: 'offers',
   },
   [uuid()]: {
     name: 'Mes Candidatures',
     color: '#eee',
     items: [],
+    className: 'applications',
   },
   [uuid()]: {
     name: 'Mes Relances',
     color: '#eee',
     items: [],
+    className: 'relaunch',
   },
   [uuid()]: {
     name: 'Mes Entretiens',
     color: '#eee',
     items: [],
+    className: 'interview',
+  },
+  [uuid()]: {
+    name: 'Corbeille',
+    color: '#eee',
+    items: [],
+    className: 'trash',
   },
 };
 

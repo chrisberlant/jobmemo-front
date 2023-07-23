@@ -1,7 +1,17 @@
 @use '../../styles/variables' as v;
 
 .column {
+  position: relative;
   padding: 4px;
   min-width: 200px;
-  min-height: 50px;
+  min-height: 200px;
+  margin: 8px;
+}
+
+.trash {
+  background-color: 'red';
+  // position: absolute;
+  // bottom: 0;
+  // right: 50px;
+  height: 200px;
 }

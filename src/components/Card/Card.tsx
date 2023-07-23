@@ -4,11 +4,22 @@ import logo from '../../assets/images/logo.svg';
 import { CardType } from '../../@types/jobmemo';
 import './Card.scss';
 
-function Card({ item, index }) {
-  // console.log(item);
-  const [checked, setChecked] = useState(false);
+// Ce composant restitue un élément déplaçable à l'aide du composant Draggable de la bibliothèque 'react-beautifull-dnd'.
+// Il définit la clé, draggableId et les accessoires d'index en fonction de l'accessoire d'élément.
+// Dans le composant Draggable, il y a une fonction qui reçoit fourni et un instantané en tant que paramètres.
 
-  const handleChange = () => {
+type CardProps = {
+  item: {
+    id: string;
+    title: string;
+    enterpriseName: string;
+    createdAt: string;
+  };
+  index: number;
+};
+function Card({ item, index }: CardProps): JSX.Element {
+  const [checked, setChecked] = useState<boolean>(false);
+  const handleChange = (): void => {
     setChecked(!checked);
   };
 
