@@ -2,7 +2,8 @@ import { Droppable } from 'react-beautiful-dnd';
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
 import CardButton from '../CardButton/CardButton';
-import recycleBinIcon from '../../assets/icons/recycle-bin.svg';
+import recycleBinIcon from '../../assets/icons/icon-recycle-bin.svg';
+import addCardIcon from '../../assets/icons/icon-add-card.svg';
 import './Column.scss';
 
 interface ColumnProps {
@@ -10,6 +11,8 @@ interface ColumnProps {
   column: {
     color: string;
     className: string;
+    name: string;
+    id: number;
     items?: Array<{ id: React.Key }>;
   };
 }
@@ -27,6 +30,9 @@ function Column({ droppableId, column }: ColumnProps) {
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
       {(provided, snapshot) => {
+
+        const route = `/addCard/${column.id}`;
+
         return (
           <div
             {...provided.droppableProps}
@@ -51,7 +57,18 @@ function Column({ droppableId, column }: ColumnProps) {
                 />
               </Link>
             )}
-            {isNotRecycleBin && <CardButton />}
+            {isNotRecycleBin && (
+              <Link to={route}>
+                <div className="add-card">
+                  <img
+                    src={addCardIcon}
+                    alt="icon-add-card"
+                    className="icon-add-card"
+                  />
+                </div>
+              </Link>
+            )}
+            {/* {isNotRecycleBin && <CardButton />} */}
             {/* <CardButton /> */}
           </div>
         );

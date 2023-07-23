@@ -82,7 +82,7 @@ export const router = createBrowserRouter([
     element: <Card />,
   },
   {
-    path: '/cards/addCard/:id',
+    path: '/addCard/:id',
     element: <CardForm />,
   },
 ]);

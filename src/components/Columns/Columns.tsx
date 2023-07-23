@@ -106,7 +106,11 @@ function Columns() {
       <div className="columns">
         {Object.entries(columns).map(([columnId, column]) => {
           return (
-            <div key={columnId} className={`column ${column.className}`}>
+            <div
+              key={columnId}
+              id={columnId}
+              className={`column ${column.className} `}
+            >
               <h3>{column.name}</h3>
               <div>
                 <Column droppableId={columnId} key={columnId} column={column} />

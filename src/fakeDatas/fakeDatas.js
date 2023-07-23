@@ -45,30 +45,35 @@ const fakeItems = [
 
 export const status = {
   [uuid()]: {
+    id: 0,
     name: 'Mes Offres',
     color: '#eee',
     items: fakeItems,
     className: 'offers',
   },
   [uuid()]: {
+    id: 1,
     name: 'Mes Candidatures',
     color: '#eee',
     items: [],
     className: 'applications',
   },
   [uuid()]: {
+    id: 2,
     name: 'Mes Relances',
     color: '#eee',
     items: [],
     className: 'relaunch',
   },
   [uuid()]: {
+    id: 3,
     name: 'Mes Entretiens',
     color: '#eee',
     items: [],
     className: 'interview',
   },
   [uuid()]: {
+    id: 4,
     name: '',
     color: '#eee',
     items: [],
