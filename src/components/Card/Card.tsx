@@ -27,19 +27,19 @@ function Card({ item, index }: CardProps): JSX.Element {
     <Draggable key={item.id} draggableId={item.id} index={index}>
       {(provided, snapshot) => {
         if (snapshot.isDragging) {
-          console.log('on drag : ', item.title, '- id : ', item.id);
+          console.log('on drag : ', item.title, 'is dragged- (id : ', item.id),')';
         }
         return (
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            style={{
-              backgroundColor: snapshot.isDragging
-                ? 'darkslateblue'
-                : 'slateblue',
-              ...provided.draggableProps.style,
-            }}
+            // style={{
+            //   backgroundColor: snapshot.isDragging
+            //     ? 'darkslateblue'
+            //     : 'slateblue',
+            //   ...provided.draggableProps.style,
+            // }}
           >
             <div className="card">
               <img src={logo} alt="logo" className="logo" />

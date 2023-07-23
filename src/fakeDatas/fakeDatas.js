@@ -69,7 +69,7 @@ export const status = {
     className: 'interview',
   },
   [uuid()]: {
-    name: 'Corbeille',
+    name: '',
     color: '#eee',
     items: [],
     className: 'recycle-bin',

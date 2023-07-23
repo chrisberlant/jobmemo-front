@@ -2,6 +2,7 @@
 
 .column {
   // background: lightsteelblue;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -19,14 +20,9 @@
     height: 160px;
   }
 
-
+  .icon-recycle-bin {
+    width: 64px;
+    margin: 8px auto;
+    cursor: pointer;
+  }
 }
-
-// .recycle-bin .card-button{
-//   background: yellow;
-//   height: 200px;
-
-//   .card-button {
-//     background: red;
-//   }
-// }
