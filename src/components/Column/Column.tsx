@@ -16,11 +16,6 @@ interface ColumnProps {
     items?: Array<{ id: React.Key }>;
   };
 }
-interface CardProps {
-  key: string;
-  item: any; // Replace 'any' with the specific type of 'item' if possible
-  index: number;
-}
 
 // Rendu de la colonne avec fonctions glissables et déposables à l'aide du composant Droppable de la bibliothèque react-beautiful-dnd. Le composant Column prend en charge deux props: droppableId et column.
 // Il utilise ensuite ces accessoires pour définir le droppableId du composant Droppable et restituer une liste de composants Card basée sur le tableau column.items
@@ -30,7 +25,6 @@ function Column({ droppableId, column }: ColumnProps) {
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
       {(provided, snapshot) => {
-
         const route = `/addCard/${column.id}`;
 
         return (
@@ -68,8 +62,6 @@ function Column({ droppableId, column }: ColumnProps) {
                 </div>
               </Link>
             )}
-            {/* {isNotRecycleBin && <CardButton />} */}
-            {/* <CardButton /> */}
           </div>
         );
       }}

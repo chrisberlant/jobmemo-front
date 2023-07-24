@@ -94,6 +94,7 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
+
 function Columns() {
   // Initialize state with the status object
   const [columns, setColumns] = useState(status);
@@ -102,6 +103,7 @@ function Columns() {
     <DragDropContext
       // Call the onDragEnd function with the result, columns, and setColumns arguments
       onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+      // onDragUpdate={(result) => onDragUpdate(result, columns, setColumns)}
     >
       <div className="columns">
         {Object.entries(columns).map(([columnId, column]) => {
