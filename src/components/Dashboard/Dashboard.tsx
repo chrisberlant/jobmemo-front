@@ -4,7 +4,7 @@
 // import { CardType } from '../../@types/jobmemo';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import Columns from '../Columns/Columns';
+import Columns from '../Kanban/Kanban';
 import Navbar from '../Navbar/Navbar';
 import './Dashboard.scss';
 

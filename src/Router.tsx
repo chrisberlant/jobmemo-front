@@ -4,7 +4,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './components/App/App';
 import Login from './components/Login/Login';
-import Logout from './components/Logout/Logout';
+// import Logout from './components/Logout/Logout';
 import Register from './components/Register/Register';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Account from './components/Account/Account';
@@ -28,10 +28,6 @@ export const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
-  },
-  {
-    path: '/logout',
-    element: <Logout />,
   },
   {
     path: '/register',

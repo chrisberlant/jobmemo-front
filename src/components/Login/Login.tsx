@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 // import { useLayoutEffect, useRef } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './Login.scss';
-import { useAppDispatch } from '../hook/redux';
+import { useAppDispatch } from '../../store/hook/redux';
 import { login } from '../../store/reducers/user';
 import { getAllCards } from '../../store/reducers/cards';
 
@@ -58,7 +58,7 @@ function Login() {
     const form = e.target;
     const formData = new FormData(form);
     dispatch(login(formData));
-    dispatch(getAllCards());
+    // dispatch(getAllCards());
     navigate('/Dashboard');
   };
 

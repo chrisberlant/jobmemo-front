@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import * as MaIcons from 'react-icons/md';
 import Calendar from 'react-calendar';
-import { useAppSelector } from '../hook/redux';
+import { useAppSelector } from '../../store/hook/redux';
 import './Navbar.scss';
 
 function Navbar() {
