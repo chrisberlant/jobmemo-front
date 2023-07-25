@@ -3,6 +3,8 @@ import { Draggable } from 'react-beautiful-dnd';
 import logo from '../../assets/images/logo.svg';
 import { CardType } from '../../@types/jobmemo';
 import './Card.scss';
+import { useAppDispatch, useAppSelector } from '../hook/redux';
+import { setMovingCardId } from '../../store/reducers/movingCard';
 
 // Ce composant restitue un élément déplaçable à l'aide du composant Draggable de la bibliothèque 'react-beautifull-dnd'.
 // Il définit la clé, draggableId et les accessoires d'index en fonction de l'accessoire d'élément.
@@ -17,17 +19,23 @@ type CardProps = {
   };
   index: number;
 };
+
 function Card({ item, index }: CardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  // const storedCardId = useAppSelector((state) => state.movingCard.cardId);
   const [checked, setChecked] = useState<boolean>(false);
   const handleChange = (): void => {
     setChecked(!checked);
+    console.log(item.title, item.id, 'is checked');
   };
 
   return (
     <Draggable key={item.id} draggableId={item.id} index={index}>
       {(provided, snapshot) => {
-        if (snapshot.isDragging) {
-          console.log('on drag : ', item.title, 'is dragged- (id : ', item.id),')';
+        if (snapshot.isDropAnimating) {
+          dispatch(setMovingCardId(item.id));
+          // console.log(item.title, 'is dragged- (id : ', item.id), ')';
+          // console.log("Id dans le store :" + storedCardId);
         }
         return (
           <div
