@@ -70,7 +70,7 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.firstName = firstName;
       state.lastName = lastName;
       state.avatarUrl = avatarUrl;
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', JSON.stringify(token));
       console.log('Requête effectuée, token ajouté dans localStorage');
     });
 });

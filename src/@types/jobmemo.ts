@@ -33,3 +33,7 @@ export interface UserType {
   lastName: string;
   avatarUrl: string;
 }
+
+export interface UserToken {
+  token: string;
+}

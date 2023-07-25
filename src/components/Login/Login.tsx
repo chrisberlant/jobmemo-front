@@ -6,13 +6,26 @@ import logo from '../../assets/images/logo.svg';
 import './Login.scss';
 import { useAppDispatch } from '../../store/hook/redux';
 import { login } from '../../store/reducers/user';
-import { getAllCards } from '../../store/reducers/cards';
+// import { getAllCards } from '../../store/reducers/cards';
 
 function Login() {
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
 
+  async function redirectToDashboard(formData: FormData) {
+    try {
+      await dispatch(login(formData));
+    } catch (error) {
+      console.log('Une erreur est survenue lors de la connexion', error);
+    }
+    // Comment dispatch to avoid any error
+    /* try {
+      await dispatch(getAllCards());
+    } catch (error) {
+      console.log('Une erreur est survenue lors de la connexion', error);
+    } */
+    navigate('/dashboard');
+  }
   // ANIMATION ////////////////////////////////////////////////////
 
   // Animation des champs email et mot de passe avec GSAP >>
@@ -57,9 +70,7 @@ function Login() {
 
     const form = e.target;
     const formData = new FormData(form);
-    dispatch(login(formData));
-    // dispatch(getAllCards());
-    navigate('/Dashboard');
+    redirectToDashboard(formData);
   };
 
   return (
