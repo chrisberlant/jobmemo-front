@@ -16,6 +16,8 @@ type CardProps = {
     title: string;
     enterpriseName: string;
     createdAt: string;
+    color: string;
+    isDeleted: boolean;
   };
   index: number;
 };
@@ -28,6 +30,8 @@ function Card({ item, index }: CardProps): JSX.Element {
     setChecked(!checked);
     console.log(item.title, item.id, 'is checked');
   };
+
+  const {isDeleted} = item;
 
   return (
     <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -49,17 +53,19 @@ function Card({ item, index }: CardProps): JSX.Element {
             //   ...provided.draggableProps.style,
             // }}
           >
-            <div className="card">
-              <img src={logo} alt="logo" className="logo" />
-              <h3>{item.title}</h3>
-              <span>{item.enterpriseName}</span>
-              <span>{item.createdAt}</span>
-              <input
-                type="checkbox"
-                checked={checked}
-                onChange={handleChange}
-              />
-            </div>
+            {!isDeleted && (
+              <div className="card">
+                <img src={logo} alt="logo" className="logo" />
+                <h3>{item.title}</h3>
+                <span>{item.enterpriseName}</span>
+                <span>{item.createdAt}</span>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={handleChange}
+                />
+              </div>
+            )}
           </div>
         );
       }}
@@ -68,6 +74,18 @@ function Card({ item, index }: CardProps): JSX.Element {
 }
 
 export default Card;
+
+// {isNotRecycleBin && (
+//   <Link to={route}>
+//     <div className="add-card">
+//       <img
+//         src={addCardIcon}
+//         alt="icon-add-card"
+//         className="icon-add-card"
+//       />
+//     </div>
+//   </Link>
+// )}
 
 // import './Card.scss';
 // import { CardType } from '../../@types/jobmemo';

@@ -42,7 +42,6 @@ const onDragEnd = (result, columns, setColumns, dispatch) => {
   if (source.droppableId !== destination.droppableId) {
     // Log the source and the destination column
 
-
     // Remove the dragged item from the source items array
     const [removed] = sourceItems.splice(source.index, 1);
 

@@ -8,6 +8,7 @@ const fakeItems = [
     color: '#666',
     createdAt: '21/07/23',
     notation: 4,
+    isDeleted: false,
   },
   {
     id: uuid(),
@@ -16,6 +17,7 @@ const fakeItems = [
     color: '#666',
     createdAt: '21/07/23',
     notation: 4,
+    isDeleted: false,
   },
   {
     id: uuid(),
@@ -24,6 +26,7 @@ const fakeItems = [
     color: '#666',
     createdAt: '21/07/23',
     notation: 4,
+    isDeleted: true,
   },
   {
     id: uuid(),
@@ -32,6 +35,7 @@ const fakeItems = [
     color: '#666',
     createdAt: '21/07/23',
     notation: 4,
+    idDeleted: false,
   },
   {
     id: uuid(),
@@ -40,6 +44,7 @@ const fakeItems = [
     color: '#666',
     createdAt: '21/07/23',
     notation: 4,
+    idDeleted: false,
   },
 ];
 
