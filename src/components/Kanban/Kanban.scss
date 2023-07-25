@@ -1,6 +1,6 @@
 @use '../../styles/variables' as v;
 
-.columns {
+.kanban {
   // background: lightslategray;
   display: grid;
   grid-template-columns: repeat(4, 1fr) auto;

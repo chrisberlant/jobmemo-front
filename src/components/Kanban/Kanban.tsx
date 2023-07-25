@@ -102,7 +102,7 @@ const onDragEnd = (result, columns, setColumns, dispatch) => {
   }
 };
 
-function Columns() {
+function Kanban() {
   // Initialize state with the status object
   const [columns, setColumns] = useState(status);
   const dispatch = useAppDispatch();
@@ -112,7 +112,7 @@ function Columns() {
       // Call the onDragEnd function with the result, columns, and setColumns arguments
       onDragEnd={(result) => onDragEnd(result, columns, setColumns, dispatch)}
     >
-      <div className="columns">
+      <div className="kanban">
         {Object.entries(columns).map(([columnId, column]) => {
           return (
             <div
@@ -132,4 +132,4 @@ function Columns() {
   );
 }
 
-export default Columns;
+export default Kanban;
