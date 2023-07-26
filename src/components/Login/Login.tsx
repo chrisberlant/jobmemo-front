@@ -6,7 +6,6 @@ import logo from '../../assets/images/logo.svg';
 import './Login.scss';
 import { useAppDispatch } from '../../store/hook/redux';
 import { login } from '../../store/reducers/user';
-// import { getAllCards } from '../../store/reducers/cards';
 
 function Login() {
   const dispatch = useAppDispatch();
@@ -18,12 +17,6 @@ function Login() {
     } catch (error) {
       console.error('Une erreur est survenue lors de la connexion', error);
     }
-    // Comment dispatch to avoid any error
-    /* try {
-      await dispatch(getAllCards());
-    } catch (error) {
-      console.error('Une erreur est survenue lors de la connexion', error);
-    } */
     navigate('/dashboard');
   }
   // ANIMATION ////////////////////////////////////////////////////

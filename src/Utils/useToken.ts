@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { UserToken } from '../@types/jobmemo';
 
 export const useToken = () => {
@@ -8,3 +7,5 @@ export const useToken = () => {
     : null;
   return userToken;
 };
+
+export default useToken;

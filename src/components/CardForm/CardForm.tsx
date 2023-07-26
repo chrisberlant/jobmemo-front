@@ -215,12 +215,12 @@ function CardForm() {
             <input type="submit" defaultValue="Enregistrer" />
           </div>
           <div className="input-wrap">
-            <input type="submit" defaultValue="Annuler" />
-          </div>
-          <div className="input-wrap">
-            <span>Rating stars</span>
+            <input type="reset" defaultValue="Annuler" />
           </div>
         </form>
+        <div className="input-wrap">
+          <span>Rating stars</span>
+        </div>
       </div>
     </div>
   );
