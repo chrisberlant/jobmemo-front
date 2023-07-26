@@ -15,7 +15,7 @@ function CardForm() {
     <div className="box-wrap">
       <div className="box-cardform">
         <img className="logo" src={logo} alt="logo" />
-        <img className="avatar" src="" alt="avatar" />
+        <img className="avatar" src="avatarUrl" alt="avatar" />
         <div className="input-wrap">
           <label htmlFor="category">Catégorie : </label>
           <select className="category">
