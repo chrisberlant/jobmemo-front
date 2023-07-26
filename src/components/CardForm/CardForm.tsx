@@ -1,8 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+// Import quill for react
 import ReactQuill from 'react-quill';
 import { useState } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './CardForm.scss';
+// Import Quill css and snow theme (2 themes are available : snow & bubble)
 import 'react-quill/dist/quill.snow.css';
 
 function CardForm() {
@@ -14,7 +16,9 @@ function CardForm() {
   return (
     <div className="box-wrap">
       <div className="box-cardform">
-        <img className="logo" src={logo} alt="logo" />
+        <Link to="/dashboard">
+          <img className="logo" src={logo} alt="logo" />
+        </Link>
         <img className="avatar" src="avatarUrl" alt="avatar" />
         <div className="input-wrap">
           <label htmlFor="category">Catégorie : </label>
@@ -175,6 +179,7 @@ function CardForm() {
             <div className="line" />
           </div>
           <div className="input-wrap">
+            {/* Add quill text editor */}
             <div className="box-editor">
               <ReactQuill theme="snow" value={value} onChange={setValue} />
             </div>

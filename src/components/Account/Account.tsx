@@ -1,11 +1,65 @@
-import Navbar from '../Navbar/Navbar';
+import { Link } from 'react-router-dom';
+import logo from '../../assets/images/logo.svg';
 import './Account.scss';
 
 function Account() {
+  // logout function
+  const clearLocalStorage = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
   return (
-    <div className="Account">
-      <Navbar />
-      <h1>Hello Account</h1>
+    <div className="box-wrap">
+      <div className="box-account">
+        <Link to="/dashboard">
+          <img className="logo" src={logo} alt="logo" />
+        </Link>
+        <img className="avatar" src="avatarUrl" alt="avatar" />
+        <div className="input-wrap">
+          <label htmlFor="firstName">Nom : </label>
+          <input
+            type="text"
+            name="fisrtName"
+            id="firstName"
+            autoComplete="off"
+          />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="lastName">Prénom : </label>
+          <input
+            type="text"
+            name="lasttName"
+            id="lastName"
+            autoComplete="off"
+          />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="email">email : </label>
+          <input type="email" name="email" id="email" autoComplete="off" />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="adress">Adresse : </label>
+          <textarea name="adress" id="adress" autoComplete="off" />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <input type="submit" defaultValue="Modifier le mot de passe" />
+        </div>
+        <div className="input-wrap">
+          <input
+            type="button"
+            onClick={clearLocalStorage}
+            defaultValue="Se déconnecter"
+          />
+        </div>
+        <div className="input-wrap">
+          <input type="submit" defaultValue="Supprimer le compte" />
+        </div>
+      </div>
     </div>
   );
 }
