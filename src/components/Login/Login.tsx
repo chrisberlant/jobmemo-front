@@ -16,13 +16,13 @@ function Login() {
     try {
       await dispatch(login(formData));
     } catch (error) {
-      console.log('Une erreur est survenue lors de la connexion', error);
+      console.error('Une erreur est survenue lors de la connexion', error);
     }
     // Comment dispatch to avoid any error
     /* try {
       await dispatch(getAllCards());
     } catch (error) {
-      console.log('Une erreur est survenue lors de la connexion', error);
+      console.error('Une erreur est survenue lors de la connexion', error);
     } */
     navigate('/dashboard');
   }
