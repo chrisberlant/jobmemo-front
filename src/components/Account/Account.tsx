@@ -1,12 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
 import './Account.scss';
 
 function Account() {
+  const navigate = useNavigate();
+
   // logout function
   const clearLocalStorage = () => {
     localStorage.clear();
     window.location.reload();
+  };
+
+  const navigateToChangePassword = () => {
+    navigate('/account/changePassword');
+  };
+
+  const navigateToDeleteAccount = () => {
+    navigate('/deleteAccount');
   };
 
   return (
@@ -47,7 +57,11 @@ function Account() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <input type="submit" defaultValue="Modifier le mot de passe" />
+          <input
+            type="button"
+            onClick={navigateToChangePassword}
+            defaultValue="Modifier le mot de passe"
+          />
         </div>
         <div className="input-wrap">
           <input
@@ -57,7 +71,11 @@ function Account() {
           />
         </div>
         <div className="input-wrap">
-          <input type="submit" defaultValue="Supprimer le compte" />
+          <input
+            type="button"
+            onClick={navigateToDeleteAccount}
+            defaultValue="Supprimer le compte"
+          />
         </div>
       </div>
     </div>

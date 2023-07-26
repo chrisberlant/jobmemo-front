@@ -194,7 +194,7 @@ function CardForm() {
               <div className="line" />
             </select>
           </div>
-          <h2>Ajouterun document depuis : </h2>
+          <h2>Ajouter un document depuis : </h2>
           <div className="input-wrap">
             <input type="submit" defaultValue="Drive" />
           </div>
