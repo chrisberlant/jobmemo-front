@@ -7,21 +7,23 @@ import Footer from '../Footer/Footer';
 import Kanban from '../Kanban/Kanban';
 import Navbar from '../Navbar/Navbar';
 import './Dashboard.scss';
+import { useAppSelector, useAppDispatch } from '../../store/hook/redux';
+import { getAllCards } from '../../store/reducers/cards';
 
 function Dashboard() {
-  // const user = useAppSelector((state) => state.user);
-  // const cards = useAppSelector((state) => state.cards.list);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.email);
+  const cards = useAppSelector((state) => state.cards.list);
+
+  if (cards.length === 0) {
+    dispatch(getAllCards());
+  }
+  console.log(`User connecté : ${user}`);
+  cards.forEach((card) => console.log(card));
+
   // const cardsOffres = cards.filter(
   //   (card: CardType) => card.category === 'Mes offres'
   // );
-
-  // useEffect(() => {
-  //   fetch(`http://localhost:3000/userCards/${user.id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setCards(data);
-  //     });
-  // }, [user.id]);
 
   // const cardsItems = cardsOffres.map((card: CardType) => (
   //   <Card key={card.id} {...card} />

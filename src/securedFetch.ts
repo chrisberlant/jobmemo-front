@@ -1,25 +1,22 @@
 export const baseUrl = 'http://localhost:3000';
 
 async function securedFetch(route: string, method?: string, body?: FormData) {
-  try {
-    const response = await fetch(baseUrl + route, {
-      method,
-      headers: {
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body,
-    });
+  const tokenAuthorization = `Bearer ${localStorage
+    .getItem('token')
+    ?.replace(/^"(.*)"$/, '$1')}`;
+  const response = await fetch(baseUrl + route, {
+    method,
+    headers: {
+      authorization: tokenAuthorization,
+    },
+    body,
+  });
 
-    if (response.status !== 200) {
-      throw new Error(`La requête a échoué : ${response}`);
-    }
+  const data = await response.json();
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
+  const returnedData = { status: response.status, data };
+
+  return returnedData;
 }
 
 export default securedFetch;

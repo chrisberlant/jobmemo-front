@@ -7,7 +7,7 @@ import {
 import { baseUrl } from '../../securedFetch';
 
 interface User {
-  id: number;
+  id: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -17,7 +17,7 @@ interface User {
 }
 
 const initialValue: User = {
-  id: 0,
+  id: '',
   email: '',
   firstName: '',
   lastName: '',
@@ -35,9 +35,14 @@ export const login = createAsyncThunk(
       body: credentials,
     };
     // TODO Gestion d'erreurs
-    const data = await fetch(`${baseUrl}/login`, fetchLoginParams);
-    const userData = await data.json();
-    return userData;
+    const response = await fetch(`${baseUrl}/login`, fetchLoginParams);
+    const data = await response.json();
+    console.log(data);
+
+    if (response.status !== 200) {
+      throw new Error(data);
+    }
+    return data;
   }
 );
 
@@ -63,15 +68,15 @@ const userReducer = createReducer(initialValue, (builder) => {
       console.log(state.error);
     })
     .addCase(login.fulfilled, (state, action) => {
-      const { id, email, firstName, lastName, avatarUrl, token } =
-        action.payload;
+      const { id, email, firstName, lastName, avatarUrl } = action.payload.user;
+      const { token } = action.payload;
       state.id = id;
       state.email = email;
       state.firstName = firstName;
       state.lastName = lastName;
       state.avatarUrl = avatarUrl;
       localStorage.setItem('token', JSON.stringify(token));
-      console.log('Requête effectuée, token ajouté dans localStorage');
+      console.log(`Requête effectuée, token ajouté dans localStorage`);
     });
 });
 

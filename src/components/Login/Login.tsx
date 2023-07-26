@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { Link, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
-// import { useLayoutEffect, useRef } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './Login.scss';
 import { useAppDispatch } from '../../store/hook/redux';
@@ -12,11 +11,7 @@ function Login() {
   const navigate = useNavigate();
 
   async function redirectToDashboard(formData: FormData) {
-    try {
-      await dispatch(login(formData));
-    } catch (error) {
-      console.error('Une erreur est survenue lors de la connexion', error);
-    }
+    await dispatch(login(formData));
     navigate('/dashboard');
   }
   // ANIMATION ////////////////////////////////////////////////////

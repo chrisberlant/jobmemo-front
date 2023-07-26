@@ -1,5 +1,5 @@
 export interface CardType {
-  id: number;
+  id: string;
   title: string;
   category: string;
   index: number;
@@ -16,7 +16,7 @@ export interface CardType {
   color: string;
   isDeleted: boolean;
   notes: string;
-  createdAt: string;
+  createdAt: Date;
   reminder: Date;
   userId: number;
 }
@@ -27,7 +27,7 @@ export interface ColumnType {
 }
 
 export interface UserType {
-  id: number;
+  id: string;
   email: string;
   firstName: string;
   lastName: string;
