@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 // Import quill for react
 import ReactQuill from 'react-quill';
 import { useState } from 'react';
@@ -10,6 +10,12 @@ import 'react-quill/dist/quill.snow.css';
 function CardForm() {
   const { id } = useParams();
   console.log(id);
+
+  const navigate = useNavigate();
+
+  const navigateToDrive = () => {
+    navigate('/docs');
+  };
 
   const [value, setValue] = useState('');
 
@@ -196,10 +202,14 @@ function CardForm() {
           </div>
           <h2>Ajouter un document depuis : </h2>
           <div className="input-wrap">
-            <input type="submit" defaultValue="Drive" />
+            <input
+              type="button"
+              onClick={navigateToDrive}
+              defaultValue="Drive"
+            />
           </div>
           <div className="input-wrap">
-            <input type="submit" defaultValue="Ordinateur" />
+            <input type="file" />
           </div>
           <div className="input-wrap">
             <input type="submit" defaultValue="Enregistrer" />

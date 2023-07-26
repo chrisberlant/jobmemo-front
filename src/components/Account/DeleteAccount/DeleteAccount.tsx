@@ -1,5 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
-import logo from '../../../assets/images/logo.svg';
+import { useNavigate } from 'react-router-dom';
 import './DeleteAccount.scss';
 
 function DeleteAccount() {
