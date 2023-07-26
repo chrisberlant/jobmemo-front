@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import logo from '../../assets/images/logo.svg';
 import { CardType } from '../../@types/jobmemo';
-import './Card.scss';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { setMovingCardId } from '../../store/reducers/movingCard';
+import './Card.scss';
 
 // Ce composant restitue un élément déplaçable à l'aide du composant Draggable de la bibliothèque 'react-beautifull-dnd'.
 // Il définit la clé, draggableId et les accessoires d'index en fonction de l'accessoire d'élément.
