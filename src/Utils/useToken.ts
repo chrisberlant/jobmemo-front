@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { UserToken } from '../@types/jobmemo';
 
 export const useToken = () => {
@@ -8,3 +7,7 @@ export const useToken = () => {
     : null;
   return userToken;
 };
+
+export const tokenAuthorization = `Bearer ${localStorage
+  .getItem('token')
+  ?.replace(/^"(.*)"$/, '$1')}`; // Get the token from localStorage and remove the "" around using regex
