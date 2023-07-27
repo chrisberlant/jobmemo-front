@@ -31,7 +31,7 @@ function Upload() {
   };
 
   return (
-    <div className="container">
+    <div className="upload">
       <h1>File Upload</h1>
       <form id="form" onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="input-group">
