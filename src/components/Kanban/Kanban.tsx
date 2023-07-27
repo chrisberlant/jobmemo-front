@@ -103,6 +103,11 @@ const onDragEnd = (result, columns, setColumns, dispatch) => {
   }
 };
 
+// function useForceUpdate() {
+//     let [value, setState] = useState(true);
+//     return () => setState(!value);
+// }
+
 function Kanban() {
   // Initialize state with the categories object
   const cards = useAppSelector((state) => state.cards.list);

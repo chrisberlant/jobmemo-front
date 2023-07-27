@@ -13,7 +13,7 @@
     margin: 0 16px;
     position: relative;
     border-bottom: 2px solid lightgray;
-
+    
     .btn-action {
       height: 100%;
       display: grid;
@@ -23,18 +23,21 @@
       width: 32px;
       cursor: pointer;
     }
-
+    
     #btnFilter {
       grid-column: 1;
     }
-
+    
     #btnSearch {
       grid-column: 3;
     }
-
+    
     .dynamic-content {
       position: absolute;
+      max-width: 1000px;
+      left: 50%;
       top: 0;
+      transform: translateX(-50%);
       grid-column: 2 / 2;
       height: 100%;
       width: 100%;
