@@ -15,12 +15,9 @@ function Header() {
   const [search, setSearch] = useState('');
 
   // ANIMATION ////////////////////////////////////////////////////
-
   const container = useRef<HTMLDivElement>(null);
   const tl = useRef();
-  // const toggleTimeline = () => {
-  //   tl.current.reversed(!tl.current.reversed());
-  // };
+
   const playTimeline = () => {
     tl.current.play();
   };

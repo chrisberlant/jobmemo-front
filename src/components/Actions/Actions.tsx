@@ -1,6 +1,6 @@
 import './Actions.scss';
 
-function Actions() {
+function Actions(): JSX.Element {
   return (
     <div className="menu">
       <div className="btn-delete">Supprimer</div>

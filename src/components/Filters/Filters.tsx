@@ -64,6 +64,14 @@ function Menu({ items }: { items: MenuItem[] }) {
     });
   };
 
+  // Use Stagger Apparition elements
+  // useEffect(() => {
+  //   console.log(btns);
+  //   gsap.to(btns, {
+  //     autoAlpha: 0,
+  //   });
+  // }, []);
+
   useEffect(() => {
     animate();
     window.addEventListener('resize', animate);
