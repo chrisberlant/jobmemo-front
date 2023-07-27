@@ -1,0 +1,54 @@
+.menu {
+	display: flex;
+	justify-content: space-around;
+  align-items: center;
+	position: relative;
+	padding: 20px;
+  width: 100%;
+  min-width: 420px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  .btn-delete {
+    padding: 4px 16px;
+		cursor: pointer;
+    background: slateblue;
+    border-radius: 999px;
+    color: #fff;
+    margin: 0 4px;
+
+    &:hover {
+      background: #000;
+    }
+  }
+
+  .select-dropdown {
+    padding: 4px 8px;
+    background: slateblue;
+    border-radius: 999px;
+    margin: 0 4px;
+
+    select {
+      background: transparent;
+      border: none;
+      color: #fff;
+      min-width: 128px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+	
+	.item {
+		padding: 4px 8px;
+		cursor: pointer;
+	}
+	
+	.indicator {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		border-radius: 999px;
+	}
+}

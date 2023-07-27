@@ -1,6 +1,7 @@
 import { useState, useLayoutEffect, useRef, createRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import Filters from '../Filters/Filters';
+import Actions from '../Actions/Actions';
 import iconSearch from '../../assets/icons/icon-search.svg';
 import iconFilter from '../../assets/icons/icon-filter.svg';
 import './Header.scss';
@@ -84,6 +85,7 @@ function Header() {
           <div className="action-wrapper">
             <div className="filters">
               <Filters />
+              {/* <Actions /> */}
             </div>
           </div>
 
