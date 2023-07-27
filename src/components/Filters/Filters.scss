@@ -1,0 +1,33 @@
+.menu {
+	display: flex;
+	justify-content: space-around;
+  align-items: center;
+	position: relative;
+	padding: 20px;
+  width: 100%;
+  min-width: 420px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  
+  span {
+    color: #555;
+  }
+	
+	.item {
+		padding: 4px 8px;
+		cursor: pointer;
+		
+		&.active {
+			color: #fff;
+		}
+	}
+	
+	.indicator {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		border-radius: 999px;
+	}
+}
