@@ -77,25 +77,25 @@ function Register() {
         <img className="logo" src={logo} alt="logo" />
         <form method="post" onSubmit={handleSubmit}>
           <div className="input-wrap">
-            <label htmlFor="first_name">Prénom : </label>
+            <label htmlFor="firstName">Prénom : </label>
             <input
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
-              name="first_name"
-              id="first_name"
+              name="firstName"
+              id="firstName"
               autoComplete="new-password"
             />
             <div className="line" />
           </div>
           <div className="input-wrap">
-            <label htmlFor="last_name">Nom : </label>
+            <label htmlFor="lastName">Nom : </label>
             <input
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
-              name="last_name"
-              id="last_name"
+              name="lastName"
+              id="lastName"
               autoComplete="new-password"
             />
             <div className="line" />
@@ -125,13 +125,13 @@ function Register() {
             <div className="line" />
           </div>
           <div className="input-wrap">
-            <label htmlFor="confirm_password">Confirmez mot de passe : </label>
+            <label htmlFor="confirmPassword">Confirmez mot de passe : </label>
             <input
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="password"
-              name="confirm_password"
-              id="confirm_password"
+              name="confirmPassword"
+              id="confirmPassword"
               autoComplete="new-password"
             />
             <div className="line" />
