@@ -37,3 +37,14 @@ export interface UserType {
 export interface UserToken {
   token: string;
 }
+
+export interface Category {
+  id: number;
+  name: string;
+  color: string;
+  items: CardType[];
+  className: string;
+}
+export interface Categories {
+  [key: string]: Category;
+}

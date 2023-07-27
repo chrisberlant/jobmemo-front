@@ -13,13 +13,8 @@ import { getAllCards } from '../../store/reducers/cards';
 function Dashboard() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.email);
-  const cards = useAppSelector((state) => state.cards.list);
 
-  if (cards.length === 0) {
-    dispatch(getAllCards());
-  }
-  console.log(`User connecté : ${user}`);
-  cards.forEach((card) => console.log(card));
+  console.log(`Utilisateur connecté : ${user}`);
 
   // const cardsOffres = cards.filter(
   //   (card: CardType) => card.category === 'Mes offres'

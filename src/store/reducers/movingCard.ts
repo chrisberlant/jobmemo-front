@@ -33,7 +33,7 @@ const movingCardReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(setMovingCardId, (state, action) => {
       state.cardId = action.payload;
-      console.log(`Valeur dans le store : ${state.cardId}`);
+      console.log(`Valeur dans le  de la carte déplacée : ${state.cardId}`);
     })
     .addCase(setDestination, (state, action) => {
       state.destinationColumnId = action.payload.destinationColumnId;

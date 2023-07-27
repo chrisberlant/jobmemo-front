@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { gsap } from 'gsap';
-import { status } from '../../fakeDatas/fakeDatas';
-import { useAppDispatch } from '../../store/hook/redux';
+import categories from '../../categories/categories';
+import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { setDestination } from '../../store/reducers/movingCard';
 import Column from '../Column/Column';
 import './Kanban.scss';
+import { getAllCards } from '../../store/reducers/cards';
 
 // Cet extrait de code définit une fonction appelée onDragEnd qui est utilisée comme rappel pour gérer la fin d'un événement glisser. Il prend trois paramètres : result, columns et setColumns.
 // La fonction vérifie d'abord s'il existe une destination valide pour l'événement glisser. Sinon, il revient à sa place.
@@ -103,9 +104,22 @@ const onDragEnd = (result, columns, setColumns, dispatch) => {
 };
 
 function Kanban() {
-  // Initialize state with the status object
-  const [columns, setColumns] = useState(status);
+  // Initialize state with the categories object
+  const cards = useAppSelector((state) => state.cards.list);
+  const [columns, setColumns] = useState(categories);
   const dispatch = useAppDispatch();
+
+  if (cards.length === 0) {
+    dispatch(getAllCards());
+  }
+  // for each cards in cards array if card category is the same of the current category, add the card to the corresponding column
+  cards.forEach((card) => {
+    Object.values(categories).forEach((category) => {
+      if (category.name === card.category) {
+        category.items.push(card);
+      }
+    });
+  });
 
   return (
     <DragDropContext
