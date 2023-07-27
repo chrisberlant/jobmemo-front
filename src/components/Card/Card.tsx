@@ -3,7 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import logo from '../../assets/images/logo.svg';
 import { CardType } from '../../@types/jobmemo';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
-import { setMovingCardId } from '../../store/reducers/movingCard';
+import { setMovingCardId } from '../../store/reducers/cards';
 import './Card.scss';
 
 // Ce composant restitue un élément déplaçable à l'aide du composant Draggable de la bibliothèque 'react-beautifull-dnd'.

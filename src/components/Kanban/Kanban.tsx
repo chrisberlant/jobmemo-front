@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { gsap } from 'gsap';
 import categories from '../../categories/categories';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { setDestination } from '../../store/reducers/movingCard';
 import Column from '../Column/Column';
 import './Kanban.scss';
-import { getAllCards } from '../../store/reducers/cards';
+import { getAllCards, moveCard } from '../../store/reducers/cards';
 
 // Cet extrait de code définit une fonction appelée onDragEnd qui est utilisée comme rappel pour gérer la fin d'un événement glisser. Il prend trois paramètres : result, columns et setColumns.
 // La fonction vérifie d'abord s'il existe une destination valide pour l'événement glisser. Sinon, il revient à sa place.
@@ -14,7 +13,7 @@ import { getAllCards } from '../../store/reducers/cards';
 // Si la source et la destination proviennent de conteneurs de dépôt différents, la fonction déplace l'élément déplacé de la colonne source vers la colonne de destination. Pour ce faire, il crée des copies des tableaux d'éléments des colonnes source et destination, supprime l'élément du tableau source et l'insère à l'index approprié dans le tableau de destination. Enfin, il met à jour l'état des colonnes en fusionnant les modifications avec l'état existant.
 // Si la source et la destination proviennent du même conteneur de dépôt, la fonction déplace l'élément déplacé dans la même colonne. Il suit un processus similaire au précédent, mais avec une seule colonne impliquée.
 
-const onDragEnd = (result, columns, setColumns, dispatch) => {
+const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
   // Check if there is a destination for the dragged item
   if (!result.destination) return;
 
@@ -31,13 +30,12 @@ const onDragEnd = (result, columns, setColumns, dispatch) => {
   // Create copies of the source and destination items arrays
   const sourceItems = [...sourceColumn.items];
   const destItems = [...destColumn.items];
-
-  dispatch(
-    setDestination({
-      destinationColumnId: destColumn.id,
-      destinationCardIndex: destination.index,
-    })
-  );
+  const newCardInfos = {
+    id: movingCardId,
+    index: destination.index,
+    category: destColumn.name,
+  };
+  dispatch(moveCard(newCardInfos));
 
   // If the source and destination droppableIds are different
   if (source.droppableId !== destination.droppableId) {
@@ -108,6 +106,7 @@ function Kanban() {
   const cards = useAppSelector((state) => state.cards.list);
   const [columns, setColumns] = useState(categories);
   const dispatch = useAppDispatch();
+  const movingCardId = useAppSelector((state) => state.cards.id);
 
   if (cards.length === 0) {
     dispatch(getAllCards());
@@ -124,7 +123,9 @@ function Kanban() {
   return (
     <DragDropContext
       // Call the onDragEnd function with the result, columns, and setColumns arguments
-      onDragEnd={(result) => onDragEnd(result, columns, setColumns, dispatch)}
+      onDragEnd={(result) =>
+        onDragEnd(result, columns, setColumns, dispatch, movingCardId)
+      }
     >
       <div className="kanban">
         {Object.entries(columns).map(([columnId, column]) => {
