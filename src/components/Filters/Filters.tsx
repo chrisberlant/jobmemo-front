@@ -1,6 +1,6 @@
 import { useRef, createRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
-import './App.scss';
+import './Filters.scss';
 
 /*--------------------
 Items
@@ -8,40 +8,26 @@ Items
 interface MenuItem {
   name: string;
   color: string;
-  href: string;
 }
 
 const items: MenuItem[] = [
   {
     name: 'Aucun',
-    color: '#f44336',
-    href: '#',
+    color: 'slateblue',
   },
   {
     name: 'Par note',
-    color: '#e91e63',
-    href: '#',
+    color: 'slateblue',
   },
   {
     name: 'Par date',
-    color: '#9c27b0',
-    href: '#',
+    color: 'slateblue',
   },
   {
     name: 'Par salaire',
-    color: '#673ab7',
-    href: '#',
-  },
-  {
-    name: 'Par distance',
-    color: '#3f51b5',
-    href: '#',
+    color: 'slateblue',
   },
 ];
-
-/*--------------------
-Menu
---------------------*/
 
 function Menu({ items }: { items: MenuItem[] }) {
   const filters = useRef<HTMLDivElement>(null);
@@ -89,12 +75,17 @@ function Menu({ items }: { items: MenuItem[] }) {
 
   return (
     <div ref={filters} className="menu">
+      <span>Filtres :</span>
       {items.map((item, index) => (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
           key={item.name}
           ref={btns.current[index]}
           className={`item ${active === index ? 'active' : ''}`}
-          onMouseEnter={() => {
+          onClick={() => {
+            setActive(index);
+          }}
+          onKeyDown={() => {
             setActive(index);
           }}
         >
@@ -106,12 +97,8 @@ function Menu({ items }: { items: MenuItem[] }) {
     </div>
   );
 }
-
-/*--------------------
-App
---------------------*/
-function App() {
+function Filters() {
   return <Menu items={items} />;
 }
 
-export default App;
+export default Filters;

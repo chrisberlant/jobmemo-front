@@ -1,15 +1,10 @@
 @use '../../styles/variables' as v;
 
-
 .header {
-  background: lightgreen;
-  width: 100%;
-  height: 100px;
   display: flex;
   align-items: center;
 
   .actions-bar {
-    background: lightgrey;
     width: 100%;
     height: 64px;
     display: grid;
@@ -17,10 +12,10 @@
     grid-template-columns: 32px 1fr 32px;
     margin: 0 16px;
     position: relative;
+    border-bottom: 2px solid lightgray;
 
     .btn-action {
       height: 100%;
-      background: lightgoldenrodyellow;
       display: grid;
       place-items: center;
       position: absolute;
@@ -39,10 +34,8 @@
 
     .dynamic-content {
       position: absolute;
-      padding: 0 8px;
       top: 0;
       grid-column: 2 / 2;
-      background: lime;
       height: 100%;
       width: 100%;
       display: flex;
@@ -50,78 +43,27 @@
     }
 
     .action-wrapper {
-      background: lightcoral;
-      height: 40px;
       width: 100%;
-      display: flex;
-      justify-content: start;
-      align-items: center;
       overflow: hidden;
-      position: relative;
-
-      .selects-wrapper {
-        width: 100%;
-        // position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-
-        // SELECT DROPDOWN
-        .select-dropdown,
-        .select-dropdown * {
-          margin: 0;
-          padding: 0;
-          position: relative;
-          box-sizing: border-box;
-        }
-        .select-dropdown {
-          position: relative;
-          background-color: #e6e6e6;
-          border-radius: 999px;
-        }
-        .select-dropdown select {
-          font-size: 1rem;
-          font-weight: normal;
-          max-width: 100%;
-          padding: 8px 24px 8px 10px;
-          border: none;
-          background-color: transparent;
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-        }
-        .select-dropdown select:active,
-        .select-dropdown select:focus {
-          outline: none;
-          box-shadow: none;
-        }
-        .select-dropdown:after {
-          content: "";
-          position: absolute;
-          top: 50%;
-          right: 8px;
-          width: 0;
-          height: 0;
-          margin-top: -2px;
-          border-top: 5px solid #aaa;
-          border-right: 5px solid transparent;
-          border-left: 5px solid transparent;
-        }
-      }
     }
+
     .search-wrapper {
-      background: lightseagreen;
       height: 40px;
       width: 0%;
-      display: flex;
-      justify-content: end;
-      align-items: center;
       overflow: hidden;
+      position: absolute;
+      right: 0;
+      margin: 0 16px;
 
       input {
         width: 100%;
         height: 100%;
+        border-radius: 999px;
         border: none;
+        border: 2px solid lightgray;
+        padding: 0 32px;
+        font-size: 18px;
+        font-weight: 700;
       }
     }
   }

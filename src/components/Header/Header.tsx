@@ -1,5 +1,6 @@
 import { useState, useLayoutEffect, useRef, createRef, useEffect } from 'react';
 import { gsap } from 'gsap';
+import Filters from '../Filters/Filters';
 import iconSearch from '../../assets/icons/icon-search.svg';
 import iconFilter from '../../assets/icons/icon-filter.svg';
 import './Header.scss';
@@ -43,6 +44,9 @@ function Header() {
       // })
 
       tl.current
+        .to('.filters', {
+          autoAlpha: 0,
+        })
         .to('.action-wrapper', {
           duration: 1,
           width: '0%',
@@ -51,7 +55,7 @@ function Header() {
           '.search-wrapper',
           {
             duration: 1,
-            width: '100%',
+            width: 'calc(100% - 32px)',
           },
           '<'
         );
@@ -60,6 +64,7 @@ function Header() {
   }, []);
   /// //////////////////////////////////////////////////////////////
 
+  // SEARCH ////////////////////////////////////////////////////
   const onchange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value);
   };
@@ -77,7 +82,9 @@ function Header() {
 
         <div className="dynamic-content">
           <div className="action-wrapper">
-            <div className="selects-wrapper" />
+            <div className="filters">
+              <Filters />
+            </div>
           </div>
 
           <div className="search-wrapper">
