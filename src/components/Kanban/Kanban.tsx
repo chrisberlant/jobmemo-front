@@ -114,13 +114,9 @@ function Kanban() {
   const dispatch = useAppDispatch();
   const movingCardId = useAppSelector((state) => state.cards.movingCardId);
 
-  console.log(loadedCards);
-  console.log(cards.length);
-
-  // for each cards in cards array if card category is the same of the current category, add the card to the corresponding column
-
   useEffect(() => {
     const fillDashboard = () => {
+      // for each cards in cards array if card category is the same of the current category, add the card to the corresponding column
       const newColumns = Object.values(columns).map((category) => ({
         ...category,
         items: dashboardCards.filter((card) => card.category === category.name),
@@ -140,9 +136,7 @@ function Kanban() {
     if (!loadedCards) {
       fillDashboard();
     }
-  }, [dashboardCards.length, dispatch, loadedCards, dashboardCards, columns]);
-
-  console.log(`Cartes chargées dans le dashboard : ${loadedCards}`);
+  }, [dispatch, loadedCards, dashboardCards, columns]);
 
   return (
     <DragDropContext
