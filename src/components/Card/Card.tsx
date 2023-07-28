@@ -38,6 +38,13 @@ function Card({ item, index }: CardProps): JSX.Element {
           dispatch(setMovingCardId(item.id));
         }
 
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const navigate = useNavigate();
+
+        const navigateToCardItem = () => {
+          navigate(`/cardItem/${item.id}`);
+        };
+
         return (
           <div
             ref={provided.innerRef}
@@ -57,7 +64,9 @@ function Card({ item, index }: CardProps): JSX.Element {
                 checked={checked}
                 onChange={handleChange}
               />
-              <Link to={`/cardItem/${item.id}`}>Voir la fiche</Link>
+              <button type="button" onClick={navigateToCardItem}>
+                Voir la fiche
+              </button>
             </div>
           </div>
         );
