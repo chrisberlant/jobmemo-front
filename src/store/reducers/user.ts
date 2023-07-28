@@ -30,19 +30,23 @@ export const modifyUserInfos = createAction<User>('user/MODIFY_USER_INFOS');
 export const login = createAsyncThunk(
   'user/LOGIN',
   async (credentials: FormData) => {
-    const fetchLoginParams = {
-      method: 'POST',
-      body: credentials,
-    };
-    // TODO Gestion d'erreurs
-    const response = await fetch(`${baseUrl}/login`, fetchLoginParams);
-    const data = await response.json();
-    console.log(data);
+    try {
+      const fetchLoginParams = {
+        method: 'POST',
+        body: credentials,
+      };
+      // TODO Gestion d'erreurs
+      const response = await fetch(`${baseUrl}/login`, fetchLoginParams);
+      const data = await response.json();
 
-    if (response.status !== 200) {
-      throw new Error(data);
+      if (response.status !== 200) {
+        throw new Error(data);
+      }
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw new Error();
     }
-    return data;
   }
 );
 
@@ -65,7 +69,6 @@ const userReducer = createReducer(initialValue, (builder) => {
     .addCase(login.rejected, (state) => {
       state.isLoading = false;
       state.error = 'Email ou mot de passe incorrect';
-      console.log(state.error);
     })
     .addCase(login.fulfilled, (state, action) => {
       const { id, email, firstName, lastName, avatarUrl } = action.payload.user;
@@ -75,8 +78,8 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.firstName = firstName;
       state.lastName = lastName;
       state.avatarUrl = avatarUrl;
+      // Adding token to local storage if login is fulfilled
       localStorage.setItem('token', JSON.stringify(token));
-      console.log(`Requête effectuée, token ajouté dans localStorage`);
     });
 });
 
