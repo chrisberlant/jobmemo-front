@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import categories from '../../categories/categories';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
-import { setDestination } from '../../store/reducers/movingCard';
 import Column from '../Column/Column';
 import './Kanban.scss';
-import { getAllCards, moveCard } from '../../store/reducers/cards';
+import {
+  getAllCards,
+  loadCardsToDashboard,
+  moveCard,
+} from '../../store/reducers/cards';
+import { Categories } from '../../@types/jobmemo';
 
 // Cet extrait de code définit une fonction appelée onDragEnd qui est utilisée comme rappel pour gérer la fin d'un événement glisser. Il prend trois paramètres : result, columns et setColumns.
 // La fonction vérifie d'abord s'il existe une destination valide pour l'événement glisser. Sinon, il revient à sa place.
@@ -31,9 +35,9 @@ const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
   const sourceItems = [...sourceColumn.items];
   const destItems = [...destColumn.items];
   const newCardInfos = {
-    id: movingCardId,
-    index: destination.index,
-    category: destColumn.name,
+    movingCardId,
+    movingCardindex: destination.index,
+    movingCardcategory: destColumn.name,
   };
   dispatch(moveCard(newCardInfos));
 
@@ -103,22 +107,42 @@ const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
 
 function Kanban() {
   // Initialize state with the categories object
-  const cards = useAppSelector((state) => state.cards.list);
   const [columns, setColumns] = useState(categories);
+  const cards = useAppSelector((state) => state.cards.list);
+  const dashboardCards = cards.filter((card) => card.isDeleted === false);
+  const loadedCards = useAppSelector((state) => state.cards.loadedCards);
   const dispatch = useAppDispatch();
-  const movingCardId = useAppSelector((state) => state.cards.id);
+  const movingCardId = useAppSelector((state) => state.cards.movingCardId);
 
-  if (cards.length === 0) {
-    dispatch(getAllCards());
-  }
+  console.log(loadedCards);
+  console.log(cards.length);
+
   // for each cards in cards array if card category is the same of the current category, add the card to the corresponding column
-  cards.forEach((card) => {
-    Object.values(categories).forEach((category) => {
-      if (category.name === card.category) {
-        category.items.push(card);
-      }
-    });
-  });
+
+  useEffect(() => {
+    const fillDashboard = () => {
+      const newColumns = Object.values(columns).map((category) => ({
+        ...category,
+        items: dashboardCards.filter((card) => card.category === category.name),
+      }));
+      const updatedColumns: Categories = {};
+
+      newColumns.forEach((category) => {
+        updatedColumns[category.id] = category;
+      });
+      setColumns(updatedColumns);
+      dispatch(loadCardsToDashboard());
+    };
+    if (dashboardCards.length === 0) {
+      // Get the cards from the DB
+      dispatch(getAllCards());
+    }
+    if (!loadedCards) {
+      fillDashboard();
+    }
+  }, [dashboardCards.length, dispatch, loadedCards, dashboardCards, columns]);
+
+  console.log(`Cartes chargées dans le dashboard : ${loadedCards}`);
 
   return (
     <DragDropContext

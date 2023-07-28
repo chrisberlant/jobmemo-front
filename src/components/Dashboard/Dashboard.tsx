@@ -7,22 +7,12 @@ import Footer from '../Footer/Footer';
 import Kanban from '../Kanban/Kanban';
 import Navbar from '../Navbar/Navbar';
 import './Dashboard.scss';
-import { useAppSelector, useAppDispatch } from '../../store/hook/redux';
-import { getAllCards } from '../../store/reducers/cards';
+import { useAppSelector } from '../../store/hook/redux';
 
 function Dashboard() {
-  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.email);
 
   console.log(`Utilisateur connecté : ${user}`);
-
-  // const cardsOffres = cards.filter(
-  //   (card: CardType) => card.category === 'Mes offres'
-  // );
-
-  // const cardsItems = cardsOffres.map((card: CardType) => (
-  //   <Card key={card.id} {...card} />
-  // ));
 
   return (
     <div className="dashboard">

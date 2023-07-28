@@ -10,27 +10,27 @@ import securedFetch from '../../securedFetch';
 import { CardType } from '../../@types/jobmemo';
 
 interface MovingCard {
-  id: string;
-  index: number;
-  category: string;
+  movingCardId: string;
+  movingCardindex: number;
+  movingCardcategory: string;
 }
-interface CardTable extends MovingCard {
+interface CardTable {
   list: CardType[];
   isLoading: boolean;
   error: string | undefined;
+  loadedCards: boolean;
+  movingCardId: string;
 }
 
 const initialValue: CardTable = {
   list: [],
   isLoading: false,
   error: undefined,
-  id: '',
-  index: 0,
-  category: '',
+  loadedCards: false,
+  movingCardId: '',
 };
 
 export const getAllCards = createAsyncThunk('cards/GET_ALL_CARDS', async () => {
-  // TODO Gestion d'erreurs
   const cardsRequest = await securedFetch('/userCards');
 
   if (cardsRequest.status !== 200) {
@@ -39,31 +39,35 @@ export const getAllCards = createAsyncThunk('cards/GET_ALL_CARDS', async () => {
   return cardsRequest.data;
 });
 
-export const setMovingCardId = createAction<string>(
-  'movingCard/SET_MOVING_CARD_ID'
-);
+export const setMovingCardId = createAction<string>('cards/SET_MOVING_CARD_ID');
 
 export const moveCard = createAsyncThunk(
   'cards/MOVE_CARD',
-  async ({ id, index, category }: MovingCard) => {
+  async ({ movingCardId, movingCardindex, movingCardcategory }: MovingCard) => {
     const movingCardInfos = new FormData();
-    movingCardInfos.append('id', id);
-    movingCardInfos.append('index', index.toString());
-    movingCardInfos.append('category', category);
+    movingCardInfos.append('id', movingCardId);
+    movingCardInfos.append('index', movingCardindex.toString());
+    movingCardInfos.append('category', movingCardcategory);
     console.log(movingCardInfos);
     console.log(
-      `Déplacement de la carte ${id} vers l'index ${index} de la catégorie ${category}`
+      `Déplacement de la carte ${movingCardId} vers l'index ${movingCardindex} de la catégorie ${movingCardcategory}`
     );
     const cardMoved = await securedFetch('/moveCard', 'PATCH', movingCardInfos);
     return cardMoved;
   }
 );
 
+export const loadCardsToDashboard = createAction('cards/LOAD_CARDS');
+
 const cardsReducer = createReducer(initialValue, (builder) => {
   builder
+    .addCase(loadCardsToDashboard, (state) => {
+      state.loadedCards = true;
+      console.log('Cartes envoyées au dashboard');
+    })
     .addCase(setMovingCardId, (state, action) => {
-      state.id = action.payload;
-      console.log(`Id de la carte déplacée : ${state.id}`);
+      state.movingCardId = action.payload;
+      console.log(`Id de la carte déplacée : ${state.movingCardId}`);
     })
     .addCase(getAllCards.pending, (state) => {
       state.isLoading = true;
@@ -77,7 +81,8 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
       state.list = action.payload;
-      console.log('Cartes chargées');
+      state.loadedCards = false;
+      console.log('Cartes chargées dans le store');
     })
     .addCase(moveCard.pending, (state) => {
       console.log('Carte se déplaçant');
