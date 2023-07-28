@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
 import { CardType } from '../../@types/jobmemo';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { setMovingCardId } from '../../store/reducers/cards';
 import './Card.scss';
+
 
 // Ce composant restitue un élément déplaçable à l'aide du composant Draggable de la bibliothèque 'react-beautifull-dnd'.
 // Il définit la clé, draggableId et les accessoires d'index en fonction de l'accessoire d'élément.
@@ -37,13 +39,20 @@ function Card({ item, index }: CardProps): JSX.Element {
         if (snapshot.isDropAnimating) {
           dispatch(setMovingCardId(item.id));
         }
+
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const navigate = useNavigate();
+
+        const navigateToCardItem = () => {
+          navigate(`/cardItem/${item.id}`);
+        };
         return (
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
-            <div className="card">
+            <div className="card" onClick={navigateToCardItem}>
               <img src={logo} alt="logo" className="logo" />
               <h3>{item.title}</h3>
               <span>{item.enterpriseName}</span>

@@ -16,6 +16,7 @@ import Contact from './components/Contacts/Contact/Contact';
 import Docs from './components/Docs/Docs';
 import Doc from './components/Docs/Doc/Doc';
 import CardForm from './components/CardForm/CardForm';
+import CardItem from './components/CardItem/CardItem';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import Upload from './components/Upload/Upload';
 
@@ -79,6 +80,10 @@ export const router = createBrowserRouter([
       {
         path: '/card/:id',
         element: <CardForm />,
+      },
+      {
+        path: '/cardItem/:id',
+        element: <CardItem />,
       },
       {
         path: '/addCard/:id',
