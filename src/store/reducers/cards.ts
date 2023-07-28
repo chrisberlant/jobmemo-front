@@ -84,7 +84,7 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.loadedCards = false;
       console.log('Cartes chargées dans le store');
     })
-    .addCase(moveCard.pending, (state) => {
+    .addCase(moveCard.pending, () => {
       console.log('Carte se déplaçant');
     })
     .addCase(moveCard.rejected, (state, action) => {

@@ -19,6 +19,11 @@ function CardForm() {
 
   const [value, setValue] = useState('');
 
+  const back = () => {
+    navigate('/dashboard');
+    window.location.reload();
+  };
+
   return (
     <div className="box-wrap">
       <div className="box-cardform">
@@ -218,9 +223,9 @@ function CardForm() {
             <input type="reset" defaultValue="Annuler" />
           </div>
         </form>
-        <div className="input-wrap">
-          <span>Rating stars</span>
-        </div>
+        <button type="button" onClick={back}>
+          Retour
+        </button>
       </div>
     </div>
   );

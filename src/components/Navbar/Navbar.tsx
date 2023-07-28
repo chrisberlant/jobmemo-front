@@ -19,7 +19,6 @@ function Navbar() {
   const onchange = () => {
     setDate(date);
   };
-  //
 
   return (
     <div className="Navbar-container">
@@ -29,9 +28,6 @@ function Navbar() {
         </NavLink>
       </div>
       <nav className={sideMenu ? 'Nav-menu active' : 'Nav-menu'}>
-        <NavLink to="#" className="Menu-icons">
-          <MaIcons.MdKeyboardDoubleArrowRight />
-        </NavLink>
         <h3 className="Hello-text">Bienvenue {user} !</h3>
         <div className="Calendar-container">
           <Calendar onChange={onchange} value={date} />

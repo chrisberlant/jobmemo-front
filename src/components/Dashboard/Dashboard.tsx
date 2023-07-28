@@ -1,7 +1,3 @@
-// import { useEffect, useState } from 'react';
-// import { useAppSelector, useAppDispatch } from '../hook/redux';
-// import Card from '../Card/Card';
-// import { CardType } from '../../@types/jobmemo';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Kanban from '../Kanban/Kanban';
