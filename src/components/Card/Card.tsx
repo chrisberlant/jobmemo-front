@@ -18,54 +18,45 @@ type CardProps = {
     createdAt: string;
     color: string;
     isDeleted: boolean;
+    notation: number;
   };
   index: number;
 };
 
 function Card({ item, index }: CardProps): JSX.Element {
   const dispatch = useAppDispatch();
-  // const storedCardId = useAppSelector((state) => state.movingCard.cardId);
   const [checked, setChecked] = useState<boolean>(false);
   const handleChange = (): void => {
     setChecked(!checked);
     console.log(item.title, item.id, 'is checked');
   };
 
-  const { isDeleted } = item;
-
   return (
     <Draggable key={item.id} draggableId={item.id} index={index}>
       {(provided, snapshot) => {
         if (snapshot.isDropAnimating) {
           dispatch(setMovingCardId(item.id));
-          // console.log(item.title, 'is dragged- (id : ', item.id), ')';
-          // console.log("Id dans le store :" + storedCardId);
         }
         return (
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            // style={{
-            //   backgroundColor: snapshot.isDragging
-            //     ? 'darkslateblue'
-            //     : 'slateblue',
-            //   ...provided.draggableProps.style,
-            // }}
           >
-            {!isDeleted && (
-              <div className="card">
-                <img src={logo} alt="logo" className="logo" />
-                <h3>{item.title}</h3>
-                <span>{item.enterpriseName}</span>
-                <span>{item.createdAt}</span>
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={handleChange}
-                />
-              </div>
-            )}
+            <div className="card">
+              <img src={logo} alt="logo" className="logo" />
+              <h3>{item.title}</h3>
+              <span>{item.enterpriseName}</span>
+              <span>
+                {item.createdAt.slice(0, 10).split('-').reverse().join('/')}
+              </span>
+              <span>{'★'.repeat(item.notation)}</span>
+              <input
+                type="checkbox"
+                checked={checked}
+                onChange={handleChange}
+              />
+            </div>
           </div>
         );
       }}
@@ -74,41 +65,3 @@ function Card({ item, index }: CardProps): JSX.Element {
 }
 
 export default Card;
-
-// {isNotRecycleBin && (
-//   <Link to={route}>
-//     <div className="add-card">
-//       <img
-//         src={addCardIcon}
-//         alt="icon-add-card"
-//         className="icon-add-card"
-//       />
-//     </div>
-//   </Link>
-// )}
-
-// import './Card.scss';
-// import { CardType } from '../../@types/jobmemo';
-
-// function Card({
-//   title,
-//   enterpriseName,
-//   notation,
-//   color,
-//   createdAt,
-//   index,
-// }: CardType) {
-//   return (
-//     <div className="Card">
-//       <h3>Nom : {title}</h3>
-//       <p>Entreprise : {enterpriseName}</p>
-//       <p>Etoile : {notation}</p>
-//       <p>Couleur : {color}</p>
-//       <p>Date : {createdAt} </p>
-//       <p>index : {index}</p>
-//       <input type="checkbox" />
-//     </div>
-//   );
-// }
-
-// export default Card;
