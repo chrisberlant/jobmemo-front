@@ -1,5 +1,7 @@
 import { useRef, createRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
+import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
+import { getAllCards } from '../../store/reducers/cards';
 import './Filters.scss';
 
 /*--------------------
@@ -30,6 +32,8 @@ const items: MenuItem[] = [
 ];
 
 function Menu({ items }: { items: MenuItem[] }) {
+  console.log(getAllCards());
+  
   const filters = useRef<HTMLDivElement>(null);
   const indicator1 = useRef<HTMLDivElement>(null);
   const indicator2 = useRef<HTMLDivElement>(null);

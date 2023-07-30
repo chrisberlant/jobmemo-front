@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { Link, useNavigate } from 'react-router-dom';
+import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import logo from '../../assets/images/logo.svg';
 import './Login.scss';
@@ -9,6 +10,9 @@ import { login } from '../../store/reducers/user';
 function Login() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const loginRef = useRef<HTMLFormElement>(null);
+  const tl = useRef();
 
   async function redirectToDashboard(formData: FormData) {
     await dispatch(login(formData));
@@ -50,6 +54,35 @@ function Login() {
       }
     }
   };
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context((self) => {
+      const loginBox = self.selector('.box-login');
+      const loginElements = self.selector('.box-login *');
+      const labels = self.selector('label');
+
+      tl.current = gsap
+        .timeline()
+        .from(loginBox, {
+          ease: 'ease.Out',
+          scale: 0.9,
+          duration: 0.4,
+          opacity: 0,
+          clipPath:
+            'polygon(0px 250px, 50px 200px, 300px 200px, 300px 250px, 250px 300px, 0px 300px)',
+        })
+
+        .from(loginElements, {
+          opacity: 0,
+          stagger: 0.01,
+        })
+        .to(labels, {
+          opacity: 1,
+          stagger: 0.1,
+        });
+    }, loginRef);
+    return () => ctx.revert();
+  }, []);
   // FIN ANIMATION /////////////////////////////////////////////////////
 
   // Login form submit
@@ -62,7 +95,7 @@ function Login() {
   };
 
   return (
-    <div className="box-wrap">
+    <div className="box-wrap" ref={loginRef}>
       <div className="box-login">
         <h2>Bienvenue</h2>
         <img className="logo" src={logo} alt="logo" />
