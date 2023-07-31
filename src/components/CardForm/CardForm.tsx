@@ -10,26 +10,11 @@ import securedFetch from '../../securedFetch';
 // import 'react-quill/dist/quill.snow.css';
 
 function CardForm() {
-  // state for select value of contractType
-  const [values, setValues] = useState({
-    category: '',
-    contractType: '',
-  });
-  // onChange : catch the new value
-  function handleChange(e: ChangeEvent<HTMLSelectElement>): void {
-    const { name, value } = e.target;
-    setValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  }
-
   // onSubmit : catch all entries from Form
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    formData.append('category', values.category);
     // formData.append('contractType', values.contractType);
     console.log(Object.fromEntries(formData.entries()));
     const response = await securedFetch('/createNewCard', 'POST', formData);
@@ -97,11 +82,11 @@ function CardForm() {
         <form method="post" onSubmit={handleSubmit}>
           <div className="input-wrap">
             <label htmlFor="category">Catégorie : </label>
+            {/* todo */}
             <select
               name="category"
+              defaultValue="Mes offres"
               className="category"
-              value={values.category}
-              onChange={handleChange}
             >
               <option value="Mes offres">Mes offres</option>
               <option value="Mes candidatures">Mes candidatures</option>
