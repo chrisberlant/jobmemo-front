@@ -77,10 +77,10 @@ export const router = createBrowserRouter([
         path: '/doc/:id',
         element: <Doc />,
       },
-      {
+      /* {
         path: '/card/:id',
         element: <CardForm />,
-      },
+      }, */
       {
         path: '/cardItem/:id',
         element: <CardItem />,

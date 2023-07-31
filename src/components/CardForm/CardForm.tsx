@@ -1,23 +1,35 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-// Import quill for react
+import { ChangeEvent, useState } from 'react';
 // import ReactQuill from 'react-quill';
-import { useState } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './CardForm.scss';
+import { useAppSelector } from '../../store/hook/redux';
 // Import Quill css and snow theme (2 themes are available : snow & bubble)
 // import 'react-quill/dist/quill.snow.css';
 
 function CardForm() {
+  // state for select value of contractType
+  const [value, setValue] = useState('');
+  // onChange : catch the new value
+  function handleChange(e: ChangeEvent<HTMLSelectElement>): void {
+    setValue(e.target.value);
+  }
+  // onSubmit : catch all entries from Form
+  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    formData.append('contrat', value);
+    console.log(Object.fromEntries(formData.entries()));
+  };
+
   const { id } = useParams();
-  console.log(id);
 
   const navigate = useNavigate();
 
-  const navigateToDrive = () => {
+  /* const navigateToDrive = () => {
     navigate('/docs');
-  };
-
-  const [value, setValue] = useState('');
+  }; */
 
   const back = () => {
     navigate('/dashboard');
@@ -34,14 +46,11 @@ function CardForm() {
         <div className="input-wrap">
           <label htmlFor="category">Catégorie : </label>
           <select className="category">
-            <option value="#">Mes offres</option>
-            <option value="#">Mes candidatures</option>
-            <option value="#">Mes relances</option>
-            <option value="#">Mes entretiens</option>
-            <div className="line" />
+            <option>catégories</option>
           </select>
+          <div className="line" />
         </div>
-        <form method="post">
+        <form method="post" onSubmit={handleSubmit}>
           <div className="input-wrap">
             <label htmlFor="title">Titre : </label>
             <input type="text" name="title" id="title" autoComplete="off" />
@@ -74,18 +83,16 @@ function CardForm() {
             <textarea name="adress" id="adress" autoComplete="off" />
             <div className="line" />
           </div>
-          <h3>Contacts liés</h3>
+          {/* <h3>Contacts liés</h3>
           <div className="input-wrap">
             <label htmlFor="contacts">Ajouter depuis mon réseau : </label>
             <input type="search" />
             <div className="line" />
           </div>
           <div className="input-wrap">
-            <input type="submit" defaultValue="Ajouter un nouveau contact" />
-          </div>
-          <div className="input-wrap">
-            <input type="button" defaultValue="Créer un nouveau contact" />
-          </div>
+            <input type="button" defaultValue="Ajouter un nouveau contact" />
+            <div className="line" />
+          </div> */}
           <div className="input-wrap">
             <label htmlFor="offer-title">Intitulé de l&apos;annonce : </label>
             <input
@@ -108,13 +115,17 @@ function CardForm() {
           </div>
           <div className="input-wrap">
             <label htmlFor="contractType">Type de contrat : </label>
-            <select className="contractType">
-              <option value="#">CDI</option>
-              <option value="#">CDD</option>
-              <option value="#">Alternance</option>
-              <option value="#">Intérim</option>
-              <div className="line" />
+            <select
+              className="contractType"
+              value={value}
+              onChange={handleChange}
+            >
+              <option value="CDI">CDI</option>
+              <option value="CDD">CDD</option>
+              <option value="Alternance">Alternance</option>
+              <option value="Intérim">Intérim</option>
             </select>
+            <div className="line" />
           </div>
           <div className="input-wrap">
             <label htmlFor="commentaries">Descriptif du poste : </label>
@@ -136,16 +147,16 @@ function CardForm() {
               <ReactQuill theme="snow" value={value} onChange={setValue} />
             </div>
               </div> */}
-          <div className="input-wrap">
+          {/* <div className="input-wrap">
             <label htmlFor="docs">Documents associés : </label>
             <select className="docs">
               <option value="#">Document 01</option>
               <option value="#">Document 02</option>
               <option value="#">Document 03</option>
               <option value="#">Document 04</option>
-              <div className="line" />
             </select>
-          </div>
+            <div className="line" />
+            </div> 
           <h2>Ajouter un document depuis : </h2>
           <div className="input-wrap">
             <input
@@ -156,13 +167,13 @@ function CardForm() {
           </div>
           <div className="input-wrap">
             <input type="file" />
-          </div>
+            </div> */}
           <div className="input-wrap">
             <input type="submit" defaultValue="Enregistrer" />
           </div>
-          <div className="input-wrap">
+          {/* <div className="input-wrap">
             <input type="reset" defaultValue="Annuler" />
-          </div>
+          </div> */}
         </form>
         <button type="button" onClick={back}>
           Retour
