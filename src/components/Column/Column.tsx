@@ -24,7 +24,7 @@ function Column({ droppableId, column }: ColumnProps) {
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
       {(provided, snapshot) => {
-        const route = `/addCard/${column.id}`;
+        const route = `/addCard/${column.name.replace(/\s+/g, '-')}`;
 
         return (
           <div

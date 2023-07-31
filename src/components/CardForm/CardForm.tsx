@@ -1,30 +1,42 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ChangeEvent, useState } from 'react';
 // import ReactQuill from 'react-quill';
 import logo from '../../assets/images/logo.svg';
 import './CardForm.scss';
-import { useAppSelector } from '../../store/hook/redux';
+import securedFetch from '../../securedFetch';
+
 // Import Quill css and snow theme (2 themes are available : snow & bubble)
 // import 'react-quill/dist/quill.snow.css';
 
 function CardForm() {
   // state for select value of contractType
-  const [value, setValue] = useState('');
+  const [values, setValues] = useState({
+    category: '',
+    contractType: '',
+  });
   // onChange : catch the new value
   function handleChange(e: ChangeEvent<HTMLSelectElement>): void {
-    setValue(e.target.value);
+    const { name, value } = e.target;
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
   }
+
   // onSubmit : catch all entries from Form
-  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    formData.append('contrat', value);
+    formData.append('category', values.category);
+    // formData.append('contractType', values.contractType);
     console.log(Object.fromEntries(formData.entries()));
+    const response = await securedFetch('/createNewCard', 'POST', formData);
+    console.log(response.data);
   };
 
-  const { id } = useParams();
+  // const { id } = useParams();
 
   const navigate = useNavigate();
 
@@ -78,18 +90,26 @@ function CardForm() {
   return (
     <div className="box-wrap">
       <div className="box-cardform">
-        <Link to="/dashboard">
+        <figure onClick={back}>
           <img className="logo" src={logo} alt="logo" />
-        </Link>
+        </figure>
         {/* <img className="avatar" src="avatarUrl" alt="avatar" /> */}
-        <div className="input-wrap">
-          <label htmlFor="category">Catégorie : </label>
-          <select className="category">
-            <option>catégories</option>
-          </select>
-          <div className="line" />
-        </div>
         <form method="post" onSubmit={handleSubmit}>
+          <div className="input-wrap">
+            <label htmlFor="category">Catégorie : </label>
+            <select
+              name="category"
+              className="category"
+              value={values.category}
+              onChange={handleChange}
+            >
+              <option value="Mes offres">Mes offres</option>
+              <option value="Mes candidatures">Mes candidatures</option>
+              <option value="Mes relances">Mes relances</option>
+              <option value="Mes entretiens">Mes entretiens</option>
+            </select>
+            <div className="line" />
+          </div>
           <div className="input-wrap">
             <label htmlFor="title">Titre : </label>
             <input
@@ -114,7 +134,7 @@ function CardForm() {
             />
             <div className="line" />
           </div>
-          <div className="input-wrap">
+          {/* <div className="input-wrap">
             <label htmlFor="enterpriseUrl">
               Site web de l&apos;entreprise :
             </label>
@@ -127,12 +147,12 @@ function CardForm() {
               autoComplete="off"
             />
             <div className="line" />
-          </div>
-          <div className="input-wrap">
+          </div> */}
+          {/* <div className="input-wrap">
             <label htmlFor="adress">Adresse : </label>
             <textarea name="adress" id="adress" autoComplete="off" />
             <div className="line" />
-          </div>
+          </div> */}
           {/* <h3>Contacts liés</h3>
           <div className="input-wrap">
             <label htmlFor="contacts">Ajouter depuis mon réseau : </label>
@@ -144,13 +164,13 @@ function CardForm() {
             <div className="line" />
           </div> */}
           <div className="input-wrap">
-            <label htmlFor="offer-title">Intitulé de l&apos;annonce : </label>
+            <label htmlFor="jobTitle">Intitulé de l&apos;annonce : </label>
             <input
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
-              name="offer-title"
-              id="offer-title"
+              name="jobTitle"
+              id="jobTitle"
               autoComplete="off"
             />
             <div className="line" />
@@ -167,27 +187,24 @@ function CardForm() {
             />
             <div className="line" />
           </div>
-          <div className="input-wrap">
+          {/* <div className="input-wrap">
             <label htmlFor="contractType">Type de contrat : </label>
             <select
               className="contractType"
-              value={value}
+              name="contractType"
+              value={values.contractType}
               onChange={handleChange}
             >
               <option value="CDI">CDI</option>
               <option value="CDD">CDD</option>
               <option value="Alternance">Alternance</option>
-              <option value="Intérim">Intérim</option>
+              <option value="Autre">Autre</option>
             </select>
             <div className="line" />
-          </div>
+        </div> */}
           <div className="input-wrap">
-            <label htmlFor="commentaries">Descriptif du poste : </label>
-            <textarea
-              name="commentaries"
-              id="commentaries"
-              autoComplete="off"
-            />
+            <label htmlFor="description">Descriptif du poste : </label>
+            <textarea name="description" id="description" autoComplete="off" />
             <div className="line" />
           </div>
           <div className="input-wrap">
