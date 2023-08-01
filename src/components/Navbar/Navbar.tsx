@@ -6,9 +6,15 @@ import { useAppSelector } from '../../store/hook/redux';
 import './Navbar.scss';
 
 function Navbar() {
-  const user = useAppSelector((state) => state.user.firstName);
   // Show/Hide Menu
   const [sideMenu, setSideMenu] = useState(false);
+
+  let user = null;
+  const userString = localStorage.getItem('user');
+  if (userString) {
+    user = JSON.parse(userString).firstName;
+  }
+
   const showsideMenu = () => {
     setSideMenu(!sideMenu);
     // console.log(sideMenu);
