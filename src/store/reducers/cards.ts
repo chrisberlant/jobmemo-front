@@ -61,6 +61,9 @@ export const loadCardsToDashboard = createAction('cards/LOAD_CARDS');
 
 const cardsReducer = createReducer(initialValue, (builder) => {
   builder
+    .addCase(getAllCards, (state) => {
+      return state;
+    })
     .addCase(loadCardsToDashboard, (state) => {
       state.loadedCards = true;
       console.log('Cartes envoyées au dashboard');

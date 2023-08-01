@@ -1,4 +1,5 @@
 // import { Link } from 'react-router-dom';
+import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 // import { useLayoutEffect, useRef } from 'react';
 import logo from '../../assets/images/logo.svg';
@@ -8,6 +9,8 @@ import './Register.scss';
 
 function Register() {
   // ANIMATION ////////////////////////////////////////////////////
+  const registerRef = useRef<HTMLFormElement>(null);
+  const tl = useRef();
 
   // Animation des champs avec GSAP >>
   // Animation lorsqu'il y'a une action sur le champ
@@ -43,6 +46,32 @@ function Register() {
       }
     }
   };
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context((self) => {
+      const registerBox = self.selector('.box-register');
+      const registerElements = self.selector('.box-register *');
+      const labels = self.selector('label');
+
+      tl.current = gsap
+        .timeline()
+        .from(registerBox, {
+          ease: 'ease.Out',
+          duration: 0.4,
+          clipPath:
+            'polygon(0px 100px, 50px 50px, 300px 50px, 300px 500px, 250px 550px, 0px 550px)',
+        })
+        .from(registerElements, {
+          opacity: 0,
+          stagger: 0.01,
+        })
+        .to(labels, {
+          opacity: 1,
+          stagger: 0.05,
+        });
+    }, registerRef);
+    return () => ctx.revert();
+  }, []);
   // FIN ANIMATION /////////////////////////////////////////////////////
 
   // Register form submit
@@ -71,7 +100,7 @@ function Register() {
   };
 
   return (
-    <div className="box-wrap">
+    <div className="box-wrap" ref={registerRef}>
       <div className="box-register">
         <h2>Créer votre compte</h2>
         <img className="logo" src={logo} alt="logo" />
