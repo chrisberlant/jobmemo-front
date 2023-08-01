@@ -80,6 +80,8 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.avatarUrl = avatarUrl;
       // Adding token to local storage if login is fulfilled
       localStorage.setItem('token', JSON.stringify(token));
+      const userInfos = { email, firstName, lastName, avatarUrl };
+      localStorage.setItem('user', JSON.stringify(userInfos));
     });
 });
 
