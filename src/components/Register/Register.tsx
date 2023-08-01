@@ -1,4 +1,4 @@
-// import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 // import { useLayoutEffect, useRef } from 'react';
@@ -10,6 +10,7 @@ import './Register.scss';
 function Register() {
   // ANIMATION ////////////////////////////////////////////////////
   const registerRef = useRef<HTMLFormElement>(null);
+  const navigate = useNavigate();
   const tl = useRef();
 
   // Animation des champs avec GSAP >>
@@ -97,6 +98,7 @@ function Register() {
     } catch (error) {
       console.error(error);
     }
+    navigate('/login');
   };
 
   return (
@@ -169,6 +171,9 @@ function Register() {
             <input type="submit" defaultValue="Enregistrer" />
           </div>
         </form>
+        <span className="forgot">
+          Déjà un compte ? <Link to="/login">Se connecter</Link>
+        </span>
       </div>
     </div>
   );
