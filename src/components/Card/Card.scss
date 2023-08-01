@@ -6,52 +6,171 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #fff;
+	align-items: start;
+	position: relative;
+	left: -8px;
+  min-width: 230px;
+	margin-right: -32px;
+  color: #000;
   font-weight: 700;
-  padding: 20px 20px;
+	text-align: left;
   margin: 0 0 8px 0;
   min-height: 132px;
-	border-radius: 10px;
-	gap: 7px;
-	background: slateblue;
-	// box-shadow:
-  // 0px 0px 2.2px rgba(0, 0, 0, 0.02),
-  // 0px 0px 5.3px rgba(0, 0, 0, 0.028),
-  // 0px 0px 10px rgba(0, 0, 0, 0.035),
-  // 0px 0px 17.9px rgba(0, 0, 0, 0.042),
-  // 0px 0px 33.4px rgba(0, 0, 0, 0.05),
-  // 0px 0px 80px rgba(0, 0, 0, 0.07);
-	// transition: all 0.5s;
+  box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
+  
+  .card-container {
+    position: relative;
+		width: 100%;
+    padding: 16px 16px 8px;
+    background: #fff;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    clip-path: polygon(
+      0% 50px,
+      50px 0%,
+      100% 0%,
+      100% 100%,
+      100% 100%,
+      0% 100%
+      );
+      
+      .label {
+        transition: all 0.4s ease;
+        position: absolute;
+        background: #00d948;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        top: -50px;
+        left: -50px;
+        z-index: -1;
+      }
 
+			&:active {
+        .label {
+          transform: scale(10);
+        }
+      }
 
+      .company-logo {
+        width: 34px;
+        height: 34px;
+        background: rgba(0, 0, 0, 0.2);
+        position: absolute;
+        right: 16px;
+        top: 10px;
+        border-radius: 50%;
+      }
 
-	&:active {
-	// 	box-shadow:
-	// 	1.5px 1.4px 1.2px rgba(0, 0, 0, 0.02),
-	// 	3.7px 3.3px 2.8px rgba(0, 0, 0, 0.028),
-	// 	7px 6.3px 5.3px rgba(0, 0, 0, 0.035),
-	// 	12.5px 11.2px 9.4px rgba(0, 0, 0, 0.042),
-	// 	23.4px 20.9px 17.5px rgba(0, 0, 0, 0.05),
-	// 	56px 50px 42px rgba(0, 0, 0, 0.07)
-	// ;
-	}
+      .date-wrapper {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 9px;
 
-	.logo {
-		width: 32px;
-		height: 32px;
-		flex-shrink: 0;
-		-webkit-box-flex: 0;
-		flex-grow: 0;
-		margin-bottom: 8px;
-	}
+        span:first-child {
+          color: rgba(0, 0, 0, 0.5);
+        }
 
-	h3 {
-		margin: 0;
-	}
+        span:nth-child(2) {
+          font-weight: 900;
+        }
+      }
 
-	button {
-		cursor: pointer;
-		border-radius: 10px;
-		border: none;
-	}
+      .stars-wrapper {
+        position: absolute;
+        width: 80px;
+        height: 25px;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 16px;
+
+        span {
+          position: absolute;
+          top: 0;
+          left: 0;
+          color: rgba(0, 0, 0, 0.2);
+        }
+
+        .notation {
+          color: #000;
+        }
+      }
+
+      .company-title {
+        font-size: 14px;
+        font-weight: 900;
+        color: rgba(0, 0, 0, 0.4);
+        margin: 32px 0 2px;
+      }
+
+      .card-title {
+        margin: 0;
+        padding: 4px 0;
+        line-height: 26px;
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .action-wrapper {
+        display: flex;
+        justify-content: space-between;
+        height: 24px;
+        margin: 8px 0 2px;
+
+        button {
+          border: none;
+          color: #fff;
+          background: rgba(0, 0, 0, 0.2);
+          padding: 0 16px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 10px;
+          letter-spacing: .5px;
+          cursor: pointer;
+          position: relative;
+          transition: all 0.2s ease;
+          font-weight: 900;
+          text-transform: uppercase;
+          clip-path: polygon(
+            0% 12px,
+            12px 0%,
+            calc(100% + 2px) 0%,
+            calc(100% + 2px) 100%,
+            calc(100% + 2px) calc(100% + 2px),
+            0% calc(100% + 2px)
+            );
+
+          &:hover {
+            background: #000;
+            box-shadow: 2px 2px 0px #fff;
+          }
+        }
+
+        input[type="checkbox"] {
+          appearance: none;
+          background: rgba(0, 0, 0, 0.2);
+          height: 24px;
+          width: 24px;
+          margin: 0;
+          cursor: pointer;
+          position: relative;
+          &:hover {
+            background: #000;
+            box-shadow: 2px 2px 0px #fff;
+          }
+          
+          &:checked {
+            background: #000;
+            background-image: url('../../assets/icons/check.svg');
+          }
+        }
+      }
+  }
 }

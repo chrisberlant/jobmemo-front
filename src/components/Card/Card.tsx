@@ -52,7 +52,38 @@ function Card({ item, index }: CardProps): JSX.Element {
             {...provided.dragHandleProps}
           >
             <div className="card">
-              <img src={logo} alt="logo" className="logo" />
+              <div className="card-container">
+                <div
+                  className="label"
+                  style={{ backgroundColor: item.color }}
+                />
+                <div className="company-logo" />
+                <div className="date-wrapper">
+                  <span>Crée le : </span>
+                  <span>
+                    {item.createdAt.slice(0, 10).split('-').reverse().join('/')}
+                  </span>
+                </div>
+                <div className="stars-wrapper">
+                  <span>★★★★★</span>
+                  <span className="notation">{'★'.repeat(item.notation)}</span>
+                </div>
+                <h4 className="company-title">{item.enterpriseName}</h4>
+                <h3 className="card-title">{item.title}</h3>
+                <div className="action-wrapper">
+                  <button type="button" onClick={navigateToCardItem}>
+                    Editer la fiche
+                  </button>
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* <div classNameName="card">
+              <img src={logo} alt="logo" classNameName="logo" />
               <h3>{item.title}</h3>
               <span>{item.enterpriseName}</span>
               <span>
@@ -67,7 +98,7 @@ function Card({ item, index }: CardProps): JSX.Element {
               <button type="button" onClick={navigateToCardItem}>
                 Voir la fiche
               </button>
-            </div>
+            </div> */}
           </div>
         );
       }}

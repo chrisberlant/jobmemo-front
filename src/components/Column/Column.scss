@@ -5,9 +5,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-width: 200px;
+  align-items: center;
+  gap: 16px;
   margin-top: 16px;
+  min-width: 250px;
+  // border-left: 2px solid #d3d3d3;
+  border-right: 2px solid #d3d3d3;
   // &:not(:last-child) {
   //   min-width: 200px;
   // }
