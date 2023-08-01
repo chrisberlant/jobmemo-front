@@ -6,7 +6,6 @@ import { ChangeEvent, useState } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './CardForm.scss';
 import securedFetch from '../../securedFetch';
-import { useAppSelector } from '../../store/hook/redux';
 
 function CardForm() {
   const navigate = useNavigate();
