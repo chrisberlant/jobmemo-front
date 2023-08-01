@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Link, useNavigate } from 'react-router-dom';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import logo from '../../assets/images/logo.svg';
 import './Login.scss';
@@ -55,7 +55,7 @@ function Login() {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context((self) => {
       const loginBox = self.selector('.box-login');
       const loginElements = self.selector('.box-login *');
@@ -64,6 +64,7 @@ function Login() {
       tl.current = gsap
         .timeline()
         .from(loginBox, {
+          delay: 0.4,
           ease: 'ease.Out',
           scale: 0.9,
           duration: 0.4,
