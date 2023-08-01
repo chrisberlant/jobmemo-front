@@ -7,27 +7,19 @@ import './Navbar.scss';
 
 function Navbar() {
   const user = useAppSelector((state) => state.user.firstName);
-  // Show/Hide Menu
-  const [sideMenu, setSideMenu] = useState(false);
-  const showsideMenu = () => {
-    setSideMenu(!sideMenu);
-    // console.log(sideMenu);
-  };
-  //
   // React Calendar
   const [date, setDate] = useState(new Date());
   const onchange = () => {
     setDate(date);
   };
-
   return (
     <div className="Navbar-container">
       <div className="Navbar">
         <NavLink to="#" className="Menu-icons">
-          <MaIcons.MdKeyboardDoubleArrowLeft onClick={showsideMenu} />
+          <MaIcons.MdKeyboardDoubleArrowLeft />
         </NavLink>
       </div>
-      <nav className={sideMenu ? 'Nav-menu active' : 'Nav-menu'}>
+      <nav className="Nav-menu">
         <h3 className="Hello-text">Bienvenue {user} !</h3>
         <div className="Calendar-container">
           <Calendar onChange={onchange} value={date} />
