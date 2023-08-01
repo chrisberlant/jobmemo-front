@@ -32,14 +32,6 @@ function Header() {
       const selects = self.selector('.select-dropdown');
       const inputSearch = self.selector('input[type="text"]');
       tl.current = gsap.timeline({ paused: true, ease: 'none' });
-      // .to(selects, {
-      //   autoAlpha: 0,
-      //   stagger: { // wrap advanced options in an object
-      //     each: 0.1,
-      //     from: "end",
-      //     ease: "power2.inOut",
-      //   }
-      // })
 
       tl.current
         .to('.filters', {

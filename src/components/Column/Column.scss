@@ -7,6 +7,7 @@
   flex-direction: column;
   gap: 8px;
   min-width: 200px;
+  margin-top: 16px;
   // &:not(:last-child) {
   //   min-width: 200px;
   // }
@@ -15,18 +16,13 @@
     // height: 200px;
   }
 
-  .card {
-    background: slateblue;
-    height: 200px;
-  }
-
   .recycle-bin {
     // height: 100vh;
   }
 
   .icon-recycle-bin {
     width: 64px;
-    margin: 0 auto;
+    margin: 32px auto;
     cursor: pointer;
   }
 

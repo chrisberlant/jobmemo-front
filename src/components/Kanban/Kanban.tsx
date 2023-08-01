@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import categories from '../../categories/categories';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
+import useMediaQuery from '../../Utils/mediaQuery';
 import Column from '../Column/Column';
 import './Kanban.scss';
 import {
@@ -10,6 +11,12 @@ import {
   moveCard,
 } from '../../store/reducers/cards';
 import { Categories } from '../../@types/jobmemo';
+
+function useMediaQueries() {
+  const sm = useMediaQuery('(max-width: 450px)');
+
+  return { sm };
+}
 
 // Cet extrait de code définit une fonction appelée onDragEnd qui est utilisée comme rappel pour gérer la fin d'un événement glisser. Il prend trois paramètres : result, columns et setColumns.
 // La fonction vérifie d'abord s'il existe une destination valide pour l'événement glisser. Sinon, il revient à sa place.
@@ -111,6 +118,7 @@ const onDragEnd = (result, columns, setColumns, getatch, movingCardId) => {
 // }
 
 function Kanban() {
+  const { sm } = useMediaQueries();
   // Initialize state with the categories object
   const [columns, setColumns] = useState(categories);
   const cards = useAppSelector((state) => state.cards.list);
@@ -156,7 +164,8 @@ function Kanban() {
             <div
               key={columnId}
               id={columnId}
-              className={`column ${column.className} `}
+              className={`column ${column.className}`}
+              style={sm ? { width: 'calc(100vw - 32px)' } : { width: '100%' }}
             >
               <h3>{column.name}</h3>
               <div>
