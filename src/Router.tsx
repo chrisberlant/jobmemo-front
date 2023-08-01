@@ -24,7 +24,7 @@ import Upload from './components/Upload/Upload';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <Login />,
   },
   {
     path: '/login',
