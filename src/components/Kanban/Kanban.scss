@@ -1,13 +1,16 @@
 @use '../../styles/variables' as v;
 
 .kanban {
-  // background: lightslategray;
   display: grid;
   grid-template-columns: repeat(4, 1fr) auto;
   gap: 16px;
   margin: 0 16px;
   overflow-x: scroll;
 
+  .column-wrapper {
+    border-right: 2px solid #d3d3d3;
+    height: 100vh;
+  }
 }
 
 
