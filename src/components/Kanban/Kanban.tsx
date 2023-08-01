@@ -167,7 +167,7 @@ function Kanban() {
               className={`column ${column.className}`}
               style={sm ? { width: 'calc(100vw - 32px)' } : { width: '100%' }}
             >
-              <h3>{column.name}</h3>
+              <h3 className="column-title">{column.name}</h3>
               <div className="column-wrapper">
                 <Column droppableId={columnId} key={columnId} column={column} />
               </div>

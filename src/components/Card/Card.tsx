@@ -82,23 +82,6 @@ function Card({ item, index }: CardProps): JSX.Element {
                 </div>
               </div>
             </div>
-            {/* <div classNameName="card">
-              <img src={logo} alt="logo" classNameName="logo" />
-              <h3>{item.title}</h3>
-              <span>{item.enterpriseName}</span>
-              <span>
-                {item.createdAt.slice(0, 10).split('-').reverse().join('/')}
-              </span>
-              <span>{'★'.repeat(item.notation)}</span>
-              <input
-                type="checkbox"
-                checked={checked}
-                onChange={handleChange}
-              />
-              <button type="button" onClick={navigateToCardItem}>
-                Voir la fiche
-              </button>
-            </div> */}
           </div>
         );
       }}
