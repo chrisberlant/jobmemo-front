@@ -1,23 +1,40 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable no-alert */
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { CardType } from '../../@types/jobmemo';
 import { gsap } from 'gsap';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './CardForm.scss';
 import securedFetch from '../../securedFetch';
+import { useAppSelector } from '../../store/hook/redux';
 
 function CardForm() {
+  const navigate = useNavigate();
+  const [index, setIndex] = useState('');
   // onSubmit : catch all entries from Form
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    // console.log(Object.fromEntries(formData.entries()));
-    const response = await securedFetch('/createNewCard', 'POST', formData);
-    console.log(response.data);
+    setIndex(index + 1);
+    const cardData = {
+      formData: formData,
+      index: index,
+    };
+    console.log(Object.entries(cardData));
+    {
+      /* try {
+      const response = await securedFetch('/createNewCard', 'POST', formData);
+      console.log(response.data);
+      alert('👏 votre nouvelle fiche a été crée')
+    } catch (error) {
+      alert("🥺 Une erreur est survenue lors de la création : ", error);
+    } */
+    }
+    alert('👏 votre nouvelle fiche a été crée');
+    navigate('/dashboard');
+    window.location.reload();
   };
-
-  const navigate = useNavigate();
 
   const back = () => {
     navigate('/dashboard');
@@ -89,6 +106,7 @@ function CardForm() {
           <div className="input-wrap">
             <label htmlFor="title">Titre : </label>
             <input
+              required
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
@@ -101,6 +119,7 @@ function CardForm() {
           <div className="input-wrap">
             <label htmlFor="enterpriseName">Entreprise : </label>
             <input
+              required
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
@@ -113,6 +132,7 @@ function CardForm() {
           <div className="input-wrap">
             <label htmlFor="jobTitle">Intitulé de l&apos;annonce : </label>
             <input
+              required
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
@@ -125,6 +145,7 @@ function CardForm() {
           <div className="input-wrap">
             <label htmlFor="offerUrl">Source / Lien de l&apos;annonce : </label>
             <input
+              required
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
@@ -136,12 +157,18 @@ function CardForm() {
           </div>
           <div className="input-wrap">
             <label htmlFor="description">Descriptif du poste : </label>
-            <textarea name="description" id="description" autoComplete="off" />
+            <textarea
+              required
+              name="description"
+              id="description"
+              autoComplete="off"
+            />
             <div className="line" />
           </div>
           <div className="input-wrap">
             <label htmlFor="salary">Salaire : </label>
             <input
+              required
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
