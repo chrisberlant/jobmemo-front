@@ -6,7 +6,7 @@ import securedFetch from '../../../securedFetch';
 function DeleteAccount() {
   const navigate = useNavigate();
 
-  const navigateToDashboard = () => {
+  const back = () => {
     navigate('/dashboard');
     window.location.reload();
   };
@@ -32,14 +32,14 @@ function DeleteAccount() {
       </Link>
       <h3>Voulez-vous vraiment supprimer votre compte ?</h3>
       <span>Attention cette action est irréversible</span>
-      <div className="input-wrap">
-        <button type="button" onClick={navigateToDashboard}>
-          Revenir au tableau de bord
-        </button>
-      </div>
+
       <div className="input-wrap">
         <input type="button" defaultValue="Supprimer" onClick={handleDelete} />
       </div>
+      <Link to="/dashboard" className="link" onClick={back}>
+        Retour
+      </Link>
+
     </div>
   );
 }

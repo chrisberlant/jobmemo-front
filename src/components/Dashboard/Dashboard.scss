@@ -4,11 +4,11 @@
 
 .dashboard {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   min-height: 100vh;
   text-align: center;
 
-  width: 100vw; //A virer
+  // width: 100vw; //A virer
 
   .navbar-container {
     // position: relative;
