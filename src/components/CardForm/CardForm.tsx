@@ -30,7 +30,6 @@ function CardForm() {
       alert("🥺 Une erreur est survenue lors de la création : ", error);
     } */
     }
-    alert('👏 votre nouvelle fiche a été crée');
     navigate('/dashboard');
     window.location.reload();
   };
@@ -82,112 +81,110 @@ function CardForm() {
   // console.log(category);
 
   return (
-    <div className="box-wrap">
-      <div className="box-cardform">
-        <NavLink to="/dashboard">
-          <img className="logo" src={logo} alt="logo" />
-        </NavLink>
-        <form method="post" onSubmit={handleSubmit}>
-          <div className="input-wrap">
-            <label htmlFor="category">Catégorie : </label>
-            <select
-              name="category"
-              defaultValue={category?.replace(/-/g, ' ')}
-              className="category"
-            >
-              <option value="Mes offres">Mes offres</option>
-              <option value="Mes candidatures">Mes candidatures</option>
-              <option value="Mes relances">Mes relances</option>
-              <option value="Mes entretiens">Mes entretiens</option>
-            </select>
-            <div className="line" />
-          </div>
-          <div className="input-wrap">
-            <label htmlFor="title">Titre : </label>
-            <input
-              required
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              type="text"
-              name="title"
-              id="title"
-              autoComplete="off"
-            />
-            <div className="line" />
-          </div>
-          <div className="input-wrap">
-            <label htmlFor="enterpriseName">Entreprise : </label>
-            <input
-              required
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              type="text"
-              name="enterpriseName"
-              id="enterpriseName"
-              autoComplete="off"
-            />
-            <div className="line" />
-          </div>
-          <div className="input-wrap">
-            <label htmlFor="jobTitle">Intitulé de l&apos;annonce : </label>
-            <input
-              required
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              type="text"
-              name="jobTitle"
-              id="jobTitle"
-              autoComplete="off"
-            />
-            <div className="line" />
-          </div>
-          <div className="input-wrap">
-            <label htmlFor="offerUrl">Source / Lien de l&apos;annonce : </label>
-            <input
-              required
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              type="text"
-              name="offerUrl"
-              id="offerUrl"
-              autoComplete="off"
-            />
-            <div className="line" />
-          </div>
-          <div className="input-wrap">
-            <label htmlFor="description">Descriptif du poste : </label>
-            <textarea
-              required
-              name="description"
-              id="description"
-              autoComplete="off"
-            />
-            <div className="line" />
-          </div>
-          <div className="input-wrap">
-            <label htmlFor="salary">Salaire : </label>
-            <input
-              required
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              type="text"
-              name="salary"
-              id="salary"
-              autoComplete="off"
-            />
-            <div className="line" />
-          </div>
-          <div className="input-wrap">
-            <input type="submit" defaultValue="Enregistrer" />
-          </div>
-          {/* <div className="input-wrap">
+    <div className="box-cardform">
+      <NavLink to="/dashboard">
+        <img className="logo" src={logo} alt="logo" />
+      </NavLink>
+      <form method="post" onSubmit={handleSubmit}>
+        <div className="input-wrap">
+          <label htmlFor="category">Catégorie : </label>
+          <select
+            name="category"
+            defaultValue={category?.replace(/-/g, ' ')}
+            className="category"
+          >
+            <option value="Mes offres">Mes offres</option>
+            <option value="Mes candidatures">Mes candidatures</option>
+            <option value="Mes relances">Mes relances</option>
+            <option value="Mes entretiens">Mes entretiens</option>
+          </select>
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="title">Titre : </label>
+          <input
+            required
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            type="text"
+            name="title"
+            id="title"
+            autoComplete="off"
+          />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="enterpriseName">Entreprise : </label>
+          <input
+            required
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            type="text"
+            name="enterpriseName"
+            id="enterpriseName"
+            autoComplete="off"
+          />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="jobTitle">Intitulé de l&apos;annonce : </label>
+          <input
+            required
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            type="text"
+            name="jobTitle"
+            id="jobTitle"
+            autoComplete="off"
+          />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="offerUrl">Source / Lien de l&apos;annonce : </label>
+          <input
+            required
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            type="text"
+            name="offerUrl"
+            id="offerUrl"
+            autoComplete="off"
+          />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="description">Descriptif du poste : </label>
+          <textarea
+            required
+            name="description"
+            id="description"
+            autoComplete="off"
+          />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="salary">Salaire : </label>
+          <input
+            required
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            type="text"
+            name="salary"
+            id="salary"
+            autoComplete="off"
+          />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <input type="submit" defaultValue="Enregistrer" />
+        </div>
+        {/* <div className="input-wrap">
             <input type="reset" defaultValue="Annuler" />
           </div> */}
-        </form>
-        <button type="button" onClick={back}>
-          Retour
-        </button>
-      </div>
+      </form>
+      <button type="button" onClick={back}>
+        Retour
+      </button>
     </div>
   );
 }

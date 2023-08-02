@@ -1,23 +1,7 @@
 @use '../../styles/variables' as v;
 
-body {
-  margin: 0;
-  padding: 0;
-  display: grid;
-  place-items: center;
-  height: 100vh;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.box-wrap {
-  filter: drop-shadow( 10px 10px 0px #e6e6e6);
-  
-}
-
 .box-carditem {
+  filter: drop-shadow( 10px 10px 0px #e6e6e6);
   width: 80vw;
   // position: absolute;
   display: flex;

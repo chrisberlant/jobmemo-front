@@ -1,23 +1,7 @@
 @use '../../styles/variables' as v;
 
-body {
-  margin: 0;
-  padding: 0;
-  display: grid;
-  place-items: center;
-  height: 100vh;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.box-wrap {
-  filter: drop-shadow( 10px 10px 0px #e6e6e6);
-  
-}
-
 .box-cardform {
+  filter: drop-shadow( 10px 10px 0px #e6e6e6);
   width: 80vw;
   // position: absolute;
   display: flex;
@@ -102,7 +86,7 @@ body {
       input {
         border: none;
         background: #4a65ff;
-        width: 100%;
+        width: 50%;
         height: 40px;
         margin-top: 16px;
         color: #fff;
@@ -129,7 +113,7 @@ body {
   button {
     order: none;
         background: #4a65ff;
-        width: 100%;
+        width: 50%;
         height: 40px;
         color: #fff;
         font-weight: 700;
