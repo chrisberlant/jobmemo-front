@@ -9,6 +9,7 @@ function Contacts() {
   console.log('Composant contacts');
   const contacts = useAppSelector((state) => state.contacts.list);
   const noContacts = useAppSelector((state) => state.contacts.isEmpty);
+  const isLoading = useAppSelector((state) => state.contacts.isLoading);
   console.log(contacts);
   const dispatch = useAppDispatch();
 
@@ -22,7 +23,8 @@ function Contacts() {
       {/* <Navbar /> */}
       <h1>Vos contacts :</h1>
       <div className="contacts-container">
-        {noContacts ? (
+        {isLoading && <span>Chargement en cours</span>}
+        {!isLoading && noContacts ? (
           <span>Aucun contact pour le moment</span>
         ) : (
           contacts.map((contact) => (

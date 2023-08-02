@@ -22,11 +22,13 @@ interface ContactType {
 
 interface Contacts {
   list: ContactType[];
+  isLoading: boolean;
   isEmpty: boolean;
 }
 
 const initialValue: Contacts = {
   list: [],
+  isLoading: true,
   isEmpty: true,
 };
 
@@ -54,6 +56,7 @@ const contactsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(getAllContacts.fulfilled, (state, action) => {
       state.list = action.payload;
+      state.isLoading = false;
       if (state.list.length > 0) state.isEmpty = false;
       console.log('Contacts récupérés');
     });
