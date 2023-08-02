@@ -3,6 +3,11 @@ import { NavLink } from 'react-router-dom';
 import * as MaIcons from 'react-icons/md';
 import Calendar from 'react-calendar';
 import { useAppSelector } from '../../store/hook/redux';
+import logoWhite from '../../assets/images/logo-white.svg';
+import iconDashboard from '../../assets/icons/icon-dashboard.svg';
+import iconAccount from '../../assets/icons/icon-account.svg';
+import iconDrive from '../../assets/icons/icon-drive.svg';
+import iconContacts from '../../assets/icons/icon-contacts.svg';
 import './Navbar.scss';
 
 function Navbar() {
@@ -26,72 +31,60 @@ function Navbar() {
     setDate(date);
   };
   return (
-    <div className="Navbar-container">
-      <div className="Navbar">
-        <NavLink to="#" className="Menu-icons">
-          <MaIcons.MdKeyboardDoubleArrowLeft />
+    <div className="navbar">
+      <div className="brand-wrapper">
+        <img src={logoWhite} alt="logo jobmemo" />
+        <h2>Jobmemo</h2>
+      </div>
+      <div className="welcome-wrapper">
+        <span>Bienvenue à bord</span>
+        <span>{user} !</span>
+      </div>
+      <div className="navigation-wrapper">
+        <NavLink
+          to="/dashboard"
+          className="btn-navigation"
+          style={({ isActive }) => ({
+            background: isActive ? '#4a65ff' : '',
+          })}
+        >
+          <img src={iconDashboard} alt="icone tableau de bord" />
+          <span>Tableau de bord</span>
+        </NavLink>
+        <NavLink
+          to="/account"
+          className="btn-navigation"
+          style={({ isActive }) => ({
+            background: isActive ? '#4a65ff' : '',
+          })}
+        >
+          <img src={iconAccount} alt="icone compte" />
+          <span>Mon compte</span>
+        </NavLink>
+        <NavLink
+          to="/docs"
+          className="btn-navigation"
+          style={({ isActive }) => ({
+            background: isActive ? '#4a65ff' : '',
+          })}
+        >
+          <img src={iconDrive} alt="icone fichiers" />
+          <span>Mes fichiers</span>
+        </NavLink>
+        <NavLink
+          to="/contacts"
+          className="btn-navigation"
+          style={({ isActive }) => ({
+            background: isActive ? '#4a65ff' : '',
+          })}
+        >
+          <img src={iconContacts} alt="icone contacts" />
+          <span>Mes contacts</span>
         </NavLink>
       </div>
-      <nav className="Nav-menu">
-        <h3 className="Hello-text">Bienvenue {user} !</h3>
-        <div className="Calendar-container">
-          <Calendar onChange={onchange} value={date} />
-        </div>
-        <ul className="Nav-menu__list">
-          <li className="Nav-menu__items">
-            <NavLink
-              to="/dashboard"
-              style={({ isActive }) => ({
-                color: isActive ? '#a46eff' : '',
-                background: isActive ? '#fff' : '',
-                borderRadius: isActive ? '5px' : '',
-                padding: isActive ? '10px' : '',
-              })}
-            >
-              <span>Mon tableau de bord</span>
-            </NavLink>
-          </li>
-          <li className="Nav-menu__items">
-            <NavLink
-              to="/account"
-              style={({ isActive }) => ({
-                color: isActive ? '#a46eff' : '',
-                background: isActive ? '#fff' : '',
-                borderRadius: isActive ? '5px' : '',
-                padding: isActive ? '10px' : '',
-              })}
-            >
-              <span>Mon compte</span>
-            </NavLink>
-          </li>
-          <li className="Nav-menu__items">
-            <NavLink
-              to="/docs"
-              style={({ isActive }) => ({
-                color: isActive ? '#a46eff' : '',
-                background: isActive ? '#fff' : '',
-                borderRadius: isActive ? '5px' : '',
-                padding: isActive ? '10px' : '',
-              })}
-            >
-              <span>Mon drive</span>
-            </NavLink>
-          </li>
-          <li className="Nav-menu__items">
-            <NavLink
-              to="/contacts"
-              style={({ isActive }) => ({
-                color: isActive ? '#a46eff' : '',
-                background: isActive ? '#fff' : '',
-                borderRadius: isActive ? '5px' : '',
-                padding: isActive ? '10px' : '',
-              })}
-            >
-              <span>Mon réseau</span>
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
+      <div className="calendar-wrapper">
+        {/* <Calendar onChange={onchange} value={date} /> */}
+      </div>
     </div>
   );
 }

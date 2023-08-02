@@ -4,14 +4,17 @@
 
 .dashboard {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   min-height: 100vh;
   text-align: center;
 
-  width: 100%; //A virer
+  width: 100vw; //A virer
 
   .navbar-container {
-    width: 248px;
+    // position: relative;
+    // left: 0;
+    // width: 178px;
+    // height: 100px;
   }
 
   .kanban-container {
@@ -19,16 +22,6 @@
     display: grid;
     grid-template-rows: auto 1fr;
 
-    // .header {
-    //   height: 100px;
-    //   display: flex;
-    //   flex-direction: column;
-    //   justify-content: center;
-    //   align-items: center;
-    // }
-    // .footer {
-    //   height: 50px;
-    // }
   }
 }
 
