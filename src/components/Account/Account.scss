@@ -1,8 +1,8 @@
 @use '../../styles/variables' as v;
 
 .box-account {
-  filter: drop-shadow( 10px 10px 0px #e6e6e6);
-  width: 80vw;
+  filter: drop-shadow(10px 10px 0px #e6e6e6);
+  // width: 80vw;
   // position: absolute;
   display: flex;
   flex-direction: column;
@@ -20,8 +20,8 @@
     flex-direction: column;
     align-items: center;
     // background: cadetblue;
-    width: 100%;
-    height: 100%;
+    width: 300px;
+    // height: 100%;
 
     .input-wrap {
       width: 100%;
@@ -51,7 +51,7 @@
       }
 
       select {
-        width: 50%;
+        width: 100%;
         padding: 4px 0;
         outline: none;
         background: none;
@@ -62,7 +62,11 @@
       }
 
       textarea {
-        width: 50%;
+        // width: 50%;
+        width: 220px;
+        min-height: 80px;
+        position: absolute;
+        right: 0;
         padding: 4px 0;
         outline: none;
         background: none;
@@ -71,13 +75,13 @@
         font-weight: 700;
       }
 
-      .line {  
+      .line {
         background-color: #4a65ff;
         // opacity: 0;
         height: 2px;
         width: 100%;
         position: absolute;
-        transform: scaleX(0);  
+        transform: scaleX(0);
         bottom: 0;
         transform-origin: left;
       }
@@ -86,9 +90,9 @@
       input {
         border: none;
         background: #4a65ff;
-        width: 50%;
+        // width: 50%;
         height: 40px;
-        margin-top: 16px;
+        margin-top: 64px;
         color: #fff;
         font-weight: 700;
         text-transform: uppercase;
@@ -110,30 +114,13 @@
     }
   }
 
-  button {
-    order: none;
-        background: #4a65ff;
-        width: 50%;
-        height: 40px;
-        color: #fff;
-        font-weight: 700;
-        text-transform: uppercase;
-        border: none;
-        margin-top: 16px;
-        cursor: pointer;
-        clip-path: polygon(
-          0% 20px,
-          20px 0%,
-          100% 0%,
-          100% calc(100% - 20px),
-          calc(100% - 20px) 100%,
-          0% 100%
-        );
-        transition: background 0.2s ease;
+  .adress {
+    margin: 32px 0;
+  }
 
-        &:hover {
-          background: #000;
-        }
+  .link {
+    padding-bottom: 4px;
+    font-size: 14px;
+    font-weight: 600;
   }
 }
-

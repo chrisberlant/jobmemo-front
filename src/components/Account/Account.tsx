@@ -104,7 +104,7 @@ function Account() {
           />
           <div className="line" />
         </div>
-        <div className="input-wrap">
+        <div className="input-wrap adress">
           <label htmlFor="adress">Adresse : </label>
           <textarea name="adress" id="adress" autoComplete="off" />
           <div className="line" />
@@ -115,7 +115,20 @@ function Account() {
           </div>
         </div>
       </form>
-      <button type="button" onClick={navigateToChangePassword}>
+      <Link to="/account/changePassword" className="link">
+        Réinitialisez votre mot de passe
+      </Link>
+      <Link to="/deleteAccount" className="link">
+        Supprimer le compte
+      </Link>
+      <Link to="/login" className="link" onClick={clearLocalStorage}>
+        Se déconnecter
+      </Link>
+      <Link to="/dashboard" className="link" onClick={back}>
+        Retour
+      </Link>
+
+      {/* <button type="button" onClick={navigateToChangePassword}>
         Modifier le mot de passe
       </button>
       <button type="button" onClick={clearLocalStorage}>
@@ -126,7 +139,7 @@ function Account() {
       </button>
       <button type="button" onClick={back}>
         Retour
-      </button>
+      </button> */}
     </div>
   );
 }
