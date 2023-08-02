@@ -1,7 +1,6 @@
 @use '../../styles/variables' as v;
 
 .column {
-  // background: lightsteelblue;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -9,27 +8,9 @@
   gap: 16px;
   margin-top: 16px;
   min-width: 250px;
-  // border-left: 2px solid #d3d3d3;
-  // border-right: 2px solid #d3d3d3;
-  // &:not(:last-child) {
-  //   min-width: 200px;
-  // }
-  &:last-child {
-    // background: yellow;
-    // height: 200px;
-  }
 
+  .add-card,
   .recycle-bin {
-    // height: 100vh;
-  }
-
-  .icon-recycle-bin {
-    width: 64px;
-    margin: 32px auto;
-    cursor: pointer;
-  }
-
-  .add-card {
     background: #4a65ff;
     width: 100%;
     height: 52px;
@@ -52,6 +33,10 @@
 
     .icon-add-card {
       width: 24px;
+    }
+  
+    .icon-recycle-bin {
+      width: 32px;
     }
   }
 }

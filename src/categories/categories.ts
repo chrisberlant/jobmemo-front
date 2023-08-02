@@ -32,7 +32,7 @@ const categories: Categories = {
   },
   [uuid()]: {
     id: 4,
-    name: '',
+    name: 'Corbeille',
     color: '#eee',
     items: [],
     className: 'recycle-bin',
