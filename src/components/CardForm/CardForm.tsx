@@ -7,6 +7,16 @@ import logo from '../../assets/images/logo.svg';
 import './CardForm.scss';
 import securedFetch from '../../securedFetch';
 
+function randomColor(): string {
+  const randomInt = (min: number, max: number): number => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+  return `hsl(
+    ${randomInt(0, 360)},
+    ${randomInt(90, 100)}%,
+    ${randomInt(60, 70)}%)`;
+}
+
 function CardForm() {
   const navigate = useNavigate();
   // onSubmit : catch all entries from Form
@@ -14,7 +24,7 @@ function CardForm() {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    // console.log(Object.entries(cardData));
+    formData.append('color', randomColor());
     try {
       const response = await securedFetch('/createNewCard', 'POST', formData);
       console.log(response.data);
