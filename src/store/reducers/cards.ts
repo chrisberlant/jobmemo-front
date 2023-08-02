@@ -57,6 +57,21 @@ export const moveCard = createAsyncThunk(
   }
 );
 
+export const trashOrRestoreCard = createAsyncThunk(
+  'cards/TRASH_OR_RESTORE_CARD',
+  async (id: string) => {
+    const cardForm = new FormData();
+    cardForm.append('id', id);
+    const cardIsTrashedOrRestored = await securedFetch(
+      '/trashOrRestoreCard',
+      'PATCH',
+      cardForm
+    );
+    console.log(`Carte ${id} placée dans la corbeille`);
+    return cardIsTrashedOrRestored;
+  }
+);
+
 export const loadCardsToDashboard = createAction('cards/LOAD_CARDS');
 
 const cardsReducer = createReducer(initialValue, (builder) => {
@@ -99,6 +114,15 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.list[indexMoving].category = action.payload.data.category;
       state.list[indexMoving].index = action.payload.data.index;
       console.log(state.list);
+    })
+    .addCase(trashOrRestoreCard.pending, () => {
+      console.log("Suppression/restauration d'une carte");
+    })
+    .addCase(trashOrRestoreCard.rejected, () => {
+      console.log("Erreur lors de la suppression/restauration d'une carte");
+    })
+    .addCase(trashOrRestoreCard.fulfilled, (state, action) => {
+      console.log('Carte supprimée/restaurée');
     });
 });
 
