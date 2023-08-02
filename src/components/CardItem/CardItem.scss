@@ -1,14 +1,14 @@
 @use '../../styles/variables' as v;
 
 .box-carditem {
-  filter: drop-shadow( 10px 10px 0px #e6e6e6);
+  filter: drop-shadow(10px 10px 0px #e6e6e6);
   width: 80vw;
   // position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 32px;
-  background: white; 
+  background: white;
 
   .item-wrap {
     display: flex;
@@ -34,27 +34,26 @@
   button {
     border: none;
     background: #4a65ff;
-      width: 40%;
-      height: 40px;
-      margin-top: 16px;
-      color: black;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #fff;
-      cursor: pointer;
-      clip-path: polygon(
-        0% 20px,
-        20px 0%,
-        100% 0%,
-        100% calc(100% - 20px),
-        calc(100% - 20px) 100%,
-        0% 100%
-      );
-      transition: background 0.2s ease;
+    width: 40%;
+    height: 40px;
+    margin-top: 16px;
+    color: black;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    clip-path: polygon(
+      0% 20px,
+      20px 0%,
+      100% 0%,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0% 100%
+    );
+    transition: background 0.2s ease;
 
-      &:hover {
-        background: #000;
-      }
+    &:hover {
+      background: #000;
+    }
   }
 }
-
