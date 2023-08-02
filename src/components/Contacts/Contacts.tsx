@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getAllContacts } from '../../store/reducers/contacts';
 import Navbar from '../Navbar/Navbar';
@@ -22,8 +23,14 @@ function Contacts() {
     <div className="Contacts">
       {/* <Navbar /> */}
       <h1>Vos contacts :</h1>
+      {!isLoading && (
+        <Link to="/createContact" className="add-contact-button">
+          <button type="button">Ajouter un nouveau contact</button>
+        </Link>
+      )}
       <div className="contacts-container">
         {isLoading && <span>Chargement en cours</span>}
+
         {!isLoading && noContacts ? (
           <span>Aucun contact pour le moment</span>
         ) : (

@@ -44,6 +44,21 @@ export const getAllContacts = createAsyncThunk(
   }
 );
 
+export const createNewContact = createAsyncThunk(
+  'contacts/CREATE_NEW_CONTACT',
+  async (formData: FormData) => {
+    const creationRequest = await securedFetch(
+      '/createNewContact',
+      'POST',
+      formData
+    );
+    if (creationRequest.status !== 201) {
+      throw new Error(creationRequest.data);
+    }
+    return creationRequest.data;
+  }
+);
+
 export const loadCardsToDashboard = createAction('cards/LOAD_CARDS');
 
 const contactsReducer = createReducer(initialValue, (builder) => {
@@ -59,6 +74,12 @@ const contactsReducer = createReducer(initialValue, (builder) => {
       state.isLoading = false;
       if (state.list.length > 0) state.isEmpty = false;
       console.log('Contacts récupérés');
+    })
+    .addCase(createNewContact.rejected, (state, action) => {
+      console.log('Requête de création de contact refusée');
+    })
+    .addCase(createNewContact.fulfilled, (state, action) => {
+      console.log('Contact créé');
     });
 });
 

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Contact.scss';
 
 interface ContactProps {
@@ -16,11 +16,6 @@ function Contact({
   enterprise,
   occupation,
 }: ContactProps) {
-  const navigate = useNavigate();
-  const navigateToCardItem = () => {
-    navigate(`/contact/${id}`);
-  };
-
   return (
     <div className="contact">
       <h1>
@@ -28,9 +23,9 @@ function Contact({
       </h1>
       <p>Entreprise : {enterprise}</p>
       <p>Fonction : {occupation}</p>
-      <button type="button" onClick={navigateToCardItem}>
-        Voir le contact
-      </button>
+      <Link className="see-contact-button" to={`/contact/${id}`}>
+        <button type="button">Voir le contact</button>
+      </Link>
     </div>
   );
 }
