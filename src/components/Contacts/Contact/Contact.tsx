@@ -22,7 +22,7 @@ function Contact({
   };
 
   return (
-    <div className="Contact">
+    <div className="contact">
       <h1>
         {firstName} {lastName}
       </h1>

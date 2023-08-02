@@ -1,4 +1,10 @@
 @use '../../styles/variables' as v;
 
 .Contacts {
+  display: flex;
+  flex-direction: column;
+
+  .contacts-container {
+    display: flex;
+  }
 }

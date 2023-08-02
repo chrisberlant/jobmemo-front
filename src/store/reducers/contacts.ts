@@ -22,10 +22,12 @@ interface ContactType {
 
 interface Contacts {
   list: ContactType[];
+  isEmpty: boolean;
 }
 
 const initialValue: Contacts = {
   list: [],
+  isEmpty: true,
 };
 
 export const getAllContacts = createAsyncThunk(
@@ -52,6 +54,7 @@ const contactsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(getAllContacts.fulfilled, (state, action) => {
       state.list = action.payload;
+      if (state.list.length > 0) state.isEmpty = false;
       console.log('Contacts récupérés');
     });
 });
