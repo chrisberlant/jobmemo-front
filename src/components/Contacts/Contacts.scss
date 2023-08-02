@@ -31,9 +31,10 @@
         0% 100%
       );
       transition: background 0.2s ease;
-    }
-    &:hover {
-      background: #000;
+
+      &:hover {
+        background: #000;
+      }
     }
   }
 }
