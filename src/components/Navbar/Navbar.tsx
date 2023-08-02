@@ -12,24 +12,17 @@ import './Navbar.scss';
 
 function Navbar() {
   // Show/Hide Menu
-  const [sideMenu, setSideMenu] = useState(false);
-
   let user = null;
   const userString = localStorage.getItem('user');
   if (userString) {
     user = JSON.parse(userString).firstName;
   }
-
-  const showsideMenu = () => {
-    setSideMenu(!sideMenu);
-    // console.log(sideMenu);
-  };
-  //
   // React Calendar
   const [date, setDate] = useState(new Date());
   const onchange = () => {
     setDate(date);
   };
+
   return (
     <div className="navbar">
       <div className="brand-wrapper">

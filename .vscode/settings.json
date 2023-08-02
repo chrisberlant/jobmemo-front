@@ -28,9 +28,13 @@
     "airbnb"
   ],
   "[typescriptreact]": {
+<<<<<<< HEAD
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[scss]": {
     "editor.defaultFormatter": "vscode.css-language-features"
+=======
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+>>>>>>> 342de77aca0e1a364dfccceb12e7c33df911e7ae
   }
 }

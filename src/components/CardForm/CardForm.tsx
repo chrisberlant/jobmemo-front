@@ -2,35 +2,27 @@
 /* eslint-disable no-alert */
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { gsap } from 'gsap';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './CardForm.scss';
 import securedFetch from '../../securedFetch';
 
 function CardForm() {
   const navigate = useNavigate();
-  const [index, setIndex] = useState('');
   // onSubmit : catch all entries from Form
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    setIndex(index + 1);
-    const cardData = {
-      formData: formData,
-      index: index,
-    };
-    console.log(Object.entries(cardData));
-    {
-      /* try {
+    // console.log(Object.entries(cardData));
+    try {
       const response = await securedFetch('/createNewCard', 'POST', formData);
       console.log(response.data);
-      alert('👏 votre nouvelle fiche a été crée')
+      alert('👏 votre nouvelle fiche a été crée');
     } catch (error) {
-      alert("🥺 Une erreur est survenue lors de la création : ", error);
-    } */
+      console.error(error);
+      alert('🥺 Une erreur est survenue lors de la création');
     }
-    alert('👏 votre nouvelle fiche a été crée');
     navigate('/dashboard');
     window.location.reload();
   };
@@ -152,6 +144,20 @@ function CardForm() {
               id="offerUrl"
               autoComplete="off"
             />
+            <div className="line" />
+          </div>
+          <div className="input-wrap">
+            <label htmlFor="contractType">Type de contrat : </label>
+            <select
+              className="contractType"
+              name="contractType"
+              defaultValue="CDI"
+            >
+              <option value="CDI">CDI</option>
+              <option value="CDD">CDD</option>
+              <option value="Alternance">Alternance</option>
+              <option value="Autre">Autre</option>
+            </select>
             <div className="line" />
           </div>
           <div className="input-wrap">
