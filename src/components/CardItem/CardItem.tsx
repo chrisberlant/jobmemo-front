@@ -39,10 +39,8 @@ function CardItem() {
       <div className="item-wrap">
         <span className="item">Entreprise : {cardItems?.enterpriseName}</span>
       </div>
-      {/* <span className="item">Site Web de l'entreprise : {cardItems?.enterpriseUrl}</span> */}
-      <div className="item-wrap">
-        <span className="item">Adresse : {cardItems?.location}</span>
-      </div>
+      {/* <span className="item">Site Web de l'entreprise : {cardItems?.enterpriseUrl}</span> 
+        <span className="item">Adresse : {cardItems?.location}</span> */}
       <div className="item-wrap">
         <span className="item">
           Intitulé de l&apos;annonce : {cardItems?.jobTitle}

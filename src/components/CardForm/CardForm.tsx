@@ -2,33 +2,26 @@
 /* eslint-disable no-alert */
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { gsap } from 'gsap';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './CardForm.scss';
 import securedFetch from '../../securedFetch';
 
 function CardForm() {
   const navigate = useNavigate();
-  const [index, setIndex] = useState('');
   // onSubmit : catch all entries from Form
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    setIndex(index + 1);
-    const cardData = {
-      formData: formData,
-      index: index,
-    };
-    console.log(Object.entries(cardData));
-    {
-      /* try {
+    // console.log(Object.entries(cardData));
+    try {
       const response = await securedFetch('/createNewCard', 'POST', formData);
       console.log(response.data);
-      alert('👏 votre nouvelle fiche a été crée')
+      alert('👏 votre nouvelle fiche a été crée');
     } catch (error) {
-      alert("🥺 Une erreur est survenue lors de la création : ", error);
-    } */
+      console.error(error);
+      alert('🥺 Une erreur est survenue lors de la création');
     }
     navigate('/dashboard');
     window.location.reload();
@@ -81,110 +74,126 @@ function CardForm() {
   // console.log(category);
 
   return (
-    <div className="box-cardform">
-      <NavLink to="/dashboard">
-        <img className="logo" src={logo} alt="logo" />
-      </NavLink>
-      <form method="post" onSubmit={handleSubmit}>
-        <div className="input-wrap">
-          <label htmlFor="category">Catégorie : </label>
-          <select
-            name="category"
-            defaultValue={category?.replace(/-/g, ' ')}
-            className="category"
-          >
-            <option value="Mes offres">Mes offres</option>
-            <option value="Mes candidatures">Mes candidatures</option>
-            <option value="Mes relances">Mes relances</option>
-            <option value="Mes entretiens">Mes entretiens</option>
-          </select>
-          <div className="line" />
-        </div>
-        <div className="input-wrap">
-          <label htmlFor="title">Titre : </label>
-          <input
-            required
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            type="text"
-            name="title"
-            id="title"
-            autoComplete="off"
-          />
-          <div className="line" />
-        </div>
-        <div className="input-wrap">
-          <label htmlFor="enterpriseName">Entreprise : </label>
-          <input
-            required
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            type="text"
-            name="enterpriseName"
-            id="enterpriseName"
-            autoComplete="off"
-          />
-          <div className="line" />
-        </div>
-        <div className="input-wrap">
-          <label htmlFor="jobTitle">Intitulé de l&apos;annonce : </label>
-          <input
-            required
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            type="text"
-            name="jobTitle"
-            id="jobTitle"
-            autoComplete="off"
-          />
-          <div className="line" />
-        </div>
-        <div className="input-wrap">
-          <label htmlFor="offerUrl">Source / Lien de l&apos;annonce : </label>
-          <input
-            required
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            type="text"
-            name="offerUrl"
-            id="offerUrl"
-            autoComplete="off"
-          />
-          <div className="line" />
-        </div>
-        <div className="input-wrap">
-          <label htmlFor="description">Descriptif du poste : </label>
-          <textarea
-            required
-            name="description"
-            id="description"
-            autoComplete="off"
-          />
-          <div className="line" />
-        </div>
-        <div className="input-wrap">
-          <label htmlFor="salary">Salaire : </label>
-          <input
-            required
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            type="text"
-            name="salary"
-            id="salary"
-            autoComplete="off"
-          />
-          <div className="line" />
-        </div>
-        <div className="input-wrap">
-          <input type="submit" defaultValue="Enregistrer" />
-        </div>
-        {/* <div className="input-wrap">
+    <div className="box-wrap">
+      <div className="box-cardform">
+        <NavLink to="/dashboard">
+          <img className="logo" src={logo} alt="logo" />
+        </NavLink>
+        <form method="post" onSubmit={handleSubmit}>
+          <div className="input-wrap">
+            <label htmlFor="category">Catégorie : </label>
+            <select
+              name="category"
+              defaultValue={category?.replace(/-/g, ' ')}
+              className="category"
+            >
+              <option value="Mes offres">Mes offres</option>
+              <option value="Mes candidatures">Mes candidatures</option>
+              <option value="Mes relances">Mes relances</option>
+              <option value="Mes entretiens">Mes entretiens</option>
+            </select>
+            <div className="line" />
+          </div>
+          <div className="input-wrap">
+            <label htmlFor="title">Titre : </label>
+            <input
+              required
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              type="text"
+              name="title"
+              id="title"
+              autoComplete="off"
+            />
+            <div className="line" />
+          </div>
+          <div className="input-wrap">
+            <label htmlFor="enterpriseName">Entreprise : </label>
+            <input
+              required
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              type="text"
+              name="enterpriseName"
+              id="enterpriseName"
+              autoComplete="off"
+            />
+            <div className="line" />
+          </div>
+          <div className="input-wrap">
+            <label htmlFor="jobTitle">Intitulé de l&apos;annonce : </label>
+            <input
+              required
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              type="text"
+              name="jobTitle"
+              id="jobTitle"
+              autoComplete="off"
+            />
+            <div className="line" />
+          </div>
+          <div className="input-wrap">
+            <label htmlFor="offerUrl">Source / Lien de l&apos;annonce : </label>
+            <input
+              required
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              type="text"
+              name="offerUrl"
+              id="offerUrl"
+              autoComplete="off"
+            />
+            <div className="line" />
+          </div>
+          <div className="input-wrap">
+            <label htmlFor="contractType">Type de contrat : </label>
+            <select
+              className="contractType"
+              name="contractType"
+              defaultValue="CDI"
+            >
+              <option value="CDI">CDI</option>
+              <option value="CDD">CDD</option>
+              <option value="Alternance">Alternance</option>
+              <option value="Autre">Autre</option>
+            </select>
+            <div className="line" />
+          </div>
+          <div className="input-wrap">
+            <label htmlFor="description">Descriptif du poste : </label>
+            <textarea
+              required
+              name="description"
+              id="description"
+              autoComplete="off"
+            />
+            <div className="line" />
+          </div>
+          <div className="input-wrap">
+            <label htmlFor="salary">Salaire : </label>
+            <input
+              required
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              type="text"
+              name="salary"
+              id="salary"
+              autoComplete="off"
+            />
+            <div className="line" />
+          </div>
+          <div className="input-wrap">
+            <input type="submit" defaultValue="Enregistrer" />
+          </div>
+          {/* <div className="input-wrap">
             <input type="reset" defaultValue="Annuler" />
           </div> */}
-      </form>
-      <button type="button" onClick={back}>
-        Retour
-      </button>
+        </form>
+        <button type="button" onClick={back}>
+          Retour
+        </button>
+      </div>
     </div>
   );
 }

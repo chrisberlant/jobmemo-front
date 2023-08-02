@@ -16,7 +16,6 @@ function DeleteAccount() {
   ) => {
     try {
       await securedFetch('/deleteUser', 'DELETE');
-
       alert('👏 votre compte a été supprimé');
       localStorage.clear();
       navigate('/login');
