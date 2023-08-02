@@ -12,7 +12,10 @@ interface ColumnProps {
     className: string;
     name: string;
     id: number;
-    items?: Array<{ id: React.Key }>;
+    items?: Array<{
+      index: number;
+      id: React.Key;
+    }>;
   };
 }
 
@@ -21,6 +24,7 @@ interface ColumnProps {
 
 function Column({ droppableId, column }: ColumnProps) {
   const isNotRecycleBin = column.className !== 'recycle-bin';
+  const sortedItems = column?.items?.sort((a, b) => a.index - b.index);
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
       {(provided, snapshot) => {
@@ -37,7 +41,7 @@ function Column({ droppableId, column }: ColumnProps) {
             //     : 'lavender',
             // }}
           >
-            {column?.items?.map((item: { id: React.Key }, index: number) => {
+            {sortedItems?.map((item: { id: React.Key }, index: number) => {
               return <Card key={item.id} item={item} index={index} />;
             })}
             {provided.placeholder}
