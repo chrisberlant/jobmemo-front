@@ -15,19 +15,19 @@ interface MenuItem {
 const items: MenuItem[] = [
   {
     name: 'Aucun',
-    color: 'slateblue',
+    color: '#4a65ff',
   },
   {
     name: 'Par note',
-    color: 'slateblue',
+    color: '#00d948',
   },
   {
     name: 'Par date',
-    color: 'slateblue',
+    color: '#fcd200',
   },
   {
     name: 'Par salaire',
-    color: 'slateblue',
+    color: '#ff0368',
   },
 ];
 
@@ -49,9 +49,9 @@ function Menu({ items }: { items: MenuItem[] }) {
       activeItem?.getBoundingClientRect() || {};
 
     const settings = {
-      x: left ? left - menuOffset?.x : 0,
+      x: left ? left - menuOffset?.x -4 : 0,
       y: top ? top - menuOffset?.y : 0,
-      width: width || 0,
+      width: width + 8 || 0,
       height: height || 0,
       backgroundColor: items[active]?.color,
       ease: 'elastic.out(.7, .7)',

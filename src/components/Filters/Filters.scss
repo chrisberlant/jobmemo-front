@@ -6,8 +6,8 @@
 	padding: 20px;
   width: 100%;
   min-width: 420px;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 900;
   text-transform: uppercase;
   
   span {
@@ -28,6 +28,13 @@
 		top: 0;
 		left: 0;
 		z-index: -1;
-		border-radius: 999px;
+		clip-path: polygon(
+      0% 12px,
+      12px 0%,
+      100% 0%,
+      100% calc(100% - 12px),
+      calc(100% - 12px) 100%,
+      0% 100%
+      );
 	}
 }
