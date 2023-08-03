@@ -194,6 +194,18 @@ function CardForm() {
             <div className="line" />
           </div>
           <div className="input-wrap">
+            <label htmlFor="notation">Note </label>
+            <select className="notation" name="notation" defaultValue="DEFAULT">
+              <option value="DEFAULT" disabled>
+                Modifier la note
+              </option>
+              <option value="1">⭑</option>
+              <option value="2">⭑⭑</option>
+              <option value="3">⭑⭑⭑</option>
+              <option value="4">⭑⭑⭑⭑</option>
+            </select>
+          </div>
+          <div className="input-wrap">
             <input type="submit" defaultValue="Enregistrer" />
           </div>
           {/* <div className="input-wrap">
