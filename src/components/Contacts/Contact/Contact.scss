@@ -2,7 +2,7 @@
 
 .contact {
   filter: drop-shadow(10px 10px 0px #e6e6e6);
-  width: 35vh;
+  // width: 35vh;
   // position: absolute;
   display: flex;
   flex-direction: column;
@@ -10,12 +10,14 @@
   padding: 12px;
   background: white;
   margin: 12px;
+  width: 250px;
+  height: 160px;
 
   h1 {
     font-size: 20px;
   }
   .see-contact-button {
-    width: 50%;
+    width: 80%;
 
     button {
       border: none;
