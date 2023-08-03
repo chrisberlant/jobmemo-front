@@ -1,18 +1,14 @@
 import './CreateContact.scss';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hook/redux';
 import { createNewContact } from '../../store/reducers/contacts';
 
 function CreateContact() {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const handleCreationSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     dispatch(createNewContact(formData));
-    alert('👏 votre nouveau contact a été crée');
-    navigate('/contacts');
   };
 
   return (
