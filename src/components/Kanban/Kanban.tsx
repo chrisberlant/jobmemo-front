@@ -9,6 +9,7 @@ import {
   getAllCards,
   loadCardsToDashboard,
   moveCard,
+  trashOrRestoreCard,
 } from '../../store/reducers/cards';
 import { Categories } from '../../@types/jobmemo';
 
@@ -81,6 +82,8 @@ const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
           items: sourceItems,
         },
       });
+      dispatch(trashOrRestoreCard(movingCardId));
+
       console.log(
         destItems[0].title,
         'is removed - ( id : ',
