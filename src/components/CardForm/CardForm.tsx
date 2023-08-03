@@ -107,7 +107,6 @@ function CardForm() {
           <div className="input-wrap">
             <label htmlFor="title">Titre : </label>
             <input
-              required
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
@@ -120,7 +119,6 @@ function CardForm() {
           <div className="input-wrap">
             <label htmlFor="enterpriseName">Entreprise : </label>
             <input
-              required
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
@@ -133,7 +131,6 @@ function CardForm() {
           <div className="input-wrap">
             <label htmlFor="jobTitle">Intitulé de l&apos;annonce : </label>
             <input
-              required
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
@@ -146,7 +143,6 @@ function CardForm() {
           <div className="input-wrap">
             <label htmlFor="offerUrl">Source / Lien de l&apos;annonce : </label>
             <input
-              required
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
@@ -172,18 +168,12 @@ function CardForm() {
           </div>
           <div className="input-wrap">
             <label htmlFor="description">Descriptif du poste : </label>
-            <textarea
-              required
-              name="description"
-              id="description"
-              autoComplete="off"
-            />
+            <textarea name="description" id="description" autoComplete="off" />
             <div className="line" />
           </div>
           <div className="input-wrap">
             <label htmlFor="salary">Salaire : </label>
             <input
-              required
               onFocus={handleFocus}
               onBlur={handleBlur}
               type="text"
@@ -206,7 +196,7 @@ function CardForm() {
             </select>
           </div>
           <div className="input-wrap">
-            <input type="submit" defaultValue="Enregistrer" />
+            <input type="submit" value="Enregistrer" />
           </div>
           {/* <div className="input-wrap">
             <input type="reset" defaultValue="Annuler" />

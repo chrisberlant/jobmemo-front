@@ -36,7 +36,7 @@ function CreateContact() {
             <div className="line" />
           </div>
           <div className="input-wrap">
-            <label htmlFor="email">email: </label>
+            <label htmlFor="email">Email : </label>
             <input type="email" name="email" id="email" autoComplete="off" />
             <div className="line" />
           </div>
