@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import * as MaIcons from 'react-icons/md';
-import Calendar from 'react-calendar';
-import { useAppSelector } from '../../store/hook/redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+// import * as MaIcons from 'react-icons/md';
+// import Calendar from 'react-calendar';
+// import { useAppSelector } from '../../store/hook/redux';
 import logoWhite from '../../assets/images/logo-white.svg';
 import iconDashboard from '../../assets/icons/icon-dashboard.svg';
 import iconAccount from '../../assets/icons/icon-account.svg';
@@ -11,6 +11,12 @@ import iconContacts from '../../assets/icons/icon-contacts.svg';
 import './Navbar.scss';
 
 function Navbar() {
+  const navigate = useNavigate();
+
+  const back = () => {
+    navigate('/dashboard');
+    window.location.reload();
+  };
   // Show/Hide Menu
   let user = null;
   const userString = localStorage.getItem('user');
@@ -18,10 +24,10 @@ function Navbar() {
     user = JSON.parse(userString).firstName;
   }
   // React Calendar
-  const [date, setDate] = useState(new Date());
-  const onchange = () => {
+  // const [date, setDate] = useState(new Date());
+  /* const onchange = () => {
     setDate(date);
-  };
+  }; */
 
   return (
     <div className="navbar">
@@ -37,6 +43,7 @@ function Navbar() {
         <NavLink
           to="/dashboard"
           className="btn-navigation"
+          onClick={back}
           style={({ isActive }) => ({
             background: isActive ? '#4a65ff' : '',
           })}
@@ -54,13 +61,7 @@ function Navbar() {
           <img src={iconAccount} alt="icone compte" />
           <span>Mon compte</span>
         </NavLink>
-        <NavLink
-          to="/docs"
-          className="btn-navigation"
-          style={({ isActive }) => ({
-            background: isActive ? '#4a65ff' : '',
-          })}
-        >
+        <NavLink to="#" className="btn-navigation">
           <img src={iconDrive} alt="icone fichiers" />
           <span>Mes fichiers</span>
         </NavLink>

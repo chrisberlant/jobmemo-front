@@ -72,7 +72,7 @@ function Card({ item, index }: CardProps): JSX.Element {
                 <h3 className="card-title">{item.title}</h3>
                 <div className="action-wrapper">
                   <button type="button" onClick={navigateToCardItem}>
-                    Editer la fiche
+                    Voir la fiche
                   </button>
                   <input
                     type="checkbox"
