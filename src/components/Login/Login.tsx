@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { Link, useNavigate } from 'react-router-dom';
-import { useLayoutEffect, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import logo from '../../assets/images/logo.svg';
 import './Login.scss';
@@ -109,7 +109,6 @@ function Login() {
               type="email"
               name="email"
               id="email"
-              autoComplete="off"
             />
             <div className="line" />
           </div>

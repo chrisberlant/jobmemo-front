@@ -104,14 +104,17 @@ function Account() {
           />
           <div className="line" />
         </div>
-        <div className="input-wrap adress">
-          <label htmlFor="adress">Adresse : </label>
-          <textarea name="adress" id="adress" autoComplete="off" />
-          <div className="line" />
+        <div className="input-wrap address">
+          <label htmlFor="address">Adresse : </label>
+          <textarea name="address" id="address" autoComplete="off" />
         </div>
         <div className="input-wrap">
           <div className="input-wrap">
-            <input type="submit" defaultValue="Enregistrer les modifications" />
+            <input
+              type="submit"
+              className="submit-button"
+              value="Enregistrer les modifications"
+            />
           </div>
         </div>
       </form>
@@ -127,30 +130,8 @@ function Account() {
       <Link to="/dashboard" className="link" onClick={back}>
         Retour
       </Link>
-
-      {/* <button type="button" onClick={navigateToChangePassword}>
-        Modifier le mot de passe
-      </button>
-      <button type="button" onClick={clearLocalStorage}>
-        Se déconnecter
-      </button>
-      <button type="button" onClick={navigateToDeleteAccount}>
-        Supprimer le compte
-      </button>
-      <button type="button" onClick={back}>
-        Retour
-      </button> */}
     </div>
   );
 }
 
 export default Account;
-
-// <div key={user.id}>
-// <h3>Hello {user.first_name} </h3>
-// <p>Votre id est : {user.id}</p>
-// <p>votre prénom est {user.first_name}</p>
-// <p>votre nom est {user.last_name}</p>
-// <img src={user.avatar_url} alt={user.first_name} />
-// <br />
-// </div>

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap/src';
 import logo from '../../../assets/images/logo.svg';
-import './ChangePassword.scss';
+import '../Account.scss';
 
 function ResetPassword() {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ function ResetPassword() {
   // FIN ANIMATION /////////////////////////////////////////////////////
 
   return (
-    <div className="box-changepassword">
+    <div className="box-account">
       <Link to="/dashboard">
         <img className="logo" src={logo} alt="logo" />
       </Link>
@@ -93,12 +93,17 @@ function ResetPassword() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <input type="submit" defaultValue="Valider" />
+          <input type="submit" className="submit-button" value="Valider" />
+        </div>
+        <div className="input-wrap">
+          <input
+            type="button"
+            className="cancel-button"
+            onClick={cancelChange}
+            value="Annuler"
+          />
         </div>
       </form>
-      <button type="button" onClick={cancelChange}>
-        Annuler
-      </button>
     </div>
   );
 }

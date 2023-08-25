@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/images/logo.svg';
-import './DeleteAccount.scss';
+import '../Account.scss';
 import securedFetch from '../../../securedFetch';
 
 function DeleteAccount() {
@@ -26,20 +26,25 @@ function DeleteAccount() {
   };
 
   return (
-    <div className="box-deleteaccount">
+    <div className="box-account">
       <Link to="/dashboard">
         <img className="logo" src={logo} alt="logo" />
       </Link>
       <h3>Voulez-vous vraiment supprimer votre compte ?</h3>
       <span>Attention cette action est irréversible</span>
-
-      <div className="input-wrap">
-        <input type="button" defaultValue="Supprimer" onClick={handleDelete} />
-      </div>
+      <form>
+        <div className="input-wrap">
+          <input
+            type="button"
+            value="Supprimer"
+            className="submit-button"
+            onClick={handleDelete}
+          />
+        </div>
+      </form>
       <Link to="/dashboard" className="link" onClick={back}>
         Retour
       </Link>
-
     </div>
   );
 }
