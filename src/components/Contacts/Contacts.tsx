@@ -30,41 +30,34 @@ function Contacts() {
 
   return (
     <div className="Contacts">
-      <div
-        className="navbar-container"
-        // style={md ? { width: 0, display: 'none' } : { width: '100%' }}
-      >
-        <Navbar />
+      <div className="contacts-header">
+        <h1>Vos contacts :</h1>
+        {!isLoading && (
+          <Link to="/createContact">
+            <button type="button" className="add-contact-button">
+              Ajouter un nouveau contact
+            </button>
+          </Link>
+        )}
       </div>
 
       <div className="contacts-container">
-        <div className="contacts-header">
-          <h1>Vos contacts :</h1>
-          {!isLoading && (
-            <Link to="/createContact" className="add-contact-button">
-              <button type="button">Ajouter un nouveau contact</button>
-            </Link>
-          )}
-        </div>
+        {isLoading && <span>Chargement en cours</span>}
 
-        <div className="contacts-grid">
-          {isLoading && <span>Chargement en cours</span>}
-
-          {!isLoading && noContacts ? (
-            <span>Aucun contact pour le moment</span>
-          ) : (
-            contacts.map((contact) => (
-              <Contact
-                key={contact.id}
-                id={contact.id}
-                firstName={contact.firstName}
-                lastName={contact.lastName}
-                enterprise={contact.enterprise}
-                occupation={contact.occupation}
-              />
-            ))
-          )}
-        </div>
+        {!isLoading && noContacts ? (
+          <span>Aucun contact pour le moment</span>
+        ) : (
+          contacts.map((contact) => (
+            <Contact
+              key={contact.id}
+              id={contact.id}
+              firstName={contact.firstName}
+              lastName={contact.lastName}
+              enterprise={contact.enterprise}
+              occupation={contact.occupation}
+            />
+          ))
+        )}
       </div>
     </div>
   );

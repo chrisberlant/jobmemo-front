@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 // import * as MaIcons from 'react-icons/md';
 // import Calendar from 'react-calendar';
-// import { useAppSelector } from '../../store/hook/redux';
 import logoWhite from '../../assets/images/logo-white.svg';
 import iconDashboard from '../../assets/icons/icon-dashboard.svg';
 import iconAccount from '../../assets/icons/icon-account.svg';

@@ -1,27 +1,8 @@
 @use '../../styles/variables' as v;
 
-
-
 .dashboard {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  min-height: 100vh;
-  text-align: center;
-
-  // width: 100vw; //A virer
-
-  .navbar-container {
-    // position: relative;
-    // left: 0;
-    // width: 178px;
-    // height: 100px;
-  }
-
-  .kanban-container {
-    height: 100%;
-    display: grid;
-    grid-template-rows: auto 1fr;
-
-  }
+    text-align: center;
+    width: 100%;
 }
+
 
