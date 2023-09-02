@@ -2,11 +2,12 @@
 
 .navbar {
   position: sticky;
+  z-index: 2;
   left: 0;
   background-color: #333;
   color: #fff;
   min-width: 180px;
-  height: 100vh;
+  height: 100%;
   border-right: 10px solid #dbdbdb;
   box-sizing: border-box;
 

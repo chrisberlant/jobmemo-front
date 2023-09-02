@@ -102,7 +102,7 @@ function Register() {
   };
 
   return (
-    <div className="box-wrap" ref={registerRef}>
+    <div className="register" ref={registerRef}>
       <div className="box-register">
         <h2>Créer votre compte</h2>
         <img className="logo" src={logo} alt="logo" />

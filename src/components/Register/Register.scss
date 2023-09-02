@@ -1,19 +1,11 @@
 @use '../../styles/variables' as v;
 
-body {
-  margin: 0;
-  padding: 0;
-  display: grid;
-  place-items: center;
-  height: 100vh;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.box-wrap {
-  filter: drop-shadow( 10px 10px 0px #e6e6e6);
+.register {
+  filter: drop-shadow(10px 10px 0px #e6e6e6);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .box-register {
@@ -33,7 +25,6 @@ body {
   padding: 32px;
   background: #fff;
 
-
   h2 {
     text-align: center;
     margin-bottom: 16px;
@@ -52,7 +43,7 @@ body {
     color: #999;
 
     a {
-      // display: block;
+
       text-decoration: none;
       color: #4a65ff;
       font-weight: 700;
@@ -68,7 +59,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    // background: cadetblue;
     width: 100%;
     height: 100%;
     margin-bottom: -20px;
@@ -108,7 +98,6 @@ body {
 
       .line {  
         background-color: #4a65ff;
-        // opacity: 0;
         height: 2px;
         width: 100%;
         position: absolute;

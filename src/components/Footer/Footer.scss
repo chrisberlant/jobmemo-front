@@ -1,13 +1,12 @@
 @use '../../styles/variables' as v;
 
 .footer {
-	// width: 80vh;
-	text-align: center;
   position: absolute;
+	text-align: center;
 	bottom: 0; 
-	left: 50%;
 	padding: 10px;
-	background-color: white;
+	width: 100%;
+	background-color: #f0f0f0;
 
 	a {
 		text-decoration: none;

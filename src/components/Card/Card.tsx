@@ -42,7 +42,7 @@ function Card({ item, index }: CardProps): JSX.Element {
         const navigate = useNavigate();
 
         const navigateToCardItem = () => {
-          navigate(`/cardItem/${item.id}`);
+          navigate(`/card/${item.id}`);
         };
 
         return (

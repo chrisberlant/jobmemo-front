@@ -83,7 +83,7 @@ export const router = createBrowserRouter([
         element: <Doc />,
       },
       {
-        path: '/cardItem/:id',
+        path: '/card/:id',
         element: <CardItem />,
       },
       {

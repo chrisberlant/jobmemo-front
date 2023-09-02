@@ -96,7 +96,7 @@ function Login() {
   };
 
   return (
-    <div className="box-wrap" ref={loginRef}>
+    <div className="login" ref={loginRef}>
       <div className="box-login">
         <h2>Bienvenue</h2>
         <img className="logo" src={logo} alt="logo" />
