@@ -4,27 +4,13 @@ import logo from '../../assets/images/logo.svg';
 import './Account.scss';
 
 function Account() {
-  const navigate = useNavigate();
   // logout function
   const clearLocalStorage = () => {
     localStorage.clear();
     window.location.reload();
   };
 
-  const navigateToChangePassword = () => {
-    navigate('/account/changePassword');
-  };
-
-  const navigateToDeleteAccount = () => {
-    navigate('/deleteAccount');
-  };
-
-  const back = () => {
-    navigate('/dashboard');
-    window.location.reload();
-  };
-
-  // ANIMATION ////////////////////////////////////////////////////
+  // ANIMATION
 
   // Animation des champs email et mot de passe avec GSAP >>
   // Animation lorsqu'il y'a une action sur le champ
@@ -60,7 +46,6 @@ function Account() {
       }
     }
   };
-  // FIN ANIMATION /////////////////////////////////////////////////////
 
   return (
     <div className="box-account">
@@ -74,7 +59,7 @@ function Account() {
             onFocus={handleFocus}
             onBlur={handleBlur}
             type="text"
-            name="fisrtName"
+            name="firstName"
             id="firstName"
             autoComplete="off"
           />
@@ -86,7 +71,7 @@ function Account() {
             onFocus={handleFocus}
             onBlur={handleBlur}
             type="text"
-            name="lasttName"
+            name="lastName"
             id="lastName"
             autoComplete="off"
           />
@@ -118,17 +103,14 @@ function Account() {
           </div>
         </div>
       </form>
-      <Link to="/account/changePassword" className="link">
-        Réinitialisez votre mot de passe
+      <Link to="/changePassword" className="link">
+        Changer le mot de passe
       </Link>
       <Link to="/deleteAccount" className="link">
         Supprimer le compte
       </Link>
       <Link to="/login" className="link" onClick={clearLocalStorage}>
         Se déconnecter
-      </Link>
-      <Link to="/dashboard" className="link" onClick={back}>
-        Retour
       </Link>
     </div>
   );

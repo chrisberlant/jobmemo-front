@@ -1,8 +1,8 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import useToken from '../Utils/useToken';
-import Navbar from '../components/Navbar/Navbar';
+import useToken from '../../Utils/useToken';
+import Navbar from '../Navbar/Navbar';
 import './ProtectedRoute.scss';
-import Footer from '../components/Footer/Footer';
+import Footer from '../Footer/Footer';
 
 function ProtectedRoute() {
   const auth = useToken();
@@ -10,8 +10,10 @@ function ProtectedRoute() {
     return (
       <div className="protected-page">
         <Navbar />
-        <Outlet />
-        <Footer />
+        <div className="protected-page-content">
+          <Outlet />
+          <Footer />
+        </div>
       </div>
     );
   }

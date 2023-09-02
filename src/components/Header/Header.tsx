@@ -14,7 +14,7 @@ const handleChange = (value: string): void => {
 function Header() {
   const [search, setSearch] = useState('');
 
-  // ANIMATION ////////////////////////////////////////////////////
+  // ANIMATION
   const container = useRef<HTMLDivElement>(null);
   const tl = useRef();
 
@@ -52,9 +52,9 @@ function Header() {
     }, container); // <- Scope!
     return () => ctx.revert(); // <- Cleanup!
   }, []);
-  /// //////////////////////////////////////////////////////////////
+  //
 
-  // SEARCH ////////////////////////////////////////////////////
+  // SEARCH
   const onchange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value);
   };
@@ -74,7 +74,7 @@ function Header() {
           <div className="action-wrapper">
             <div className="filters">
               <Filters />
-              {/* <Actions /> */} 
+              {/* <Actions /> */}
             </div>
           </div>
 
@@ -86,4 +86,5 @@ function Header() {
     </div>
   );
 }
+
 export default Header;

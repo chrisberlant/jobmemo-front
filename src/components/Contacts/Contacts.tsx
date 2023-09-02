@@ -1,26 +1,14 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
-// import useMediaQuery from '../../Utils/mediaQuery';
 import { getAllContacts } from '../../store/reducers/contacts';
-import Navbar from '../Navbar/Navbar';
 import Contact from './Contact/Contact';
 import './Contacts.scss';
 
-// function useMediaQueries() {
-//   const md = useMediaQuery('(max-width: 1250px)');
-
-//   return { md };
-// }
-
 function Contacts() {
-  // const { md } = useMediaQueries();
-
-  console.log('Composant contacts');
-  const contacts = useAppSelector((state) => state.contacts.list);
+  const contacts = useAppSelector((state) => state.contacts.items);
   const noContacts = useAppSelector((state) => state.contacts.isEmpty);
   const isLoading = useAppSelector((state) => state.contacts.isLoading);
-  console.log(contacts);
   const dispatch = useAppDispatch();
 
   // Get the contacts from the API and dispatch them to the store on first render

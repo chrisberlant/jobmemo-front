@@ -21,13 +21,13 @@ interface ContactType {
 }
 
 interface Contacts {
-  list: ContactType[];
+  items: ContactType[];
   isLoading: boolean;
   isEmpty: boolean;
 }
 
 const initialValue: Contacts = {
-  list: [],
+  items: [],
   isLoading: true,
   isEmpty: true,
 };
@@ -70,9 +70,9 @@ const contactsReducer = createReducer(initialValue, (builder) => {
       console.log('Impossible de récupérer les contacts');
     })
     .addCase(getAllContacts.fulfilled, (state, action) => {
-      state.list = action.payload;
+      state.items = action.payload;
       state.isLoading = false;
-      if (state.list.length > 0) state.isEmpty = false;
+      if (state.items.length > 0) state.isEmpty = false;
       console.log('Contacts récupérés');
     })
     .addCase(createNewContact.rejected, (state, action) => {

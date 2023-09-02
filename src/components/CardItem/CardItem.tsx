@@ -14,7 +14,7 @@ function CardItem() {
   const { id } = useParams();
 
   const cardItems = useAppSelector((state) =>
-    findCards(state.cards.list, id as string)
+    findCards(state.cards.items, id as string)
   );
 
   const navigate = useNavigate();

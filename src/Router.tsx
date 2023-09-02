@@ -17,9 +17,10 @@ import Docs from './components/Docs/Docs';
 import Doc from './components/Docs/Doc/Doc';
 import CardForm from './components/CardForm/CardForm';
 import CardItem from './components/CardItem/CardItem';
-import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Upload from './components/Upload/Upload';
 import CreateContact from './components/CreateContact/CreateContact';
+import ContactForm from './components/Contacts/ContactForm/ContactForm';
 
 // Add all routes to begin with
 export const router = createBrowserRouter([
@@ -55,7 +56,7 @@ export const router = createBrowserRouter([
         element: <DeleteAccount />,
       },
       {
-        path: '/account/changePassword',
+        path: 'changePassword',
         element: <ChangePassword />,
       },
       {
@@ -68,7 +69,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/contact/:id',
-        element: <Contact />,
+        element: <ContactForm />,
       },
       {
         path: '/createContact',

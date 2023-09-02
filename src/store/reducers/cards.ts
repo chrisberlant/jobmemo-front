@@ -14,8 +14,9 @@ interface MovingCard {
   movingCardindex: number;
   movingCardcategory: string;
 }
+
 interface CardTable {
-  list: CardType[];
+  items: CardType[];
   isLoading: boolean;
   error: string | undefined;
   loadedCards: boolean;
@@ -23,7 +24,7 @@ interface CardTable {
 }
 
 const initialValue: CardTable = {
-  list: [],
+  items: [],
   isLoading: false,
   error: undefined,
   loadedCards: false,
@@ -95,7 +96,7 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       console.log(`Erreur au chargement des cartes: ${state.error}`);
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
-      state.list = action.payload;
+      state.items = action.payload;
       state.loadedCards = false;
       console.log('Cartes chargées dans le store');
     })
@@ -108,12 +109,12 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     .addCase(moveCard.fulfilled, (state, action) => {
       console.log('Carte déplacée');
       console.log(`Payload : ${action.payload}`);
-      const indexMoving = state.list.findIndex(
+      const indexMoving = state.items.findIndex(
         (card) => card.id === action.payload.data.id
       );
-      state.list[indexMoving].category = action.payload.data.category;
-      state.list[indexMoving].index = action.payload.data.index;
-      console.log(state.list);
+      state.items[indexMoving].category = action.payload.data.category;
+      state.items[indexMoving].index = action.payload.data.index;
+      console.log(state.items);
     })
     .addCase(trashOrRestoreCard.pending, () => {
       console.log("Suppression/restauration d'une carte");

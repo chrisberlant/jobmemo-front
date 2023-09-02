@@ -1,5 +1,6 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Contact.scss';
+import { useAppSelector } from '../../../store/hook/redux';
 
 interface ContactProps {
   id: string;

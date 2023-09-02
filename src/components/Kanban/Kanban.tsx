@@ -13,12 +13,6 @@ import {
 } from '../../store/reducers/cards';
 import { Categories } from '../../@types/jobmemo';
 
-function useMediaQueries() {
-  const sm = useMediaQuery('(max-width: 450px)');
-
-  return { sm };
-}
-
 // Cet extrait de code définit une fonction appelée onDragEnd qui est utilisée comme rappel pour gérer la fin d'un événement glisser. Il prend trois paramètres : result, columns et setColumns.
 // La fonction vérifie d'abord s'il existe une destination valide pour l'événement glisser. Sinon, il revient à sa place.
 // Ensuite, il extrait les propriétés source et destination de l'objet de résultat.
@@ -34,9 +28,9 @@ const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
   const sourceColumn = columns[source.droppableId];
   const destColumn = columns[destination.droppableId];
 
-  // console.log(
-  //   `card moving from : ("${sourceColumn.name}", column id : ${sourceColumn.id}, card position : ${source.index}) to (column "${destColumn.name}", column id : ${destColumn.id}, card position : ${destination.index})`
-  // );
+  console.log(
+    `card moving from : ("${sourceColumn.name}", column id : ${sourceColumn.id}, card position : ${source.index}) to (column "${destColumn.name}", column id : ${destColumn.id}, card position : ${destination.index})`
+  );
 
   // Get the source and destination columns based on the droppableIds
   // Create copies of the source and destination items arrays
@@ -121,10 +115,9 @@ const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
 // }
 
 function Kanban() {
-  const { sm } = useMediaQueries();
   // Initialize state with the categories object
   const [columns, setColumns] = useState(categories);
-  const cards = useAppSelector((state) => state.cards.list);
+  const cards = useAppSelector((state) => state.cards.items);
   const dashboardCards = cards.filter((card) => card.isDeleted === false);
   const loadedCards = useAppSelector((state) => state.cards.loadedCards);
   const dispatch = useAppDispatch();
@@ -168,7 +161,6 @@ function Kanban() {
               key={columnId}
               id={columnId}
               className={`column ${column.className}`}
-              style={sm ? { width: 'calc(100vw - 32px)' } : { width: '100%' }}
             >
               <h3 className="column-title">{column.name}</h3>
               <div className="column-wrapper">
