@@ -37,15 +37,15 @@ export const router = createBrowserRouter([
     element: <Register />,
   },
   {
+    path: '/forgotPassword',
+    element: <ForgotPassword />,
+  },
+  {
     element: <ProtectedRoute />,
     children: [
       {
         path: '/dashboard',
         element: <Dashboard />,
-      },
-      {
-        path: '/forgotPassword',
-        element: <ForgotPassword />,
       },
       {
         path: '/account',

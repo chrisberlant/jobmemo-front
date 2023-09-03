@@ -1,84 +1,25 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useLayoutEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-// import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import {
+  authHandleBlur,
+  authHandleFocus,
+  appearanceAnimation,
+} from '../../Utils/animatedForm';
 import logo from '../../assets/images/logo.svg';
 // import check from '../../assets/icons/check.svg';
 // import error from '../../assets/icons/error.svg';
 import './Register.scss';
 
 function Register() {
-  // ANIMATION ////////////////////////////////////////////////////
-  const registerRef = useRef<HTMLFormElement>(null);
+  const registerRef = useRef();
   const navigate = useNavigate();
   const tl = useRef();
 
-  // Animation des champs avec GSAP >>
-  // Animation lorsqu'il y'a une action sur le champ
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    const label = e.target.parentNode?.querySelector('label');
-    const line = e.target.parentNode?.querySelector('.line');
-    if (label && line) {
-      gsap.to(label, {
-        duration: 0.2,
-        y: -16,
-        color: '#4a65ff',
-      });
-      gsap.to(line, {
-        scaleX: 1,
-      });
-    }
-  };
-  // Animation lorsque l'on sort du champ
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const label = e.target.parentNode?.querySelector('label');
-    const line = e.target.parentNode?.querySelector('.line');
-
-    if (label && line) {
-      if (e.target.value === '') {
-        gsap.to(label, {
-          duration: 0.1,
-          y: 0,
-          color: '#999',
-        });
-        gsap.to(line, {
-          scaleX: 0,
-        });
-      }
-    }
-  };
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context((self) => {
-      const registerBox = self.selector('.box-register');
-      const registerElements = self.selector('.box-register *');
-      const labels = self.selector('label');
-
-      tl.current = gsap
-        .timeline()
-        .from(registerBox, {
-          ease: 'ease.Out',
-          duration: 0.4,
-          clipPath:
-            'polygon(0px 100px, 50px 50px, 300px 50px, 300px 500px, 250px 550px, 0px 550px)',
-        })
-        .from(registerElements, {
-          opacity: 0,
-          stagger: 0.01,
-        })
-        .to(labels, {
-          opacity: 1,
-          stagger: 0.05,
-        });
-    }, registerRef);
-    return () => ctx.revert();
+  useEffect(() => {
+    appearanceAnimation(registerRef, tl);
   }, []);
-  // FIN ANIMATION /////////////////////////////////////////////////////
 
-  // Register form submit
-  const handleSubmit = async (
-    e: React.ChangeEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = e.target;
@@ -103,15 +44,15 @@ function Register() {
 
   return (
     <div className="register" ref={registerRef}>
-      <div className="box-register">
+      <div className="box">
         <h2>Créer votre compte</h2>
         <img className="logo" src={logo} alt="logo" />
         <form method="post" onSubmit={handleSubmit}>
           <div className="input-wrap">
             <label htmlFor="firstName">Prénom : </label>
             <input
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={authHandleFocus}
+              onBlur={authHandleBlur}
               type="text"
               name="firstName"
               id="firstName"
@@ -122,8 +63,8 @@ function Register() {
           <div className="input-wrap">
             <label htmlFor="lastName">Nom : </label>
             <input
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={authHandleFocus}
+              onBlur={authHandleBlur}
               type="text"
               name="lastName"
               id="lastName"
@@ -134,8 +75,8 @@ function Register() {
           <div className="input-wrap">
             <label htmlFor="email">Email : </label>
             <input
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={authHandleFocus}
+              onBlur={authHandleBlur}
               type="email"
               name="email"
               id="email"
@@ -146,8 +87,8 @@ function Register() {
           <div className="input-wrap">
             <label htmlFor="password">Mot de passe : </label>
             <input
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={authHandleFocus}
+              onBlur={authHandleBlur}
               type="password"
               name="password"
               id="password"
@@ -158,8 +99,8 @@ function Register() {
           <div className="input-wrap">
             <label htmlFor="confirmPassword">Confirmez mot de passe : </label>
             <input
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={authHandleFocus}
+              onBlur={authHandleBlur}
               type="password"
               name="confirmPassword"
               id="confirmPassword"
@@ -168,10 +109,14 @@ function Register() {
             <div className="line" />
           </div>
           <div className="input-wrap">
-            <input type="submit" defaultValue="Enregistrer" />
+            <input
+              type="submit"
+              className="submit-button"
+              value="S'enregistrer"
+            />
           </div>
         </form>
-        <span className="forgot">
+        <span className="existing-account">
           Déjà un compte ? <Link to="/login">Se connecter</Link>
         </span>
       </div>

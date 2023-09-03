@@ -8,7 +8,8 @@
   justify-content: center;
 }
 
-.box-login {
+.box {
+  filter: drop-shadow(10px 10px 0px #e6e6e6);
   width: 300px;
   height: 500px;
   clip-path: polygon(
@@ -98,9 +99,8 @@
         bottom: 0;
         transform-origin: left;
       }
-    }
-    .input-wrap:last-of-type {
-      input {
+
+      .submit-button {
         border: none;
         background: #4a65ff;
         width: 100%;
@@ -125,21 +125,7 @@
         }
       }
     }
-    .spinner {
-      position: absolute;
-      background: #4a65ff;
-      top: 16px;
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      opacity: 0;
-      border-radius: 50%;
 
-      svg {
-        fill: #fff;
-      }
-    }
   }
 }
 

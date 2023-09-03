@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { ChangeEvent, useState } from 'react';
 import './ContactForm.scss';
+import { gsap } from 'gsap';
+import { handleFocus, handleBlur } from '../../../Utils/animatedForm';
 import { useAppSelector } from '../../../store/hook/redux';
 
 function ContactForm() {
@@ -24,30 +26,102 @@ function ContactForm() {
   };
 
   return (
-    <div className="contact">
-      <input name="firstName" value={infos.firstName} onChange={handleChange} />
-      <input name="firstName" value={infos.lastName} onChange={handleChange} />
-      <input
-        name="occupation"
-        value={infos.occupation}
-        onChange={handleChange}
-      />
-      <input name="email" value={infos.email} onChange={handleChange} />
-      <input name="phone" value={infos.phone} onChange={handleChange} />
-      <input
-        name="linkedinProfile"
-        value={infos.linkedinProfile}
-        onChange={handleChange}
-      />
-      <input
-        name="enterprise"
-        value={infos.enterprise}
-        onChange={handleChange}
-      />
-      <input name="comments" value={infos.comments} onChange={handleChange} />
-
-      <button type="button">Modifier le contact</button>
-    </div>
+    <form className="contact">
+      <div className="input-wrap">
+        <label htmlFor="lastName">Nom : </label>
+        <input
+          name="lastName"
+          value={infos.lastName}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+        <div className="line" />
+      </div>
+      <div className="input-wrap">
+        <label htmlFor="firstName">Prénom : </label>
+        <input
+          name="firstName"
+          value={infos.firstName}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+        <div className="line" />
+      </div>
+      <div className="input-wrap">
+        <label htmlFor="occupation">Fonction : </label>
+        <input
+          name="occupation"
+          value={infos?.occupation}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+        <div className="line" />
+      </div>
+      <div className="input-wrap">
+        <label htmlFor="email">Email : </label>
+        <input
+          name="email"
+          value={infos?.email}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+        <div className="line" />
+      </div>
+      <div className="input-wrap">
+        <label htmlFor="phone">Téléphone : </label>
+        <input
+          name="phone"
+          value={infos?.phone}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+        <div className="line" />
+      </div>
+      <div className="input-wrap">
+        <label htmlFor="linkedinProfile">Profil LinkedIn : </label>
+        <input
+          name="linkedinProfile"
+          value={infos?.linkedinProfile}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+        <div className="line" />
+      </div>
+      <div className="input-wrap">
+        <label htmlFor="enterprise">Entreprise : </label>
+        <input
+          name="enterprise"
+          value={infos?.enterprise}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+        <div className="line" />
+      </div>
+      <div className="input-wrap">
+        <label htmlFor="comments">Commentaires : </label>
+        <input
+          name="comments"
+          type="textarea"
+          value={infos?.comments}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+        <div className="line" />
+      </div>
+      <div className="input-wrap">
+        <button type="submit" className="submit-button">
+          Modifier le contact
+        </button>
+      </div>
+    </form>
   );
 }
 

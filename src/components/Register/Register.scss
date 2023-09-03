@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.box-register {
+.box {
   width: 300px;
   height: 600px;
   clip-path: polygon(
@@ -105,9 +105,8 @@
         bottom: 0;
         transform-origin: left;
       }
-    }
-    .input-wrap:last-of-type {
-      input {
+
+      .submit-button {
         border: none;
         background: #4a65ff;
         width: 100%;
@@ -132,21 +131,7 @@
         }
       }
     }
-    .spinner {
-      position: absolute;
-      background: #4a65ff;
-      top: 16px;
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      opacity: 0;
-      border-radius: 50%;
 
-      svg {
-        fill: #fff;
-      }
-    }
   }
 }
 
