@@ -52,7 +52,7 @@ function Account() {
       <Link to="/dashboard">
         <img className="logo" src={logo} alt="logo" />
       </Link>
-      <form method="post">
+      <form>
         <div className="input-wrap">
           <label htmlFor="firstName">Nom : </label>
           <input

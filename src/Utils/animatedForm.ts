@@ -69,11 +69,14 @@ export const appearanceAnimation = (
   ref: RefObject<HTMLFormElement>,
   tlRef: MutableRefObject<gsap.core.Timeline | undefined>
 ) => {
-  if (ref.current) {
-    const tl = gsap.timeline();
-    tl.current = gsap
+  const ctx = gsap.context((self) => {
+    const loginBox = self.selector('.box');
+    const loginElements = self.selector('.box *');
+    const labels = self.selector('label');
+
+    tlRef.current = gsap
       .timeline()
-      .from(ref.current, {
+      .from(loginBox, {
         delay: 0.4,
         ease: 'ease.Out',
         scale: 0.9,
@@ -82,20 +85,15 @@ export const appearanceAnimation = (
         clipPath:
           'polygon(0px 250px, 50px 200px, 300px 200px, 300px 250px, 250px 300px, 0px 300px)',
       })
-      .from(ref.current.querySelectorAll('.box *'), {
+
+      .from(loginElements, {
         opacity: 0,
         stagger: 0.01,
       })
-      .to(ref.current.querySelectorAll('label'), {
+      .to(labels, {
         opacity: 1,
         stagger: 0.1,
       });
-  }
-
-  return () => {
-    if (tlRef.current) {
-      tlRef.current.pause();
-      tlRef.current.kill();
-    }
-  };
+  }, ref);
+  return () => ctx.revert();
 };

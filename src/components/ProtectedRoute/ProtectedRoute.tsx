@@ -1,8 +1,8 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import useToken from '../../Utils/useToken';
 import Navbar from '../Navbar/Navbar';
-import './ProtectedRoute.scss';
 import Footer from '../Footer/Footer';
+import './ProtectedRoute.scss';
 
 function ProtectedRoute() {
   const auth = useToken();

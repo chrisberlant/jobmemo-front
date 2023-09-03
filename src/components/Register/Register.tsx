@@ -47,7 +47,7 @@ function Register() {
       <div className="box">
         <h2>Créer votre compte</h2>
         <img className="logo" src={logo} alt="logo" />
-        <form method="post" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="input-wrap">
             <label htmlFor="firstName">Prénom : </label>
             <input

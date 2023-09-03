@@ -6,126 +6,138 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.box {
-  filter: drop-shadow(10px 10px 0px #e6e6e6);
-  width: 300px;
-  height: 500px;
-  clip-path: polygon(
-    0px 50px,
-    50px 0px,
-    300px 0px,
-    300px 450px,
-    250px 500px,
-    0px 500px
-  );
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px;
-  background: #fff;
-
-  h2 {
-    text-align: center;
-    margin-bottom: 16px;
-    font-weight: 400;
-  }
-
-  .logo {
-    width: 40px;
-    margin-bottom: 32px;
-  }
-
-  span {
-    font-size: 10px;
-    text-align: center;
-    margin-bottom: 16px;
-    color: #999;
-
-    a {
-      display: block;
-      text-decoration: none;
-      color: #4a65ff;
-      font-weight: 700;
-      font-size: 12px;
-
-      &:hover {
-        color: #000;
-      }
-    }
-  }
-
-  form {
+  .box {
+    width: 300px;
+    height: 500px;
+    clip-path: polygon(
+      0px 50px,
+      50px 0px,
+      300px 0px,
+      300px 550px,
+      250px 600px,
+      0px 600px
+    );
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    padding: 32px;
+    background: #fff;
 
-    .input-wrap {
-      width: 100%;
-      display: grid;
-      place-items: center;
-      position: relative;
+    h2 {
+      text-align: center;
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    .logo {
+      width: 40px;
       margin-bottom: 32px;
+    }
 
-      label {
-        font-size: 13px;
-        font-weight: 600;
-        transition: 0.2s ease all;
-        position: absolute;
-        left: 0;
-        color: #999;
-      }
+    span {
+      font-size: 10px;
+      text-align: center;
+      margin-bottom: 16px;
+      color: #999;
 
-      input {
-        width: 100%;
-        padding: 4px 0;
-        outline: none;
-        background: none;
-        border: none;
-        border-bottom: 1px solid #999;
-        font-size: 16px;
+      a {
+        display:block;
+        text-decoration: none;
+        color: #4a65ff;
         font-weight: 700;
-      }
-
-      .line {  
-        background-color: #4a65ff;
-        height: 2px;
-        width: 100%;
-        position: absolute;
-        transform: scaleX(0);  
-        bottom: 0;
-        transform-origin: left;
-      }
-
-      .submit-button {
-        border: none;
-        background: #4a65ff;
-        width: 100%;
-        height: 40px;
-        margin: 16px 0;
-        color: #fff;
-        font-weight: 700;
-        text-transform: uppercase;
-        cursor: pointer;
-        clip-path: polygon(
-          0% 20px,
-          20px 0%,
-          100% 0%,
-          100% calc(100% - 20px),
-          calc(100% - 20px) 100%,
-          0% 100%
-        );
-        transition: background 0.2s ease;
+        font-size: 12px;
 
         &:hover {
-          background: #000;
+          color: #000;
         }
       }
     }
 
+    .error {
+      position: absolute;
+      bottom: 110px;
+      color: red;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 50%;
+
+      .input-wrap {
+        width: 100%;
+        display: grid;
+        place-items: center;
+        position: relative;
+        margin-bottom: 32px;
+
+        label {
+          font-size: 13px;
+          font-weight: 600;
+          transition: 0.2s ease all;
+          position: absolute;
+          left: 0;
+          color: #999;
+        }
+
+        input {
+          width: 100%;
+          padding: 4px 0;
+          outline: none;
+          background: none;
+          border: none;
+          border-bottom: 1px solid #999;
+          font-size: 16px;
+          font-weight: 700;
+        }
+
+        img {
+          width: 20px;
+          position: absolute;
+          right: 0;
+        }
+
+        .line {  
+          background-color: #4a65ff;
+          height: 2px;
+          width: 100%;
+          position: absolute;
+          transform: scaleX(0);  
+          bottom: 0;
+          transform-origin: left;
+        }
+
+        .submit-button {
+          border: none;
+          background: #4a65ff;
+          width: 100%;
+          height: 40px;
+          margin: 16px 0;
+          color: #fff;
+          font-weight: 700;
+          text-transform: uppercase;
+          cursor: pointer;
+          clip-path: polygon(
+            0% 20px,
+            20px 0%,
+            100% 0%,
+            100% calc(100% - 20px),
+            calc(100% - 20px) 100%,
+            0% 100%
+          );
+          transition: background 0.2s ease;
+
+          &:hover {
+            background: #000;
+          }
+        }
+      }
+
+    }
   }
 }
-
