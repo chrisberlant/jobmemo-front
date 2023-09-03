@@ -21,6 +21,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Upload from './components/Upload/Upload';
 import CreateContact from './components/CreateContact/CreateContact';
 import ContactForm from './components/Contacts/ContactForm/ContactForm';
+import PageNotFound from './components/PageNotFound/PageNotFound';
 
 // Add all routes to begin with
 export const router = createBrowserRouter([
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
   {
     path: '/forgotPassword',
     element: <ForgotPassword />,
+  },
+  {
+    path: '/404',
+    element: <PageNotFound />,
   },
   {
     element: <ProtectedRoute />,

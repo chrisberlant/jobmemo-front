@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import { ChangeEvent } from 'react';
 import logo from '../../assets/images/logo.svg';
 import './CardForm.scss';
-import securedFetch from '../../securedFetch';
+import securedFetch from '../../Utils/securedFetch';
 
 function randomColor(): string {
   const randomInt = (min: number, max: number): number => {

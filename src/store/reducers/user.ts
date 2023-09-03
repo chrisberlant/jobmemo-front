@@ -4,7 +4,7 @@ import {
   createAsyncThunk,
 } from '@reduxjs/toolkit';
 
-import { baseUrl } from '../../securedFetch';
+import { baseUrl } from '../../Utils/securedFetch';
 
 interface User {
   id: string;

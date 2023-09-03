@@ -5,7 +5,7 @@ import {
   createAction,
 } from '@reduxjs/toolkit';
 
-import securedFetch from '../../securedFetch';
+import securedFetch from '../../Utils/securedFetch';
 
 import { CardType } from '../../@types/jobmemo';
 

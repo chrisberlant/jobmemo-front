@@ -1,25 +1,41 @@
-import { useParams } from 'react-router-dom';
-import { ChangeEvent, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ChangeEvent, useEffect, useState } from 'react';
 import './ContactForm.scss';
-import { gsap } from 'gsap';
 import { handleFocus, handleBlur } from '../../../Utils/animatedForm';
 import { useAppSelector } from '../../../store/hook/redux';
+import securedFetch from '../../../Utils/securedFetch';
 
 function ContactForm() {
   const { id } = useParams();
-  const contact = useAppSelector((state) => state.contacts.items).filter(
+  const navigate = useNavigate();
+  const contact = useAppSelector((state) => state.contacts.items).find(
     (searchedContact) => searchedContact.id === id
-  )[0];
+  );
   const [infos, setInfos] = useState({
-    firstName: contact.firstName,
-    lastName: contact.lastName,
-    occupation: contact.occupation,
-    email: contact.email,
-    phone: contact.phone,
-    linkedinProfile: contact.linkedinProfile,
-    enterprise: contact.enterprise,
-    comments: contact.comments,
+    firstName: '',
+    lastName: '',
+    occupation: '',
+    email: '',
+    phone: '',
+    linkedinProfile: '',
+    enterprise: '',
+    comments: '',
   });
+
+  useEffect(() => {
+    const fetchContact = async () => {
+      if (contact) {
+        setInfos(contact);
+      } else {
+        const fetchedContact = await securedFetch(`/contact/${id}`);
+        if (fetchedContact.status !== 200) {
+          navigate('/404');
+        }
+        setInfos(fetchedContact.data);
+      }
+    };
+    fetchContact();
+  }, [contact, id, navigate]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [event.target.name]: event.target.value });

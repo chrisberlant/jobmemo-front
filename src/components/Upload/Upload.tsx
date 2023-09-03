@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import './Upload.scss';
-import securedFetch from '../../securedFetch';
+import securedFetch from '../../Utils/securedFetch';
 
 function Upload() {
   const [title, setTitle] = useState<string>('');

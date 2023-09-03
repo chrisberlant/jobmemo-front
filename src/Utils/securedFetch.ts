@@ -7,19 +7,19 @@ async function securedFetch(route: string, method?: string, body?: FormData) {
     ?.replace(/^"(.*)"$/, '$1')}`;
   const notEmptyBody = new FormData();
 
-  body?.forEach((value, key) => {
-    if (value !== null && value !== undefined && value !== '') {
-      // Remove any value that is null or empty from the data sent by the user and append it to a new FormData
-      notEmptyBody.append(key, value);
-    }
-  });
+  // body?.forEach((value, key) => {
+  //   if (value !== null && value !== undefined && value !== '') {
+  //     // Remove any value that is null or empty from the data sent by the user and append it to a new FormData
+  //     notEmptyBody.append(key, value);
+  //   }
+  // });
 
   const response = await fetch(baseUrl + route, {
     method,
     headers: {
       authorization: tokenAuthorization,
     },
-    ...(method && method !== 'GET' && { body: notEmptyBody }), // We provide a body only if the user provided a method parameter, and if it is not equal to GET
+    ...(method && method !== 'GET' && { body }), // We provide a body only if the user provided a method parameter, and if it is not equal to GET
   });
 
   const data = await response.json();

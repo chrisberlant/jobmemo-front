@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/images/logo.svg';
 import '../Account.scss';
-import securedFetch from '../../../securedFetch';
+import securedFetch from '../../../Utils/securedFetch';
 
 function DeleteAccount() {
   const navigate = useNavigate();
