@@ -1,20 +1,29 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getAllContacts } from '../../store/reducers/contacts';
 import Contact from './Contact/Contact';
 import './Contacts.scss';
+import { ContactType } from '../../@types/jobmemo';
 
 function Contacts() {
-  const contacts = useAppSelector((state) => state.contacts.items);
-  const noContacts = useAppSelector((state) => state.contacts.isEmpty); //TODO utiliser contacts.length ?
+  const storedContacts = useAppSelector((state) => state.contacts.items);
+  const [contacts, setContacts] = useState<ContactType[] | null>();
   const isLoading = useAppSelector((state) => state.contacts.isLoading);
+  const noContacts = useAppSelector((state) => state.contacts.isEmpty);
+  const error = useAppSelector((state) => state.contacts.error);
   const dispatch = useAppDispatch();
 
   // Get the contacts from the API and dispatch them to the store on first render
   useEffect(() => {
-    dispatch(getAllContacts()); //TODO ne pas dispatch si les contacts sont déjà dans le store
-  }, [dispatch]);
+    const fetchContacts = async () => {
+      if (storedContacts.length === 0 && !noContacts) {
+        dispatch(getAllContacts());
+      }
+      setContacts(storedContacts);
+    };
+    fetchContacts();
+  }, [dispatch, storedContacts, noContacts]);
 
   return (
     <div className="Contacts">
@@ -31,11 +40,13 @@ function Contacts() {
 
       <div className="contacts-container">
         {isLoading && <span>Chargement en cours</span>}
-
+        {!isLoading && error && (
+          <span>Erreur lors de la récupération des contacts</span>
+        )}
         {!isLoading && noContacts ? (
           <span>Aucun contact pour le moment</span>
         ) : (
-          contacts.map((contact) => (
+          contacts?.map((contact) => (
             <Contact
               key={contact.id}
               id={contact.id}

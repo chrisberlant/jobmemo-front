@@ -4,39 +4,21 @@ import {
   createAsyncThunk,
   createAction,
 } from '@reduxjs/toolkit';
+import { ContactType, Contacts } from '../../@types/jobmemo';
 
 import securedFetch from '../../Utils/securedFetch';
 
-interface ContactType {
-  id: string;
-  firstName: string;
-  lastName: string;
-  occupation: string;
-  email: string;
-  phone: string;
-  linkedinProfile: string;
-  enterprise: string;
-  comments: string;
-  color: string;
-}
-
-interface Contacts {
-  items: ContactType[];
-  isLoading: boolean;
-  isEmpty: boolean;
-}
-
 const initialValue: Contacts = {
   items: [],
-  isLoading: true,
-  isEmpty: true,
+  isLoading: false,
+  isEmpty: false,
+  error: false,
 };
 
 export const getAllContacts = createAsyncThunk(
   'contacts/GET_ALL_CONTACTS',
   async () => {
-    const contactsRequest = await securedFetch('/userContacts');
-
+    const contactsRequest = await securedFetch('/allContacts');
     if (contactsRequest.status !== 200) {
       throw new Error(contactsRequest.data);
     }
@@ -46,11 +28,15 @@ export const getAllContacts = createAsyncThunk(
 
 export const createNewContact = createAsyncThunk(
   'contacts/CREATE_NEW_CONTACT',
-  async (formData: FormData) => {
+  async (contact: ContactType) => {
+    const contactInfos = new FormData();
+    Object.keys(contact).forEach((key) => {
+      contactInfos.append(key, contact[key]);
+    });
     const creationRequest = await securedFetch(
       '/createNewContact',
       'POST',
-      formData
+      contactInfos
     );
     if (creationRequest.status !== 201) {
       throw new Error(creationRequest.data);
@@ -64,15 +50,18 @@ export const loadCardsToDashboard = createAction('cards/LOAD_CARDS');
 const contactsReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(getAllContacts.pending, (state, action) => {
+      state.isLoading = true;
       console.log('Récupération des contacts');
     })
     .addCase(getAllContacts.rejected, (state, action) => {
       console.log('Impossible de récupérer les contacts');
+      state.isLoading = false;
+      state.error = true;
     })
     .addCase(getAllContacts.fulfilled, (state, action) => {
       state.items = action.payload;
       state.isLoading = false;
-      if (state.items.length > 0) state.isEmpty = false;
+      if (state.items.length === 0) state.isEmpty = true;
       console.log('Contacts récupérés');
     })
     .addCase(createNewContact.rejected, (state, action) => {

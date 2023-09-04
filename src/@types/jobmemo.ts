@@ -48,3 +48,23 @@ export interface Category {
 export interface Categories {
   [key: string]: Category;
 }
+
+export interface ContactType {
+  id: string;
+  firstName: string;
+  lastName: string;
+  occupation: string;
+  email: string;
+  phone: string;
+  linkedinProfile: string;
+  enterprise: string;
+  comments: string;
+  color: string;
+}
+
+export interface Contacts {
+  items: ContactType[];
+  isLoading: boolean;
+  isEmpty: boolean;
+  error: boolean;
+}

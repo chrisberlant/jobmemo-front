@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import './ContactForm.scss';
 import { handleFocus, handleBlur } from '../../../Utils/animatedForm';
-import { useAppSelector } from '../../../store/hook/redux';
+import { useAppDispatch, useAppSelector } from '../../../store/hook/redux';
 import securedFetch from '../../../Utils/securedFetch';
 
 function ContactForm() {
@@ -21,6 +21,7 @@ function ContactForm() {
     enterprise: '',
     comments: '',
   });
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchContact = async () => {
@@ -41,8 +42,14 @@ function ContactForm() {
     setInfos({ ...infos, [event.target.name]: event.target.value });
   };
 
+  const handleSubmit = () => {
+    const formInfos = new FormData();
+
+    // dispatch(createNewContact(formInfos));
+  };
+
   return (
-    <form className="contact">
+    <form className="contact" onSubmit={handleSubmit}>
       <div className="input-wrap">
         <label htmlFor="lastName">Nom : </label>
         <input

@@ -2,8 +2,7 @@
 
 .box-contact {
   filter: drop-shadow(10px 10px 0px #e6e6e6);
-  // width: 80vw;
-  // position: absolute;
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,9 +18,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    // background: cadetblue;
+
     width: 300px;
-    // height: 100%;
+
 
     .input-wrap {
       width: 100%;
@@ -51,7 +50,6 @@
       }
 
       textarea {
-        // width: 50%;
         width: 220px;
         min-height: 80px;
         position: absolute;
@@ -67,7 +65,7 @@
 
       .line {
         background-color: #4a65ff;
-        // opacity: 0;
+
         height: 2px;
         width: 100%;
         position: absolute;
@@ -80,7 +78,7 @@
       input {
         border: none;
         background: #4a65ff;
-        // width: 50%;
+
         height: 40px;
         margin-top:16px;
         color: #fff;
@@ -102,10 +100,6 @@
         }
       }
     }
-  }
-
-  #comments {
-    margin-top: 100px;
   }
 
   .link {

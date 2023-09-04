@@ -12,9 +12,7 @@ function CreateContact() {
     const form = e.target;
     const formData = new FormData(form);
     dispatch(createNewContact(formData));
-    alert('👏 votre nouveau contact a été crée');
     navigate('/contacts');
-    window.location.reload();
   };
 
   // ANIMATION ////////////////////////////////////////////////////
