@@ -7,13 +7,13 @@ import './Contacts.scss';
 
 function Contacts() {
   const contacts = useAppSelector((state) => state.contacts.items);
-  const noContacts = useAppSelector((state) => state.contacts.isEmpty); //TODO utiliser contacts.length ?
+  const noContacts = useAppSelector((state) => state.contacts.isEmpty);
   const isLoading = useAppSelector((state) => state.contacts.isLoading);
   const dispatch = useAppDispatch();
 
   // Get the contacts from the API and dispatch them to the store on first render
   useEffect(() => {
-    dispatch(getAllContacts()); //TODO ne pas dispatch si les contacts sont déjà dans le store
+    dispatch(getAllContacts());
   }, [dispatch]);
 
   return (
