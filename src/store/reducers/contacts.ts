@@ -28,15 +28,12 @@ export const getAllContacts = createAsyncThunk(
 
 export const createNewContact = createAsyncThunk(
   'contacts/CREATE_NEW_CONTACT',
-  async (contact: ContactType) => {
-    const contactInfos = new FormData();
-    Object.keys(contact).forEach((key) => {
-      contactInfos.append(key, contact[key]);
-    });
+  async (contact: FormData) => {
+    console.log(contact);
     const creationRequest = await securedFetch(
       '/createNewContact',
       'POST',
-      contactInfos
+      contact
     );
     if (creationRequest.status !== 201) {
       throw new Error(creationRequest.data);
