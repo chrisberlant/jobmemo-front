@@ -53,8 +53,8 @@ export interface ContactType {
   id: string;
   firstName: string;
   lastName: string;
-  occupation: string;
   email: string;
+  occupation: string;
   phone: string;
   linkedinProfile: string;
   enterprise: string;

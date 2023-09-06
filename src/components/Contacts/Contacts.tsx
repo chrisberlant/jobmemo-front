@@ -7,8 +7,7 @@ import './Contacts.scss';
 import { ContactType } from '../../@types/jobmemo';
 
 function Contacts() {
-  const storedContacts = useAppSelector((state) => state.contacts.items);
-  const [contacts, setContacts] = useState<ContactType[] | null>();
+  const contacts = useAppSelector((state) => state.contacts.items);
   const isLoading = useAppSelector((state) => state.contacts.isLoading);
   const noContacts = useAppSelector((state) => state.contacts.isEmpty);
   const error = useAppSelector((state) => state.contacts.error);
@@ -17,13 +16,12 @@ function Contacts() {
   // Get the contacts from the API and dispatch them to the store on first render
   useEffect(() => {
     const fetchContacts = async () => {
-      if (storedContacts.length === 0 && !noContacts) {
+      if (contacts.length === 0 && !noContacts) {
         dispatch(getAllContacts());
       }
-      setContacts(storedContacts);
     };
     fetchContacts();
-  }, [dispatch, storedContacts, noContacts]);
+  }, [dispatch, contacts, noContacts]);
 
   return (
     <div className="Contacts">

@@ -59,15 +59,16 @@ const contactsReducer = createReducer(initialValue, (builder) => {
       state.error = true;
     })
     .addCase(getAllContacts.fulfilled, (state, action) => {
-      state.items = action.payload;
       state.isLoading = false;
-      if (state.items.length === 0) state.isEmpty = true;
+      if (action.payload.length === 0) state.isEmpty = true;
+      else state.items = action.payload;
       console.log('Contacts récupérés');
     })
     .addCase(createNewContact.rejected, (state, action) => {
       console.log('Requête de création de contact refusée');
     })
     .addCase(createNewContact.fulfilled, (state, action) => {
+      state.isEmpty = false;
       console.log('Contact créé');
     });
 });
