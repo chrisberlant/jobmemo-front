@@ -66,6 +66,7 @@ const contactsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(createNewContact.fulfilled, (state, action) => {
       state.isEmpty = false;
+      state.items.push(action.payload);
       console.log('Contact créé');
     });
 });

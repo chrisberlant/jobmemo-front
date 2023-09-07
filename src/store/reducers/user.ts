@@ -5,28 +5,25 @@ import {
 } from '@reduxjs/toolkit';
 
 import { baseUrl } from '../../Utils/securedFetch';
+import { UserType, UserInfosType } from '../../@types/jobmemo';
 
-interface User {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  avatarUrl: string;
-  isLoading: boolean;
-  error: string | null;
-}
-
-const initialValue: User = {
-  id: '',
-  email: '',
-  firstName: '',
-  lastName: '',
-  avatarUrl: '',
+const initialValue: UserType = {
+  infos: {
+    id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    avatarUrl: '',
+    address: '',
+  },
   isLoading: false,
-  error: null,
+  error: undefined,
 };
 
-export const modifyUserInfos = createAction<User>('user/MODIFY_USER_INFOS');
+export const modifyUserInfos = createAction<UserInfosType>(
+  'user/MODIFY_USER_INFOS'
+);
+// TODO ajouter async pour modifier les infos de la BDD
 export const login = createAsyncThunk(
   'user/LOGIN',
   async (credentials: FormData) => {
@@ -54,33 +51,35 @@ const userReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(modifyUserInfos, (state, action) => {
       const { id, email, firstName, lastName, avatarUrl } = action.payload;
-      state.id = id;
-      state.email = email;
-      state.firstName = firstName;
-      state.lastName = lastName;
-      state.avatarUrl = avatarUrl;
+      state.infos.id = id;
+      state.infos.email = email;
+      state.infos.firstName = firstName;
+      state.infos.lastName = lastName;
+      state.infos.avatarUrl = avatarUrl;
       console.log('Infos utilisateur modifiées');
     })
     .addCase(login.pending, (state) => {
       state.isLoading = true;
       console.log('Chargement en cours');
-      state.error = null;
+      state.error = undefined;
     })
     .addCase(login.rejected, (state) => {
       state.isLoading = false;
       state.error = 'Email ou mot de passe incorrect';
     })
     .addCase(login.fulfilled, (state, action) => {
-      const { id, email, firstName, lastName, avatarUrl } = action.payload.user;
+      const { id, email, firstName, lastName, avatarUrl, address } =
+        action.payload.user;
       const { token } = action.payload;
-      state.id = id;
-      state.email = email;
-      state.firstName = firstName;
-      state.lastName = lastName;
-      state.avatarUrl = avatarUrl;
+      state.infos.id = id;
+      state.infos.email = email;
+      state.infos.firstName = firstName;
+      state.infos.lastName = lastName;
+      state.infos.avatarUrl = avatarUrl;
+      state.infos.address = address;
       // Adding token to local storage if login is fulfilled
       localStorage.setItem('token', JSON.stringify(token));
-      const userInfos = { email, firstName, lastName, avatarUrl };
+      const userInfos = { email, firstName, lastName, avatarUrl, address };
       localStorage.setItem('user', JSON.stringify(userInfos));
     });
 });

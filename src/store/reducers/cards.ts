@@ -4,29 +4,13 @@ import {
   createAsyncThunk,
   createAction,
 } from '@reduxjs/toolkit';
-
 import securedFetch from '../../Utils/securedFetch';
-
-import { CardType } from '../../@types/jobmemo';
-
-interface MovingCard {
-  movingCardId: string;
-  movingCardindex: number;
-  movingCardcategory: string;
-}
-
-interface CardTable {
-  items: CardType[];
-  isLoading: boolean;
-  error: string | undefined;
-  loadedCards: boolean;
-  movingCardId: string;
-}
+import { CardTable, MovingCard } from '../../@types/jobmemo';
 
 const initialValue: CardTable = {
   items: [],
   isLoading: false,
-  error: undefined,
+  error: null,
   loadedCards: false,
   movingCardId: '',
 };

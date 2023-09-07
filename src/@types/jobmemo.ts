@@ -21,17 +21,23 @@ export interface CardType {
   userId: number;
 }
 
+export interface MovingCard {
+  movingCardId: string;
+  movingCardindex: number;
+  movingCardcategory: string;
+}
+
+export interface CardTable {
+  items: CardType[];
+  isLoading: boolean;
+  error: string | undefined;
+  loadedCards: boolean;
+  movingCardId: string;
+}
+
 export interface ColumnType {
   id: number;
   title: string;
-}
-
-export interface UserType {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  avatarUrl: string;
 }
 
 export interface UserToken {
@@ -67,4 +73,19 @@ export interface Contacts {
   isLoading: boolean;
   isEmpty: boolean;
   error: boolean;
+}
+
+export interface UserInfosType {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+  address: string;
+}
+
+export interface UserType {
+  infos: UserInfosType;
+  isLoading: boolean;
+  error: string | undefined;
 }
