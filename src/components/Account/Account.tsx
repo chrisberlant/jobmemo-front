@@ -59,6 +59,7 @@ function Account() {
             id="lastName"
             onChange={handleChange}
             value={infos.lastName}
+            required
           />
           <div className="line" />
         </div>
@@ -72,6 +73,7 @@ function Account() {
             id="firstName"
             onChange={handleChange}
             value={infos.firstName}
+            required
           />
           <div className="line" />
         </div>
@@ -85,6 +87,7 @@ function Account() {
             id="email"
             onChange={handleChange}
             value={infos.email}
+            required
           />
           <div className="line" />
         </div>
@@ -93,21 +96,18 @@ function Account() {
           <input
             onFocus={handleFocus}
             onBlur={handleBlur}
-            type="textarea"
             name="address"
             id="address"
             onChange={handleChange}
-            value={infos.address}
+            value={infos.address ?? ''} // TODO remplacer ça dans le useState ?
           />
           <div className="line" />
         </div>
-        <div className="input-wrap">
-          <input
-            type="submit"
-            className="submit-button"
-            value="Enregistrer les modifications"
-          />
-        </div>
+        <input
+          type="submit"
+          className="button button--submit"
+          value="Enregistrer les modifications"
+        />
       </form>
       <Link to="/changePassword" className="link">
         Changer le mot de passe

@@ -1,10 +1,6 @@
 /* eslint-disable no-console */
-import {
-  createReducer,
-  createAsyncThunk,
-  createAction,
-} from '@reduxjs/toolkit';
-import { ContactType, Contacts } from '../../@types/jobmemo';
+import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
+import { Contacts } from '../../@types/jobmemo';
 
 import securedFetch from '../../Utils/securedFetch';
 
@@ -43,7 +39,21 @@ export const createNewContact = createAsyncThunk(
   }
 );
 
-export const loadCardsToDashboard = createAction('cards/LOAD_CARDS');
+export const modifyContact = createAsyncThunk(
+  'contacts/MODIFY_CONTACT',
+  async (infos: FormData) => {
+    console.log(infos);
+    const modificationRequest = await securedFetch(
+      '/modifyContact',
+      'PATCH',
+      infos
+    );
+    if (modificationRequest.status !== 200) {
+      throw new Error(modificationRequest.data);
+    }
+    return modificationRequest.data;
+  }
+);
 
 const contactsReducer = createReducer(initialValue, (builder) => {
   builder
@@ -62,6 +72,9 @@ const contactsReducer = createReducer(initialValue, (builder) => {
       else state.items = action.payload;
       console.log('Contacts récupérés');
     })
+    .addCase(createNewContact.pending, (state, action) => {
+      console.log('Création du contact en cours');
+    })
     .addCase(createNewContact.rejected, (state, action) => {
       console.log('Requête de création de contact refusée');
     })
@@ -69,6 +82,22 @@ const contactsReducer = createReducer(initialValue, (builder) => {
       state.isEmpty = false;
       state.items.push(action.payload);
       console.log('Contact créé');
+    })
+    .addCase(modifyContact.pending, (state, action) => {
+      console.log('Modification du contact en cours');
+    })
+    .addCase(modifyContact.rejected, (state, action) => {
+      console.log('Requête de modification de contact refusée');
+    })
+    .addCase(modifyContact.fulfilled, (state, action) => {
+      const updatedInfos = action.payload;
+      const contactIndexToUpdate = state.items.findIndex(
+        (contact) => contact.id === updatedInfos.id
+      );
+      if (contactIndexToUpdate) {
+        state.items[contactIndexToUpdate] = updatedInfos;
+        console.log('Contact modifié');
+      }
     });
 });
 

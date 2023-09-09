@@ -5,14 +5,6 @@ async function securedFetch(route: string, method?: string, body?: FormData) {
   const tokenAuthorization = `Bearer ${localStorage
     .getItem('token')
     ?.replace(/^"(.*)"$/, '$1')}`;
-  const notEmptyBody = new FormData();
-
-  // body?.forEach((value, key) => {
-  //   if (value !== null && value !== undefined && value !== '') {
-  //     // Remove any value that is null or empty from the data sent by the user and append it to a new FormData
-  //     notEmptyBody.append(key, value);
-  //   }
-  // });
 
   const response = await fetch(baseUrl + route, {
     method,

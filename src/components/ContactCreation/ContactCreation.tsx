@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { createNewContact } from '../../store/reducers/contacts';
 import { useAppDispatch } from '../../store/hook/redux';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
@@ -19,7 +19,7 @@ function CreateContact() {
     comments: '',
   });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [event.target.name]: event.target.value });
   };
 
@@ -44,6 +44,7 @@ function CreateContact() {
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
+            required
           />
           <div className="line" />
         </div>
@@ -56,6 +57,7 @@ function CreateContact() {
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
+            required
           />
           <div className="line" />
         </div>
@@ -132,13 +134,20 @@ function CreateContact() {
           />
           <div className="line" />
         </div>
-        <div className="input-wrap">
-          <input
-            type="submit"
-            className="submit-button"
-            value="Créer le contact"
-          />
-        </div>
+        <input
+          type="submit"
+          name="submit-button"
+          className="button button--submit"
+          value="Créer le contact"
+          aria-label="Créer le contact"
+        />
+        <input
+          type="submit"
+          name="cancel-button"
+          className="button button--cancel"
+          value="Annuler"
+          aria-label="Annuler"
+        />
       </form>
     </div>
   );

@@ -46,6 +46,7 @@ export const login = createAsyncThunk(
 export const modifyUserInfos = createAsyncThunk(
   'user/MODIFY_USER_INFOS',
   async (infos: FormData) => {
+    console.log(infos);
     const modificationRequest = await securedFetch(
       '/modifyUserInfos',
       'PATCH',
