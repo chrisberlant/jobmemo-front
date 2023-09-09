@@ -13,7 +13,7 @@ import './Login.scss';
 function Login() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const loginRef = useRef<HTMLFormElement>(null);
+  const loginRef = useRef(null);
   const tl = useRef();
   const error = useAppSelector((state) => state.user.error);
 

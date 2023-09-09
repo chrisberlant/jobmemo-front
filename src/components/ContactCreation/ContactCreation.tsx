@@ -25,8 +25,7 @@ function CreateContact() {
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
+    const formData = new FormData(e.target);
     dispatch(createNewContact(formData));
     navigate('/contacts');
   };

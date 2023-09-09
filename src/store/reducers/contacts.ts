@@ -13,6 +13,7 @@ const initialValue: Contacts = {
   isLoading: false,
   isEmpty: false,
   error: false,
+  message: null,
 };
 
 export const getAllContacts = createAsyncThunk(

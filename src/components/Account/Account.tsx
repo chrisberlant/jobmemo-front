@@ -10,7 +10,6 @@ function Account() {
   const dispatch = useAppDispatch();
   const userInfos = useAppSelector((state) => state.user.infos);
   const [infos, setInfos] = useState({
-    id: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -19,21 +18,29 @@ function Account() {
   });
 
   useEffect(() => {
-    if (!userInfos) {
-      // TODO récupérer les infos user si pas dans le store (nouvelle méthode de contrôleur avec securedfetch)
+    const storedUser = localStorage.getItem('user');
+    if (userInfos.email !== '') {
+      setInfos(userInfos);
+    } else if (storedUser) {
+      const parsedStoredUser = JSON.parse(storedUser);
+      setInfos(parsedStoredUser);
     }
   }, [userInfos]);
 
   // logout function
-  const clearLocalStorage = () => {
+  const logOut = () => {
     localStorage.clear();
     window.location.reload();
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      modifyUserInfos({ ...userInfos, [event.target.name]: event.target.value })
-    );
+    setInfos({ ...infos, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    dispatch(modifyUserInfos(formData));
   };
 
   return (
@@ -41,17 +48,17 @@ function Account() {
       <Link to="/dashboard">
         <img className="logo" src={logo} alt="logo" />
       </Link>
-      <form>
+      <form className="account-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="firstName">Nom : </label>
           <input
             onFocus={handleFocus}
             onBlur={handleBlur}
             type="text"
-            name="firstName"
-            id="firstName"
+            name="lastName"
+            id="lastName"
             onChange={handleChange}
-            value={userInfos.firstName}
+            value={infos.lastName}
           />
           <div className="line" />
         </div>
@@ -61,9 +68,10 @@ function Account() {
             onFocus={handleFocus}
             onBlur={handleBlur}
             type="text"
-            name="lastName"
-            id="lastName"
+            name="firstName"
+            id="firstName"
             onChange={handleChange}
+            value={infos.firstName}
           />
           <div className="line" />
         </div>
@@ -76,21 +84,29 @@ function Account() {
             name="email"
             id="email"
             onChange={handleChange}
+            value={infos.email}
           />
           <div className="line" />
         </div>
-        <div className="input-wrap address">
+        <div className="input-wrap">
           <label htmlFor="address">Adresse : </label>
-          <textarea name="address" id="address" onChange={handleChange} />
+          <input
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            type="textarea"
+            name="address"
+            id="address"
+            onChange={handleChange}
+            value={infos.address}
+          />
+          <div className="line" />
         </div>
         <div className="input-wrap">
-          <div className="input-wrap">
-            <input
-              type="submit"
-              className="submit-button"
-              value="Enregistrer les modifications"
-            />
-          </div>
+          <input
+            type="submit"
+            className="submit-button"
+            value="Enregistrer les modifications"
+          />
         </div>
       </form>
       <Link to="/changePassword" className="link">
@@ -99,7 +115,7 @@ function Account() {
       <Link to="/deleteAccount" className="link">
         Supprimer le compte
       </Link>
-      <Link to="/login" className="link" onClick={clearLocalStorage}>
+      <Link to="/login" className="link" onClick={logOut}>
         Se déconnecter
       </Link>
     </div>

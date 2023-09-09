@@ -73,10 +73,10 @@ export interface Contacts {
   isLoading: boolean;
   isEmpty: boolean;
   error: boolean;
+  message: string | null;
 }
 
 export interface UserInfosType {
-  id: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -87,5 +87,6 @@ export interface UserInfosType {
 export interface UserType {
   infos: UserInfosType;
   isLoading: boolean;
-  error: string | undefined;
+  error: string | null;
+  message: string | null;
 }
