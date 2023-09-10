@@ -81,8 +81,7 @@ function CardForm() {
   // FIN ANIMATION /////////////////////////////////////////////////////
 
   const { category } = useParams();
-  // console.log(category);
-
+  // TODO champs contrôlés
   return (
     <div className="box-wrap">
       <div className="box-cardform">
@@ -94,7 +93,7 @@ function CardForm() {
             <label htmlFor="category">Catégorie : </label>
             <select
               name="category"
-              defaultValue={category?.replace(/-/g, ' ')}
+              value={category?.replace(/-/g, ' ')}
               className="category"
             >
               <option value="Mes offres">Mes offres</option>
