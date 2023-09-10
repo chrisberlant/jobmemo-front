@@ -35,11 +35,6 @@ function Column({ droppableId, column }: ColumnProps) {
             {...provided.droppableProps}
             ref={provided.innerRef}
             className="column"
-            // style={{
-            //   background: snapshot.isDraggingOver
-            //     ? 'lightsteelblue'
-            //     : 'lavender',
-            // }}
           >
             {sortedItems?.map((item: { id: React.Key }, index: number) => {
               return <Card key={item.id} item={item} index={index} />;

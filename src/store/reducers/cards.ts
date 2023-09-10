@@ -10,7 +10,7 @@ import { CardTable, MovingCard } from '../../@types/jobmemo';
 const initialValue: CardTable = {
   items: [],
   isLoading: false,
-  error: null,
+  error: undefined,
   loadedCards: false,
   movingCardId: '',
 };
@@ -23,6 +23,22 @@ export const getAllCards = createAsyncThunk('cards/GET_ALL_CARDS', async () => {
   }
   return cardsRequest.data;
 });
+
+export const modifyCard = createAsyncThunk(
+  'contacts/MODIFY_CARD',
+  async (infos: FormData) => {
+    console.log(infos);
+    const modificationRequest = await securedFetch(
+      '/modifyCard',
+      'PATCH',
+      infos
+    );
+    if (modificationRequest.status !== 200) {
+      throw new Error(modificationRequest.data);
+    }
+    return modificationRequest.data;
+  }
+);
 
 export const setMovingCardId = createAction<string>('cards/SET_MOVING_CARD_ID');
 
@@ -83,6 +99,25 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.items = action.payload;
       state.loadedCards = false;
       console.log('Cartes chargées dans le store');
+    })
+    .addCase(modifyCard.pending, (state, action) => {
+      console.log('Modification du contact en cours');
+    })
+    .addCase(modifyCard.rejected, (state, action) => {
+      console.log('Requête de modification de contact refusée');
+      state.error = action.error.message;
+    })
+    .addCase(modifyCard.fulfilled, (state, action) => {
+      const updatedInfos = action.payload;
+      const cardIndexToUpdate = state.items.findIndex(
+        (card) => card.id === updatedInfos.id
+      );
+      if (cardIndexToUpdate) {
+        state.items[cardIndexToUpdate] = updatedInfos;
+        console.log('Fiche modifiée');
+        // state.error = false;
+        // state.message = `Contact ${state.items[contactIndexToUpdate].firstName} ${state.items[contactIndexToUpdate].lastName} modifié`;
+      }
     })
     .addCase(moveCard.pending, () => {
       console.log('Carte se déplaçant');

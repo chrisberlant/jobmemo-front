@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getAllContacts } from '../../store/reducers/contacts';
-import Contact from './Contact/Contact';
+import ContactCard from './ContactCard/ContactCard';
 import './Contacts.scss';
 
 function Contacts() {
@@ -46,7 +46,7 @@ function Contacts() {
           <span>Aucun contact pour le moment</span>
         ) : (
           contacts?.map((contact) => (
-            <Contact
+            <ContactCard
               key={contact.id}
               id={contact.id}
               firstName={contact.firstName}

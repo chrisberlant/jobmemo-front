@@ -21,18 +21,18 @@ export interface CardType {
   userId: number;
 }
 
-export interface MovingCard {
-  movingCardId: string;
-  movingCardindex: number;
-  movingCardcategory: string;
-}
-
 export interface CardTable {
   items: CardType[];
   isLoading: boolean;
   error: string | undefined;
   loadedCards: boolean;
   movingCardId: string;
+}
+
+export interface MovingCard {
+  movingCardId: string;
+  movingCardindex: number;
+  movingCardcategory: string;
 }
 
 export interface ColumnType {

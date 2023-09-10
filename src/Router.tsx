@@ -15,7 +15,7 @@ import Contacts from './components/Contacts/Contacts';
 import Docs from './components/Docs/Docs';
 import Doc from './components/Docs/Doc/Doc';
 import CardForm from './components/CardForm/CardForm';
-import CardItem from './components/CardItem/CardItem';
+import CardDetails from './components/CardDetails/CardDetails';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Upload from './components/Upload/Upload';
 import ContactCreation from './components/ContactCreation/ContactCreation';
@@ -89,7 +89,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/card/:id',
-        element: <CardItem />,
+        element: <CardDetails />,
       },
       {
         path: '/addCard/:category',

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Link, useNavigate } from 'react-router-dom';
-import logo from '../../assets/images/logo.svg';
+import { useNavigate } from 'react-router-dom';
+
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { setMovingCardId } from '../../store/reducers/cards';
 import './Card.scss';
@@ -23,7 +23,7 @@ type CardProps = {
   index: number;
 };
 
-function Card({ item, index }: CardProps): JSX.Element {
+function Card({ item, index }: CardProps) {
   const dispatch = useAppDispatch();
   const [checked, setChecked] = useState<boolean>(false);
   const handleChange = (): void => {
@@ -41,7 +41,7 @@ function Card({ item, index }: CardProps): JSX.Element {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const navigate = useNavigate();
 
-        const navigateToCardItem = () => {
+        const navigateToCardDetails = () => {
           navigate(`/card/${item.id}`);
         };
 
@@ -71,7 +71,7 @@ function Card({ item, index }: CardProps): JSX.Element {
                 <h4 className="company-title">{item.enterpriseName}</h4>
                 <h3 className="card-title">{item.title}</h3>
                 <div className="action-wrapper">
-                  <button type="button" onClick={navigateToCardItem}>
+                  <button type="button" onClick={navigateToCardDetails}>
                     Voir la fiche
                   </button>
                   <input

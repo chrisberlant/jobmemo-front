@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import categories from '../../categories/categories';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
-import useMediaQuery from '../../Utils/mediaQuery';
 import Column from '../Column/Column';
 import './Kanban.scss';
 import {
@@ -108,11 +107,6 @@ const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
     });
   }
 };
-
-// function useForceUpdate() {
-//     let [value, setState] = useState(true);
-//     return () => setState(!value);
-// }
 
 function Kanban() {
   // Initialize state with the categories object
