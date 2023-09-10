@@ -4,29 +4,22 @@ import {
   createAsyncThunk,
 } from '@reduxjs/toolkit';
 
-import { baseUrl } from '../../Utils/securedFetch';
+import securedFetch, { baseUrl } from '../../Utils/securedFetch';
+import { UserType, UserInfosType } from '../../@types/jobmemo';
 
-interface User {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  avatarUrl: string;
-  isLoading: boolean;
-  error: string | null;
-}
-
-const initialValue: User = {
-  id: '',
-  email: '',
-  firstName: '',
-  lastName: '',
-  avatarUrl: '',
+const initialValue: UserType = {
+  infos: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    avatarUrl: '',
+    address: '',
+  },
   isLoading: false,
   error: null,
+  message: null,
 };
 
-export const modifyUserInfos = createAction<User>('user/MODIFY_USER_INFOS');
 export const login = createAsyncThunk(
   'user/LOGIN',
   async (credentials: FormData) => {
@@ -50,17 +43,23 @@ export const login = createAsyncThunk(
   }
 );
 
+export const modifyUserInfos = createAsyncThunk(
+  'user/MODIFY_USER_INFOS',
+  async (infos: FormData) => {
+    const modificationRequest = await securedFetch(
+      '/modifyUserInfos',
+      'PATCH',
+      infos
+    );
+    if (modificationRequest.status !== 200) {
+      throw new Error(modificationRequest.data);
+    }
+    return modificationRequest.data;
+  }
+);
+
 const userReducer = createReducer(initialValue, (builder) => {
   builder
-    .addCase(modifyUserInfos, (state, action) => {
-      const { id, email, firstName, lastName, avatarUrl } = action.payload;
-      state.id = id;
-      state.email = email;
-      state.firstName = firstName;
-      state.lastName = lastName;
-      state.avatarUrl = avatarUrl;
-      console.log('Infos utilisateur modifiées');
-    })
     .addCase(login.pending, (state) => {
       state.isLoading = true;
       console.log('Chargement en cours');
@@ -71,17 +70,26 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.error = 'Email ou mot de passe incorrect';
     })
     .addCase(login.fulfilled, (state, action) => {
-      const { id, email, firstName, lastName, avatarUrl } = action.payload.user;
       const { token } = action.payload;
-      state.id = id;
-      state.email = email;
-      state.firstName = firstName;
-      state.lastName = lastName;
-      state.avatarUrl = avatarUrl;
+      state.infos = action.payload.user;
+      state.error = null;
       // Adding token to local storage if login is fulfilled
       localStorage.setItem('token', JSON.stringify(token));
-      const userInfos = { email, firstName, lastName, avatarUrl };
+      const userInfos = state.infos;
       localStorage.setItem('user', JSON.stringify(userInfos));
+    })
+    .addCase(modifyUserInfos.pending, (state) => {
+      console.log('Infos utilisateur en cours de modification');
+      state.isLoading = true;
+    })
+    .addCase(modifyUserInfos.rejected, (state) => {
+      state.error = 'Impossible de modifier les infos';
+      console.log('Impossible de modifier les infos');
+    })
+    .addCase(modifyUserInfos.fulfilled, (state, action) => {
+      state.infos = action.payload;
+      localStorage.setItem('user', JSON.stringify(state.infos));
+      console.log('Infos utilisateur modifiées');
     });
 });
 

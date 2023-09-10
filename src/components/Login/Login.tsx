@@ -13,27 +13,22 @@ import './Login.scss';
 function Login() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const loginRef = useRef<HTMLFormElement>(null);
+  const loginRef = useRef(null);
   const tl = useRef();
   const error = useAppSelector((state) => state.user.error);
-
-  async function redirectToDashboard(formData: FormData) {
-    await dispatch(login(formData));
-    navigate('/dashboard');
-  }
 
   useEffect(() => {
     appearanceAnimation(loginRef, tl);
   }, []);
 
   // Login form submit
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = e.target;
     const formData = new FormData(form);
-    dispatch(login(formData));
-    if (!error) redirectToDashboard(formData);
+    await dispatch(login(formData));
+    if (!error) navigate('/dashboard');
   };
 
   return (

@@ -23,6 +23,7 @@ export const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
   if (label && line) {
     gsap.to(label, {
       duration: 0.1,
+
       color: '#999',
     });
     gsap.to(line, {
@@ -35,6 +36,7 @@ export const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
 export const authHandleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
   const label = e.target.parentNode?.querySelector('label');
   const line = e.target.parentNode?.querySelector('.line');
+
   if (label && line) {
     gsap.to(label, {
       duration: 0.2,
@@ -62,6 +64,12 @@ export const authHandleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         scaleX: 0,
       });
     }
+  }
+};
+
+export const handleInputFilled = (e: React.ChangeEvent<HTMLInputElement>) => {
+  if (e.target.value !== '') {
+    authHandleFocus(e);
   }
 };
 
@@ -94,6 +102,20 @@ export const appearanceAnimation = (
         opacity: 1,
         stagger: 0.1,
       });
+    const inputs = self.selector('input');
+    inputs.forEach((input: HTMLInputElement) => {
+      input.addEventListener('input', (e: Event) => {
+        handleInputFilled(e as unknown as React.ChangeEvent<HTMLInputElement>);
+      });
+    });
   }, ref);
-  return () => ctx.revert();
+  return () => {
+    ctx.revert();
+    const inputs = self.selector('input');
+    inputs.forEach((input: HTMLInputElement) => {
+      input.removeEventListener('input', (e: Event) => {
+        handleInputFilled(e as unknown as React.ChangeEvent<HTMLInputElement>);
+      });
+    });
+  };
 };

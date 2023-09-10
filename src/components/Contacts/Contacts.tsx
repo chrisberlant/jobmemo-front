@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getAllContacts } from '../../store/reducers/contacts';
@@ -9,12 +9,18 @@ function Contacts() {
   const contacts = useAppSelector((state) => state.contacts.items);
   const noContacts = useAppSelector((state) => state.contacts.isEmpty);
   const isLoading = useAppSelector((state) => state.contacts.isLoading);
+  const error = useAppSelector((state) => state.contacts.error);
   const dispatch = useAppDispatch();
 
   // Get the contacts from the API and dispatch them to the store on first render
   useEffect(() => {
-    dispatch(getAllContacts());
-  }, [dispatch]);
+    const fetchContacts = async () => {
+      if (contacts.length === 0 && !noContacts) {
+        dispatch(getAllContacts());
+      }
+    };
+    fetchContacts();
+  }, [dispatch, contacts, noContacts]);
 
   return (
     <div className="Contacts">
@@ -31,11 +37,13 @@ function Contacts() {
 
       <div className="contacts-container">
         {isLoading && <span>Chargement en cours</span>}
-
+        {!isLoading && error && (
+          <span>Erreur lors de la récupération/modification des contacts</span>
+        )}
         {!isLoading && noContacts ? (
           <span>Aucun contact pour le moment</span>
         ) : (
-          contacts.map((contact) => (
+          contacts?.map((contact) => (
             <Contact
               key={contact.id}
               id={contact.id}

@@ -42,7 +42,6 @@ function Navbar() {
         <NavLink
           to="/dashboard"
           className="btn-navigation"
-          onClick={back}
           style={({ isActive }) => ({
             background: isActive ? '#4a65ff' : '',
           })}
