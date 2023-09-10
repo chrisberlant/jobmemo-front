@@ -8,7 +8,6 @@ import './ContactDetails.scss';
 
 function ContactForm() {
   const { id } = useParams();
-  console.log(id);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const contact = useAppSelector((state) => state.contacts.items).find(
@@ -41,14 +40,15 @@ function ContactForm() {
     fetchContact();
   }, [contact, id, navigate]);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInfos({ ...infos, [event.target.name]: event.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInfos({ ...infos, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    dispatch(modifyContact(formData));
+    await dispatch(modifyContact(formData));
+    navigate('/contacts');
   };
 
   return (

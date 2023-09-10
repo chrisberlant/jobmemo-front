@@ -42,7 +42,6 @@ export const createNewContact = createAsyncThunk(
 export const modifyContact = createAsyncThunk(
   'contacts/MODIFY_CONTACT',
   async (infos: FormData) => {
-    console.log(infos);
     const modificationRequest = await securedFetch(
       '/modifyContact',
       'PATCH',
@@ -88,6 +87,7 @@ const contactsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(modifyContact.rejected, (state, action) => {
       console.log('Requête de modification de contact refusée');
+      state.error = true;
     })
     .addCase(modifyContact.fulfilled, (state, action) => {
       const updatedInfos = action.payload;
@@ -97,6 +97,8 @@ const contactsReducer = createReducer(initialValue, (builder) => {
       if (contactIndexToUpdate) {
         state.items[contactIndexToUpdate] = updatedInfos;
         console.log('Contact modifié');
+        // state.error = false;
+        // state.message = `Contact ${state.items[contactIndexToUpdate].firstName} ${state.items[contactIndexToUpdate].lastName} modifié`;
       }
     });
 });

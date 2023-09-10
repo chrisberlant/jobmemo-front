@@ -4,13 +4,13 @@ import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getAllContacts } from '../../store/reducers/contacts';
 import Contact from './Contact/Contact';
 import './Contacts.scss';
-import { ContactType } from '../../@types/jobmemo';
 
 function Contacts() {
   const contacts = useAppSelector((state) => state.contacts.items);
   const isLoading = useAppSelector((state) => state.contacts.isLoading);
   const noContacts = useAppSelector((state) => state.contacts.isEmpty);
   const error = useAppSelector((state) => state.contacts.error);
+  // const message = useAppSelector((state) => state.contacts.message);
   const dispatch = useAppDispatch();
 
   // Get the contacts from the API and dispatch them to the store on first render
@@ -39,8 +39,9 @@ function Contacts() {
       <div className="contacts-container">
         {isLoading && <span>Chargement en cours</span>}
         {!isLoading && error && (
-          <span>Erreur lors de la récupération des contacts</span>
+          <span>Erreur lors de la récupération/modification des contacts</span>
         )}
+        {/* {message && !error && <span>{message}</span>} */}
         {!isLoading && noContacts ? (
           <span>Aucun contact pour le moment</span>
         ) : (

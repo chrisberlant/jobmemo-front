@@ -46,7 +46,6 @@ export const login = createAsyncThunk(
 export const modifyUserInfos = createAsyncThunk(
   'user/MODIFY_USER_INFOS',
   async (infos: FormData) => {
-    console.log(infos);
     const modificationRequest = await securedFetch(
       '/modifyUserInfos',
       'PATCH',
@@ -71,25 +70,19 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.error = 'Email ou mot de passe incorrect';
     })
     .addCase(login.fulfilled, (state, action) => {
-      const { email, firstName, lastName, avatarUrl, address } =
-        action.payload.user;
       const { token } = action.payload;
-      state.infos.email = email;
-      state.infos.firstName = firstName;
-      state.infos.lastName = lastName;
-      state.infos.avatarUrl = avatarUrl;
-      state.infos.address = address;
+      state.infos = action.payload.user;
       state.error = null;
       // Adding token to local storage if login is fulfilled
       localStorage.setItem('token', JSON.stringify(token));
-      const userInfos = { email, firstName, lastName, avatarUrl, address };
+      const userInfos = state.infos;
       localStorage.setItem('user', JSON.stringify(userInfos));
     })
-    .addCase(modifyUserInfos.pending, (state, action) => {
+    .addCase(modifyUserInfos.pending, (state) => {
       console.log('Infos utilisateur en cours de modification');
       state.isLoading = true;
     })
-    .addCase(modifyUserInfos.rejected, (state, action) => {
+    .addCase(modifyUserInfos.rejected, (state) => {
       state.error = 'Impossible de modifier les infos';
       console.log('Impossible de modifier les infos');
     })
