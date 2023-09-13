@@ -6,7 +6,8 @@ html, body, #root, .app {
   height: 100%;
 }
 
-.protected-page {
+.app {
+
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -25,6 +26,7 @@ html, body, #root, .app {
   }
 
 }
+
 
 body {
   font-family: "Mulish", sans-serif;

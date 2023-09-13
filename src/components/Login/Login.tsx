@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   authHandleBlur,
   authHandleFocus,
@@ -16,10 +16,18 @@ function Login() {
   const loginRef = useRef(null);
   const tl = useRef();
   const error = useAppSelector((state) => state.user.error);
+  const [infos, setInfos] = useState({
+    email: '',
+    password: '',
+  });
 
   useEffect(() => {
     appearanceAnimation(loginRef, tl);
   }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInfos({ ...infos, [e.target.name]: e.target.value });
+  };
 
   // Login form submit
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
@@ -45,6 +53,8 @@ function Login() {
               type="email"
               name="email"
               id="email"
+              onChange={handleChange}
+              required
             />
             <div className="line" />
           </div>
@@ -57,6 +67,8 @@ function Login() {
               name="password"
               id="password"
               autoComplete="off"
+              onChange={handleChange}
+              required
             />
             <div className="line" />
           </div>

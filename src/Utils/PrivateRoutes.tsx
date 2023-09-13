@@ -6,13 +6,13 @@ import Navbar from '../components/Navbar/Navbar';
 function PrivateRoutes() {
   const auth = useToken();
   return auth ? (
-    <div className="protected-page">
+    <>
       <Navbar />
       <div className="protected-page-content">
         <Outlet />
         <Footer />
       </div>
-    </div>
+    </>
   ) : (
     <Navigate to="/login" />
   );

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   authHandleBlur,
   authHandleFocus,
@@ -11,13 +11,24 @@ import logo from '../../assets/images/logo.svg';
 import './Register.scss';
 
 function Register() {
-  const registerRef = useRef();
+  const registerRef = useRef(null);
   const navigate = useNavigate();
   const tl = useRef();
+  const [infos, setInfos] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
 
   useEffect(() => {
     appearanceAnimation(registerRef, tl);
   }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInfos({ ...infos, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,7 +67,9 @@ function Register() {
               type="text"
               name="firstName"
               id="firstName"
-              autoComplete="new-password"
+              autoComplete="given-name"
+              onChange={handleChange}
+              required
             />
             <div className="line" />
           </div>
@@ -68,7 +81,9 @@ function Register() {
               type="text"
               name="lastName"
               id="lastName"
-              autoComplete="new-password"
+              autoComplete="family-name"
+              onChange={handleChange}
+              required
             />
             <div className="line" />
           </div>
@@ -80,7 +95,9 @@ function Register() {
               type="email"
               name="email"
               id="email"
-              autoComplete="new-password"
+              autoComplete="email"
+              onChange={handleChange}
+              required
             />
             <div className="line" />
           </div>
@@ -93,6 +110,8 @@ function Register() {
               name="password"
               id="password"
               autoComplete="new-password"
+              onChange={handleChange}
+              required
             />
             <div className="line" />
           </div>
@@ -105,6 +124,8 @@ function Register() {
               name="confirmPassword"
               id="confirmPassword"
               autoComplete="new-password"
+              onChange={handleChange}
+              required
             />
             <div className="line" />
           </div>
