@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './store';
+import App from './components/App/App';
 
 import './styles/index.scss';
 import { router } from './Router';
@@ -13,6 +14,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <App />
   </Provider>
 );

@@ -8,12 +8,8 @@ import ChangePassword from '../Account/ChangePassword/ChangePassword';
 import Dashboard from '../Dashboard/Dashboard';
 import RecycleBin from '../RecycleBin/RecycleBin';
 import Contacts from '../Contacts/Contacts';
-import Docs from '../Docs/Docs';
-import Doc from '../Docs/Doc/Doc';
 import CardForm from '../CardForm/CardForm';
 import CardDetails from '../CardDetails/CardDetails';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import Upload from '../Upload/Upload';
 import ContactCreation from '../ContactCreation/ContactCreation';
 import ContactDetails from '../Contacts/ContactDetails/ContactDetails';
 import PageNotFound from '../PageNotFound/PageNotFound';
@@ -31,6 +27,7 @@ function App() {
           <Route element={<PageNotFound />} path="/404" />
           <Route element={<PrivateRoutes />}>
             <Route element={<Dashboard />} path="/dashboard" />
+            <Route element={<Account />} path="/account" />
             <Route element={<DeleteAccount />} path="/deleteAccount" />
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<RecycleBin />} path="/recycleBin" />

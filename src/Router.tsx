@@ -2,7 +2,6 @@
 
 // Set Up React Router and Adding 2 routes for Home and Login
 import { createBrowserRouter } from 'react-router-dom';
-import App from './components/App/App';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
