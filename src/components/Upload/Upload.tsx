@@ -48,7 +48,7 @@ function Upload() {
           <label htmlFor="file">Sélectionner document</label>
           <input id="file" name="file" type="file" onChange={changeFile} />
         </div>
-        <button className="submit-btn" type="submit">
+        <button className="button--submit" type="submit">
           Upload
         </button>
       </form>

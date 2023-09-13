@@ -132,7 +132,7 @@ function Register() {
           <div className="input-wrap">
             <input
               type="submit"
-              className="submit-button"
+              className="button--submit"
               value="S'enregistrer"
             />
           </div>

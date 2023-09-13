@@ -137,16 +137,17 @@ function CreateContact() {
         <input
           type="submit"
           name="submit-button"
-          className="button button--submit"
+          className="button--submit"
           value="Créer le contact"
           aria-label="Créer le contact"
         />
         <input
-          type="submit"
+          type="button"
           name="cancel-button"
-          className="button button--cancel"
+          className="button--cancel"
           value="Annuler"
           aria-label="Annuler"
+          onClick={() => navigate('/contacts')}
         />
       </form>
     </div>

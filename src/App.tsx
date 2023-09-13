@@ -14,7 +14,8 @@ import ContactCreation from './components/ContactCreation/ContactCreation';
 import ContactDetails from './components/Contacts/ContactDetails/ContactDetails';
 import PageNotFound from './components/PageNotFound/PageNotFound';
 import PrivateRoutes from './Utils/PrivateRoutes';
-import './App.scss';
+import './styles/reset.scss';
+import './styles/App.scss';
 
 function App() {
   return (

@@ -105,18 +105,27 @@ function Account() {
         </div>
         <input
           type="submit"
-          className="button button--submit"
+          className="button--submit"
           value="Enregistrer les modifications"
         />
       </form>
-      <Link to="/changePassword" className="link">
-        Changer le mot de passe
+      <Link className="other-buttons" to="/changePassword">
+        <input
+          type="button"
+          className="button--password"
+          value="Changer le mot de passe"
+        />
       </Link>
-      <Link to="/deleteAccount" className="link">
+
+      <Link className="other-buttons" to="/login" onClick={logOut}>
+        <input
+          type="button"
+          className="button--logout"
+          value="Se déconnecter"
+        />
+      </Link>
+      <Link to="/deleteAccount" className="delete-account">
         Supprimer le compte
-      </Link>
-      <Link to="/login" className="link" onClick={logOut}>
-        Se déconnecter
       </Link>
     </div>
   );
