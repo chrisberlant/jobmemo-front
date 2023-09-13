@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 // import * as MaIcons from 'react-icons/md';
 // import Calendar from 'react-calendar';
 import logoWhite from '../../assets/images/logo-white.svg';
@@ -10,12 +9,6 @@ import iconContacts from '../../assets/icons/icon-contacts.svg';
 import './Navbar.scss';
 
 function Navbar() {
-  const navigate = useNavigate();
-
-  const back = () => {
-    navigate('/dashboard');
-    window.location.reload();
-  };
   // Show/Hide Menu
   let user = null;
   const userString = localStorage.getItem('user');
