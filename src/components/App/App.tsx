@@ -1,13 +1,47 @@
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from '../Login/Login';
+import Register from '../Register/Register';
+import ForgotPassword from '../ForgotPassword/ForgotPassword';
+import Account from '../Account/Account';
+import DeleteAccount from '../Account/DeleteAccount/DeleteAccount';
+import ChangePassword from '../Account/ChangePassword/ChangePassword';
+import Dashboard from '../Dashboard/Dashboard';
+import RecycleBin from '../RecycleBin/RecycleBin';
+import Contacts from '../Contacts/Contacts';
+import Docs from '../Docs/Docs';
+import Doc from '../Docs/Doc/Doc';
+import CardForm from '../CardForm/CardForm';
+import CardDetails from '../CardDetails/CardDetails';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Upload from '../Upload/Upload';
+import ContactCreation from '../ContactCreation/ContactCreation';
+import ContactDetails from '../Contacts/ContactDetails/ContactDetails';
+import PageNotFound from '../PageNotFound/PageNotFound';
+import PrivateRoutes from '../../Utils/PrivateRoutes';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <Link to="/login" className="login-link">
-        Se connecter
-      </Link>
-      <h1>/</h1>
+      <Router>
+        <Routes>
+          <Route element={<Login />} path="/login" />
+          <Route element={<Register />} path="/register" />
+          <Route element={<ForgotPassword />} path="/forgotPassword" />
+          <Route element={<PageNotFound />} path="/404" />
+          <Route element={<PrivateRoutes />}>
+            <Route element={<Dashboard />} path="/dashboard" />
+            <Route element={<DeleteAccount />} path="/deleteAccount" />
+            <Route element={<ChangePassword />} path="/changePassword" />
+            <Route element={<RecycleBin />} path="/recycleBin" />
+            <Route element={<Contacts />} path="/contacts" />
+            <Route element={<ContactDetails />} path="/contact/:id" />
+            <Route element={<ContactCreation />} path="/createContact" />
+            <Route element={<CardDetails />} path="/card/:id" />
+            <Route element={<CardForm />} path="/addCard/:category" />
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
