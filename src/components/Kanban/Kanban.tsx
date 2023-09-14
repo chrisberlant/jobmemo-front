@@ -8,7 +8,7 @@ import {
   getAllCards,
   loadCardsToDashboard,
   moveCard,
-  trashOrRestoreCard,
+  sendCardToTrash,
 } from '../../store/reducers/cards';
 import { Categories } from '../../@types/jobmemo';
 
@@ -75,7 +75,7 @@ const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
           items: sourceItems,
         },
       });
-      dispatch(trashOrRestoreCard(movingCardId));
+      dispatch(sendCardToTrash(movingCardId));
 
       console.log(
         destItems[0].title,

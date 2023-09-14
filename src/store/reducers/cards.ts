@@ -58,6 +58,21 @@ export const moveCard = createAsyncThunk(
   }
 );
 
+export const sendCardToTrash = createAsyncThunk(
+  'cards/TRASH__CARD',
+  async (id: string) => {
+    const cardForm = new FormData();
+    cardForm.append('id', id);
+    const cardIsTrashed = await securedFetch(
+      '/sendCardToTrash',
+      'PATCH',
+      cardForm
+    );
+    console.log(`Carte ${id} placée dans la corbeille`);
+    return cardIsTrashed;
+  }
+);
+
 export const trashOrRestoreCard = createAsyncThunk(
   'cards/TRASH_OR_RESTORE_CARD',
   async (id: string) => {
@@ -126,23 +141,25 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.error = action.error.message;
     })
     .addCase(moveCard.fulfilled, (state, action) => {
-      console.log('Carte déplacée');
-      console.log(`Payload : ${action.payload}`);
-      const indexMoving = state.items.findIndex(
-        (card) => card.id === action.payload.data.id
-      );
-      state.items[indexMoving].category = action.payload.data.category;
-      state.items[indexMoving].index = action.payload.data.index;
-      console.log(state.items);
+      const { id } = action.payload.data;
+      const cardMoving = state.items.find((card) => card.id === id);
+      if (cardMoving) {
+        cardMoving.category = action.payload.data.category;
+        cardMoving.index = action.payload.data.index;
+        console.log('Carte déplacée');
+      }
     })
-    .addCase(trashOrRestoreCard.pending, () => {
-      console.log("Suppression/restauration d'une carte");
+    .addCase(sendCardToTrash.pending, () => {
+      console.log("Suppression d'une carte");
     })
-    .addCase(trashOrRestoreCard.rejected, () => {
-      console.log("Erreur lors de la suppression/restauration d'une carte");
+    .addCase(sendCardToTrash.rejected, () => {
+      console.log("Erreur lors de la suppression d'une carte");
     })
-    .addCase(trashOrRestoreCard.fulfilled, (state, action) => {
-      console.log('Carte supprimée/restaurée');
+    .addCase(sendCardToTrash.fulfilled, (state, action) => {
+      const { id } = action.payload.data;
+      const cardToUpdate = state.items.find((card) => card.id === id);
+      if (cardToUpdate) cardToUpdate.isDeleted = true;
+      console.log('Carte supprimée');
     });
 });
 
