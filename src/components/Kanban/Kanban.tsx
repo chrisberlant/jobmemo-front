@@ -17,7 +17,7 @@ import { Categories } from '../../@types/jobmemo';
 // Ensuite, il extrait les propriétés source et destination de l'objet de résultat.
 // Si la source et la destination proviennent de conteneurs de dépôt différents, la fonction déplace l'élément déplacé de la colonne source vers la colonne de destination. Pour ce faire, il crée des copies des tableaux d'éléments des colonnes source et destination, supprime l'élément du tableau source et l'insère à l'index approprié dans le tableau de destination. Enfin, il met à jour l'état des colonnes en fusionnant les modifications avec l'état existant.
 // Si la source et la destination proviennent du même conteneur de dépôt, la fonction déplace l'élément déplacé dans la même colonne. Il suit un processus similaire au précédent, mais avec une seule colonne impliquée.
-
+// TODO fix the drag and drop resetting
 const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
   // Check if there is a destination for the dragged item
   if (!result.destination) return;

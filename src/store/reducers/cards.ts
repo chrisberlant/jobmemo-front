@@ -141,13 +141,15 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.error = action.error.message;
     })
     .addCase(moveCard.fulfilled, (state, action) => {
-      const { id } = action.payload.data;
-      const cardMoving = state.items.find((card) => card.id === id);
-      if (cardMoving) {
-        cardMoving.category = action.payload.data.category;
-        cardMoving.index = action.payload.data.index;
-        console.log('Carte déplacée');
-      }
+      console.log('Carte déplacée');
+      console.log(`Payload : ${action.payload}`);
+      // TODO use find ?
+      const indexMoving = state.items.findIndex(
+        (card) => card.id === action.payload.data.id
+      );
+      state.items[indexMoving].category = action.payload.data.category;
+      state.items[indexMoving].index = action.payload.data.index;
+      console.log(state.items);
     })
     .addCase(sendCardToTrash.pending, () => {
       console.log("Suppression d'une carte");
