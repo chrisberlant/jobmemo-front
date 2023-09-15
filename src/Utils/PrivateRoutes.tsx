@@ -1,5 +1,4 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import useToken from './useToken';
 import Footer from '../components/Footer/Footer';
 import Navbar from '../components/Navbar/Navbar';
 

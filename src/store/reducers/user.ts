@@ -4,8 +4,8 @@ import {
   createAsyncThunk,
 } from '@reduxjs/toolkit';
 
-import securedFetch, { baseUrl } from '../../Utils/securedFetch';
-import { UserType, UserInfosType } from '../../@types/jobmemo';
+import securedFetch from '../../Utils/securedFetch';
+import { UserType } from '../../@types/jobmemo';
 
 const initialValue: UserType = {
   infos: {
@@ -25,20 +25,14 @@ export const login = createAsyncThunk(
   'user/LOGIN',
   async (credentials: FormData) => {
     try {
-      const fetchLoginParams = {
-        method: 'POST',
-        credentials: 'include',
-        body: credentials,
-      };
+      const loginRequest = await securedFetch('/login', 'POST', credentials);
       // TODO Gestion d'erreurs
-      const response = await fetch(`${baseUrl}/login`, fetchLoginParams);
-      const data = await response.json();
-
-      if (response.status !== 200) {
-        throw new Error(data);
+      if (loginRequest.status !== 200) {
+        throw new Error(loginRequest.data);
       }
       localStorage.setItem('authenticated', 'true');
-      return data;
+      localStorage.setItem('firstName', loginRequest.data);
+      return loginRequest.data;
     } catch (error) {
       throw new Error();
     }
@@ -59,6 +53,8 @@ export const modifyUserInfos = createAsyncThunk(
     return modificationRequest.data;
   }
 );
+
+export const disconnectUser = createAction('user/DISCONNECT_USER');
 
 const userReducer = createReducer(initialValue, (builder) => {
   builder
@@ -87,6 +83,10 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.infos = action.payload;
       localStorage.setItem('user', JSON.stringify(state.infos));
       console.log('Infos utilisateur modifiées');
+    })
+    .addCase(disconnectUser, (state, action) => {
+      state.error = 'Vous avez été deconnecté';
+      localStorage.clear();
     });
 });
 

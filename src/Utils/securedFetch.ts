@@ -1,12 +1,5 @@
 export const baseUrl = 'http://localhost:3000';
 
-// async function logOutUser() {
-//   localStorage.clear();
-//   await fetch(`${baseUrl}/logout`);
-//   console.log('Retrait du local storage');
-//   window.location.href = `${baseUrl}/login`;
-// }
-
 // This allows to fetch the API while providing the JWT in the headers
 async function securedFetch(route: string, method?: string, body?: FormData) {
   const response = await fetch(baseUrl + route, {
@@ -17,9 +10,12 @@ async function securedFetch(route: string, method?: string, body?: FormData) {
 
   const data = await response.json();
 
-  // if (response.status === 403) {
-  //   logOutUser();
-  // }
+  // If the JWT has been altered
+  if (response.status === 403) {
+    localStorage.clear();
+    await securedFetch('/logout');
+    window.location.replace('/login');
+  }
 
   // if (response.status > 299 || response.status < 200) {
   //   // If request failed
