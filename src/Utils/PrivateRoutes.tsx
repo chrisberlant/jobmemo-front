@@ -3,7 +3,8 @@ import Footer from '../components/Footer/Footer';
 import Navbar from '../components/Navbar/Navbar';
 
 function PrivateRoutes() {
-  const authenticatedUser = localStorage.getItem('authenticated'); // Stocker info loggedIn dans localstorage, l'effacer quand request failed
+  // If there is the firstName in localstorage, we assume user is logged in
+  const authenticatedUser = localStorage.getItem('firstName');
   return authenticatedUser ? (
     <>
       <Navbar />

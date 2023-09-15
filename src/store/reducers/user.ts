@@ -76,9 +76,9 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.error = 'Email ou mot de passe incorrect';
     })
     .addCase(login.fulfilled, (state, action) => {
-      localStorage.setItem('authenticated', 'true');
-      localStorage.setItem('firstName', action.payload);
-      state.infos = action.payload.user;
+      localStorage.setItem('firstName', action.payload.firstName);
+      state.infos = action.payload;
+      console.log(action.payload);
     })
     .addCase(getUserInfos.pending, (state) => {
       console.log('Infos utilisateur en cours de récupération');
@@ -86,7 +86,7 @@ const userReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(getUserInfos.rejected, (state) => {
       state.isLoading = false;
-      state.error = 'Impossible de modifier les infos';
+      state.error = 'Impossible de récupérer les infos';
       console.log('Impossible de récupérer les infos');
     })
     .addCase(getUserInfos.fulfilled, (state, action) => {

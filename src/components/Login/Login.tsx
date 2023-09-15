@@ -16,13 +16,15 @@ function Login() {
   const loginRef = useRef(null);
   const tl = useRef();
   const error = useAppSelector((state) => state.user.error);
-  const isLogged = useAppSelector((state) => state.user.isLogged);
+  const isLogged = useAppSelector((state) => state.user.infos.email);
   const [infos, setInfos] = useState({
     email: '',
     password: '',
   });
 
-  if (isLogged) navigate('/dashboard');
+  useEffect(() => {
+    if (isLogged !== '') navigate('/dashboard');
+  }, [isLogged, navigate]);
 
   useEffect(() => {
     appearanceAnimation(loginRef, tl);

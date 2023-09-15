@@ -98,7 +98,7 @@ function Account() {
             name="address"
             id="address"
             onChange={handleChange}
-            value={infos.address ?? ''} // TODO remplacer ça dans le useState ?
+            value={infos.address}
           />
           <div className="line" />
         </div>
