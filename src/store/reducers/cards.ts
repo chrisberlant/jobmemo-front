@@ -11,6 +11,7 @@ const initialValue: CardTable = {
   items: [],
   isLoading: false,
   error: undefined,
+  isEmpty: false,
   loadedCards: false,
   movingCardId: '',
 };
@@ -49,7 +50,6 @@ export const moveCard = createAsyncThunk(
     movingCardInfos.append('id', movingCardId);
     movingCardInfos.append('index', movingCardindex.toString());
     movingCardInfos.append('category', movingCardcategory);
-    console.log(movingCardInfos);
     console.log(
       `Déplacement de la carte ${movingCardId} vers l'index ${movingCardindex} de la catégorie ${movingCardcategory}`
     );
@@ -111,7 +111,8 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       console.log(`Erreur au chargement des cartes: ${state.error}`);
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
-      state.items = action.payload;
+      if (action.payload.length === 0) state.isEmpty = true;
+      else state.items = action.payload;
       state.loadedCards = false;
       console.log('Cartes chargées dans le store');
     })
@@ -141,15 +142,14 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.error = action.error.message;
     })
     .addCase(moveCard.fulfilled, (state, action) => {
-      console.log('Carte déplacée');
-      console.log(`Payload : ${action.payload}`);
-      // TODO use find ?
-      const indexMoving = state.items.findIndex(
+      const movingCard = state.items.find(
         (card) => card.id === action.payload.data.id
       );
-      state.items[indexMoving].category = action.payload.data.category;
-      state.items[indexMoving].index = action.payload.data.index;
-      console.log(state.items);
+      if (movingCard) {
+        movingCard.category = action.payload.data.category;
+        movingCard.index = action.payload.data.index;
+        console.log('Carte déplacée');
+      }
     })
     .addCase(sendCardToTrash.pending, () => {
       console.log("Suppression d'une carte");

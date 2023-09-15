@@ -18,7 +18,6 @@ export interface CardType {
   notes: string;
   createdAt: Date;
   reminder: Date;
-  userId: number;
 }
 
 export interface CardTable {
@@ -27,6 +26,7 @@ export interface CardTable {
   error: string | undefined;
   loadedCards: boolean;
   movingCardId: string;
+  isEmpty: boolean;
 }
 
 export interface MovingCard {

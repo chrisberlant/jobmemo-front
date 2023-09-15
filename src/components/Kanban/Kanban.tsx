@@ -114,8 +114,22 @@ function Kanban() {
   const cards = useAppSelector((state) => state.cards.items);
   const dashboardCards = cards.filter((card) => card.isDeleted === false);
   const loadedCards = useAppSelector((state) => state.cards.loadedCards);
+  const noCards = useAppSelector((state) => state.cards.isEmpty);
   const dispatch = useAppDispatch();
   const movingCardId = useAppSelector((state) => state.cards.movingCardId);
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      if (cards.length === 0 && !noCards) {
+        dispatch(getAllCards());
+      }
+    };
+    fetchCards();
+  }, [dispatch, cards, noCards]);
+
+  // useEffect(() => {
+  //   dispatch(getAllCards());
+  // }, [dispatch]);
 
   useEffect(() => {
     const fillDashboard = () => {
@@ -132,10 +146,6 @@ function Kanban() {
       setColumns(updatedColumns);
       dispatch(loadCardsToDashboard());
     };
-    if (dashboardCards.length === 0) {
-      // Get the cards from the DB
-      dispatch(getAllCards());
-    }
     if (!loadedCards) {
       fillDashboard();
     }
