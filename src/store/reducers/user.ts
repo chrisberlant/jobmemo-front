@@ -18,6 +18,7 @@ const initialValue: UserType = {
   isLoading: false,
   error: null,
   message: null,
+  isLogged: false,
 };
 
 export const login = createAsyncThunk(
@@ -26,6 +27,7 @@ export const login = createAsyncThunk(
     try {
       const fetchLoginParams = {
         method: 'POST',
+        credentials: 'include',
         body: credentials,
       };
       // TODO Gestion d'erreurs
@@ -35,9 +37,9 @@ export const login = createAsyncThunk(
       if (response.status !== 200) {
         throw new Error(data);
       }
+      localStorage.setItem('authenticated', 'true');
       return data;
     } catch (error) {
-      console.error(error);
       throw new Error();
     }
   }
@@ -70,13 +72,8 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.error = 'Email ou mot de passe incorrect';
     })
     .addCase(login.fulfilled, (state, action) => {
-      const { token } = action.payload;
       state.infos = action.payload.user;
-      state.error = null;
-      // Adding token to local storage if login is fulfilled
-      localStorage.setItem('token', JSON.stringify(token));
-      const userInfos = state.infos;
-      localStorage.setItem('user', JSON.stringify(userInfos));
+      state.isLogged = true;
     })
     .addCase(modifyUserInfos.pending, (state) => {
       console.log('Infos utilisateur en cours de modification');

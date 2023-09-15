@@ -40,10 +40,6 @@ export interface ColumnType {
   title: string;
 }
 
-export interface UserToken {
-  token: string;
-}
-
 export interface Category {
   id: number;
   name: string;
@@ -89,4 +85,5 @@ export interface UserType {
   isLoading: boolean;
   error: string | null;
   message: string | null;
+  isLogged: boolean;
 }

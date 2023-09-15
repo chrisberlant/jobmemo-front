@@ -1,11 +1,14 @@
-import { UserToken } from '../@types/jobmemo';
-
 const useToken = () => {
-  const localStorageToken = localStorage.getItem('token');
-  const userToken = localStorageToken
-    ? (JSON.parse(localStorageToken) as UserToken)
-    : null;
-  return userToken;
+  if (
+    document.cookie
+      .split(';')
+      .some((cookie) => cookie.trim().startsWith('jobmemo_token='))
+  ) {
+    console.log('Cookie existant');
+    return true;
+  }
+  console.log('Cookie inexistant');
+  return false;
 };
 
 export default useToken;

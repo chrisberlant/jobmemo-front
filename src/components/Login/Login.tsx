@@ -16,10 +16,13 @@ function Login() {
   const loginRef = useRef(null);
   const tl = useRef();
   const error = useAppSelector((state) => state.user.error);
+  const isLogged = useAppSelector((state) => state.user.isLogged);
   const [infos, setInfos] = useState({
     email: '',
     password: '',
   });
+
+  if (isLogged) navigate('/dashboard');
 
   useEffect(() => {
     appearanceAnimation(loginRef, tl);
@@ -33,10 +36,8 @@ function Login() {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const form = e.target;
-    const formData = new FormData(form);
+    const formData = new FormData(e.target);
     await dispatch(login(formData));
-    if (!error) navigate('/dashboard');
   };
 
   return (

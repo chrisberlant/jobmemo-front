@@ -10,11 +10,6 @@ import './Navbar.scss';
 
 function Navbar() {
   // Show/Hide Menu
-  let user = null;
-  const userString = localStorage.getItem('user');
-  if (userString) {
-    user = JSON.parse(userString).firstName;
-  }
   // React Calendar
   // const [date, setDate] = useState(new Date());
   /* const onchange = () => {
@@ -29,7 +24,7 @@ function Navbar() {
       </div>
       <div className="welcome-wrapper">
         <span>Bienvenue à bord</span>
-        <span>{user} !</span>
+        <span>Utilisateur !</span>
       </div>
       <div className="navigation-wrapper">
         <NavLink
