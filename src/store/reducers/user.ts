@@ -18,7 +18,6 @@ const initialValue: UserType = {
   isLoading: false,
   error: null,
   message: null,
-  isLogged: false,
 };
 
 export const login = createAsyncThunk(
@@ -30,12 +29,21 @@ export const login = createAsyncThunk(
       if (loginRequest.status !== 200) {
         throw new Error(loginRequest.data);
       }
-      localStorage.setItem('authenticated', 'true');
-      localStorage.setItem('firstName', loginRequest.data);
       return loginRequest.data;
     } catch (error) {
       throw new Error();
     }
+  }
+);
+
+export const getUserInfos = createAsyncThunk(
+  'user/GET_USER_INFOS',
+  async () => {
+    const getInfosRequest = await securedFetch('/getUserInfos');
+    if (getInfosRequest.status !== 200) {
+      throw new Error(getInfosRequest.data);
+    }
+    return getInfosRequest.data;
   }
 );
 
@@ -68,20 +76,38 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.error = 'Email ou mot de passe incorrect';
     })
     .addCase(login.fulfilled, (state, action) => {
+      localStorage.setItem('authenticated', 'true');
+      localStorage.setItem('firstName', action.payload);
       state.infos = action.payload.user;
-      state.isLogged = true;
+    })
+    .addCase(getUserInfos.pending, (state) => {
+      console.log('Infos utilisateur en cours de récupération');
+      state.isLoading = true;
+    })
+    .addCase(getUserInfos.rejected, (state) => {
+      state.isLoading = false;
+      state.error = 'Impossible de modifier les infos';
+      console.log('Impossible de récupérer les infos');
+    })
+    .addCase(getUserInfos.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.infos = action.payload;
+      localStorage.setItem('firstName', action.payload.firstName);
+      console.log('Infos utilisateur récupérées');
     })
     .addCase(modifyUserInfos.pending, (state) => {
       console.log('Infos utilisateur en cours de modification');
       state.isLoading = true;
     })
     .addCase(modifyUserInfos.rejected, (state) => {
+      state.isLoading = false;
       state.error = 'Impossible de modifier les infos';
       console.log('Impossible de modifier les infos');
     })
     .addCase(modifyUserInfos.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.infos = action.payload;
-      localStorage.setItem('user', JSON.stringify(state.infos));
+      localStorage.setItem('firstName', action.payload.firstName);
       console.log('Infos utilisateur modifiées');
     })
     .addCase(disconnectUser, (state, action) => {

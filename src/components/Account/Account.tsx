@@ -4,7 +4,7 @@ import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import logo from '../../assets/images/logo.svg';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import './Account.scss';
-import { modifyUserInfos } from '../../store/reducers/user';
+import { getUserInfos, modifyUserInfos } from '../../store/reducers/user';
 
 function Account() {
   const dispatch = useAppDispatch();
@@ -18,17 +18,16 @@ function Account() {
   });
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
     if (userInfos.email !== '') {
       setInfos(userInfos);
-    } else if (storedUser) {
-      const parsedStoredUser = JSON.parse(storedUser);
-      setInfos(parsedStoredUser);
+    } else {
+      dispatch(getUserInfos());
     }
-  }, [userInfos]);
+  }, [userInfos, dispatch]);
 
   // logout function
   const logOut = () => {
+    // TODO FIX fetch logout
     localStorage.clear();
     window.location.reload();
   };
@@ -117,13 +116,13 @@ function Account() {
         />
       </Link>
 
-      <Link className="other-buttons" to="/login" onClick={logOut}>
-        <input
-          type="button"
-          className="button--logout"
-          value="Se déconnecter"
-        />
-      </Link>
+      <input
+        type="button"
+        className="button--logout"
+        value="Se déconnecter"
+        onClick={logOut}
+      />
+
       <Link to="/deleteAccount" className="delete-account">
         Supprimer le compte
       </Link>
