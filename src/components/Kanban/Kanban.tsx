@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import categories from '../../categories/categories';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
-import useMediaQuery from '../../Utils/mediaQuery';
 import Column from '../Column/Column';
 import './Kanban.scss';
 import {
   getAllCards,
-  loadCardsToDashboard,
   moveCard,
   sendCardToTrash,
 } from '../../store/reducers/cards';
-import { CardTable, Categories } from '../../@types/jobmemo';
 
 // Cet extrait de code définit une fonction appelée onDragEnd qui est utilisée comme rappel pour gérer la fin d'un événement glisser. Il prend trois paramètres : result, columns et setColumns.
 // La fonction vérifie d'abord s'il existe une destination valide pour l'événement glisser. Sinon, il revient à sa place.
@@ -27,10 +23,6 @@ const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
   const { source, destination } = result;
   const sourceColumn = columns[source.droppableId];
   const destColumn = columns[destination.droppableId];
-
-  // console.log(
-  //   `card moving from : ("${sourceColumn.name}", column id : ${sourceColumn.id}, card position : ${source.index}) to (column "${destColumn.name}", column id : ${destColumn.id}, card position : ${destination.index})`
-  // );
 
   // Get the source and destination columns based on the droppableIds
   // Create copies of the source and destination items arrays
@@ -118,7 +110,6 @@ function Kanban() {
   // Initialize state with the categories object
   const cards = useAppSelector((state) => state.cards.items);
   const [columns, setColumns] = useState(cards);
-  console.log(cards);
   const loadedCards = useAppSelector((state) => state.cards.loadedCards);
   const dispatch = useAppDispatch();
   const movingCardId = useAppSelector((state) => state.cards.movingCardId);
@@ -126,8 +117,14 @@ function Kanban() {
   useEffect(() => {
     if (!loadedCards) {
       dispatch(getAllCards());
+      console.log('fetch');
     }
   }, [dispatch, loadedCards]);
+
+  useEffect(() => {
+    setColumns(cards);
+    console.log(cards);
+  }, [cards]);
 
   return (
     <DragDropContext
@@ -144,7 +141,6 @@ function Kanban() {
               id={columnId}
               className={`column ${column.className}`}
             >
-              con
               <h3 className="column-title">{column.name}</h3>
               <div className="column-wrapper">
                 <Column droppableId={columnId} key={columnId} column={column} />

@@ -10,8 +10,11 @@ function CardDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const card = useAppSelector((state) => state.cards.items).find(
-    (searchedCard) => searchedCard.id === id
+
+  const card = useAppSelector((state) =>
+    Object.values(state.cards.items)
+      .flatMap((category) => category.items)
+      .find((searchedCard) => searchedCard.id === id)
   );
 
   const [infos, setInfos] = useState({
@@ -27,7 +30,7 @@ function CardDetails() {
   });
 
   useEffect(() => {
-    const fetchContact = async () => {
+    const fetchCard = async () => {
       if (card) {
         setInfos(card);
       } else {
@@ -38,7 +41,7 @@ function CardDetails() {
         setInfos(fetchedCard.data);
       }
     };
-    fetchContact();
+    fetchCard();
   }, [card, id, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

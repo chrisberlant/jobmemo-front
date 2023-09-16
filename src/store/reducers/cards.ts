@@ -5,10 +5,46 @@ import {
   createAction,
 } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
-import { CardTable, MovingCard } from '../../@types/jobmemo';
+import { CardTable, CardType, MovingCard } from '../../@types/jobmemo';
 
 const initialValue: CardTable = {
-  items: [],
+  items: {
+    offres: {
+      id: 0,
+      name: 'Mes offres',
+      color: '#eee',
+      items: [],
+      className: 'offres',
+    },
+    candidatures: {
+      id: 1,
+      name: 'Mes candidatures',
+      color: '#eee',
+      items: [],
+      className: 'candidatures',
+    },
+    relances: {
+      id: 2,
+      name: 'Mes relances',
+      color: '#eee',
+      items: [],
+      className: 'relances',
+    },
+    entretiens: {
+      id: 3,
+      name: 'Mes entretiens',
+      color: '#eee',
+      items: [],
+      className: 'entretiens',
+    },
+    corbeille: {
+      id: 4,
+      name: 'Corbeille',
+      color: '#eee',
+      items: [],
+      className: 'recycle-bin',
+    },
+  },
   isLoading: false,
   error: undefined,
   isEmpty: false,
@@ -16,19 +52,21 @@ const initialValue: CardTable = {
   movingCardId: '',
 };
 
-export const getAllCards = createAsyncThunk('cards/GET_ALL_CARDS', async () => {
-  const cardsRequest = await securedFetch('/userCards');
+export const getAllCards = createAsyncThunk<CardType[]>(
+  'cards/GET_ALL_CARDS',
+  async () => {
+    const cardsRequest = await securedFetch('/userCards');
 
-  if (cardsRequest.status !== 200) {
-    throw new Error(cardsRequest.data);
+    if (cardsRequest.status !== 200) {
+      throw new Error(cardsRequest.data);
+    }
+    return cardsRequest.data;
   }
-  return cardsRequest.data;
-});
+);
 
 export const modifyCard = createAsyncThunk(
   'contacts/MODIFY_CARD',
   async (infos: FormData) => {
-    console.log(infos);
     const modificationRequest = await securedFetch(
       '/modifyCard',
       'PATCH',
@@ -73,14 +111,8 @@ export const sendCardToTrash = createAsyncThunk(
   }
 );
 
-export const loadCardsToDashboard = createAction('cards/LOAD_CARDS');
-
 const cardsReducer = createReducer(initialValue, (builder) => {
   builder
-    .addCase(loadCardsToDashboard, (state) => {
-      state.loadedCards = true;
-      console.log('Cartes envoyées au dashboard');
-    })
     .addCase(setMovingCardId, (state, action) => {
       state.movingCardId = action.payload;
       console.log(`Id de la carte déplacée : ${state.movingCardId}`);
@@ -96,9 +128,23 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       console.log(`Erreur au chargement des cartes: ${state.error}`);
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
-      if (action.payload.length === 0) state.isEmpty = true;
-      else state.items = action.payload;
-      state.loadedCards = false;
+      const offresCards = action.payload.filter(
+        (card) => card.category === 'Mes offres'
+      );
+      const candidaturesCards = action.payload.filter(
+        (card) => card.category === 'Mes candidatures'
+      );
+      const relancesCards = action.payload.filter(
+        (card) => card.category === 'Mes relances'
+      );
+      const entretiensCards = action.payload.filter(
+        (card) => card.category === 'Mes entretiens'
+      );
+      state.items.offres.items = offresCards;
+      state.items.candidatures.items = candidaturesCards;
+      state.items.relances.items = relancesCards;
+      state.items.entretiens.items = entretiensCards;
+      state.loadedCards = true;
       console.log('Cartes chargées dans le store');
     })
     .addCase(modifyCard.pending, (state, action) => {
@@ -110,14 +156,13 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(modifyCard.fulfilled, (state, action) => {
       const updatedInfos = action.payload;
-      const cardIndexToUpdate = state.items.findIndex(
-        (card) => card.id === updatedInfos.id
-      );
-      if (cardIndexToUpdate) {
-        state.items[cardIndexToUpdate] = updatedInfos;
+      const cardToUpdate = Object.values(state.items)
+        .flatMap((category) => category.items)
+        .find((card) => card.id === action.payload.id);
+
+      if (cardToUpdate) {
+        Object.assign(cardToUpdate, updatedInfos);
         console.log('Fiche modifiée');
-        // state.error = false;
-        // state.message = `Contact ${state.items[contactIndexToUpdate].firstName} ${state.items[contactIndexToUpdate].lastName} modifié`;
       }
     })
     .addCase(moveCard.pending, () => {
@@ -127,13 +172,15 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.error = action.error.message;
     })
     .addCase(moveCard.fulfilled, (state, action) => {
-      const movingCard = state.items.find(
-        (card) => card.id === action.payload.data.id
-      );
+      const { id } = action.payload.data;
+      const movingCard = Object.values(state.items)
+        .flatMap((category) => category.items)
+        .find((card) => card.id === id);
+
       if (movingCard) {
         movingCard.category = action.payload.data.category;
         movingCard.index = action.payload.data.index;
-        console.log('Carte déplacée');
+        console.log(`Carte déplacée ${movingCard.id}`);
       }
     })
     .addCase(sendCardToTrash.pending, () => {
@@ -144,7 +191,9 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(sendCardToTrash.fulfilled, (state, action) => {
       const { id } = action.payload.data;
-      const cardToUpdate = state.items.find((card) => card.id === id);
+      const cardToUpdate = Object.values(state.items)
+        .flatMap((category) => category.items)
+        .find((card) => card.id === id);
       if (cardToUpdate) cardToUpdate.isDeleted = true;
       console.log('Carte supprimée');
     });

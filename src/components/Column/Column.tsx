@@ -24,7 +24,10 @@ interface ColumnProps {
 
 function Column({ droppableId, column }: ColumnProps) {
   const isNotRecycleBin = column.className !== 'recycle-bin';
-  const sortedItems = column?.items?.sort((a, b) => a.index - b.index);
+
+  const sortedItems = column?.items
+    ? [...column.items].sort((a, b) => a.index - b.index)
+    : [];
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
       {(provided, snapshot) => {
