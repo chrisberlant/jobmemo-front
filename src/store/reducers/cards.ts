@@ -59,7 +59,7 @@ export const moveCard = createAsyncThunk(
 );
 
 export const sendCardToTrash = createAsyncThunk(
-  'cards/TRASH__CARD',
+  'cards/SEND_CARD_TO_TRASH',
   async (id: string) => {
     const cardForm = new FormData();
     cardForm.append('id', id);
@@ -70,21 +70,6 @@ export const sendCardToTrash = createAsyncThunk(
     );
     console.log(`Carte ${id} placée dans la corbeille`);
     return cardIsTrashed;
-  }
-);
-
-export const trashOrRestoreCard = createAsyncThunk(
-  'cards/TRASH_OR_RESTORE_CARD',
-  async (id: string) => {
-    const cardForm = new FormData();
-    cardForm.append('id', id);
-    const cardIsTrashedOrRestored = await securedFetch(
-      '/trashOrRestoreCard',
-      'PATCH',
-      cardForm
-    );
-    console.log(`Carte ${id} placée dans la corbeille`);
-    return cardIsTrashedOrRestored;
   }
 );
 
