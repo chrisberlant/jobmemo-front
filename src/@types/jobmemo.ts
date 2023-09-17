@@ -49,17 +49,11 @@ export interface CardItems {
     items: CardType[];
     className: 'entretiens';
   };
-  corbeille: {
-    id: 4;
-    name: 'Corbeille';
-    color: '#eee';
-    items: CardType[];
-    className: 'recycle-bin';
-  };
 }
 
 export interface CardTable {
   items: CardItems;
+  trashedItems: CardType[];
   isLoading: boolean;
   error: string | undefined;
   loadedCards: boolean;

@@ -42,14 +42,8 @@ const initialValue: CardTable = {
       items: [],
       className: 'entretiens',
     },
-    corbeille: {
-      id: 4,
-      name: 'Corbeille',
-      color: '#eee',
-      items: [],
-      className: 'recycle-bin',
-    },
   },
+  trashedItems: [],
   isLoading: false,
   error: undefined,
   isEmpty: false,
@@ -58,43 +52,32 @@ const initialValue: CardTable = {
 };
 
 const storeCardsFromApi = (apiCards: CardType[], storedCards: CardItems) => {
-  const offresCards = apiCards.filter(
+  storedCards.offres.items = apiCards.filter(
     (card: CardType) =>
       card.category === 'Mes offres' && card.isDeleted === false
   );
-  const candidaturesCards = apiCards.filter(
+  storedCards.candidatures.items = apiCards.filter(
     (card: CardType) =>
       card.category === 'Mes candidatures' && card.isDeleted === false
   );
-  const relancesCards = apiCards.filter(
+  storedCards.relances.items = apiCards.filter(
     (card: CardType) =>
       card.category === 'Mes relances' && card.isDeleted === false
   );
-  const entretiensCards = apiCards.filter(
+  storedCards.entretiens.items = apiCards.filter(
     (card: CardType) =>
       card.category === 'Mes entretiens' && card.isDeleted === false
   );
-  const corbeilleCards = apiCards.filter(
-    (card: CardType) => card.isDeleted === true
-  );
-  storedCards.offres.items = offresCards;
-  storedCards.candidatures.items = candidaturesCards;
-  storedCards.relances.items = relancesCards;
-  storedCards.entretiens.items = entretiensCards;
-  storedCards.corbeille.items = corbeilleCards;
 };
 
-export const getAllCards = createAsyncThunk<CardType[]>(
-  'cards/GET_ALL_CARDS',
-  async () => {
-    const cardsRequest = await securedFetch('/userCards');
+export const getAllCards = createAsyncThunk('cards/GET_ALL_CARDS', async () => {
+  const cardsRequest = await securedFetch('/userCards');
 
-    if (cardsRequest.status !== 200) {
-      throw new Error(cardsRequest.data);
-    }
-    return cardsRequest.data;
+  if (cardsRequest.status !== 200) {
+    throw new Error(cardsRequest.data);
   }
-);
+  return cardsRequest.data;
+});
 
 export const modifyCard = createAsyncThunk(
   'contacts/MODIFY_CARD',
@@ -160,7 +143,9 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       console.log(`Erreur au chargement des cartes: ${state.error}`);
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
-      storeCardsFromApi(action.payload, state.items);
+      storeCardsFromApi(action.payload.dashboardCards, state.items);
+      state.trashedItems = action.payload.trashedCards;
+      console.log(action.payload.trashedCards);
       state.loadedCards = true;
       console.log('Cartes chargées dans le store');
     })
@@ -200,10 +185,25 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(sendCardToTrash.fulfilled, (state, action) => {
       const { id } = action.payload.data;
-      const cardToUpdate = Object.values(state.items)
+      // Iterate on every item of every category to find the card
+      const cardToTrash = Object.values(state.items)
         .flatMap((category) => category.items)
         .find((card) => card.id === id);
-      if (cardToUpdate) cardToUpdate.isDeleted = true;
+
+      if (cardToTrash) {
+        cardToTrash.isDeleted = true;
+        // Create a copy of the card
+        const cardTrashed = {
+          ...cardToTrash,
+          isDeleted: true,
+        };
+        // Remove the card from the items
+        Object.values(state.items).forEach((category) => {
+          category.items = category.items.filter((card) => card.id !== id);
+        });
+        // Add it to the trashed items
+        state.trashedItems.push(cardTrashed);
+      }
       console.log('Carte supprimée');
     });
 });
