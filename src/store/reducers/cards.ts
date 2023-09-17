@@ -5,7 +5,12 @@ import {
   createAction,
 } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
-import { CardTable, CardType, MovingCard } from '../../@types/jobmemo';
+import {
+  CardItems,
+  CardTable,
+  CardType,
+  MovingCard,
+} from '../../@types/jobmemo';
 
 const initialValue: CardTable = {
   items: {
@@ -52,6 +57,33 @@ const initialValue: CardTable = {
   movingCardId: '',
 };
 
+const storeCardsFromApi = (apiCards: CardType[], storedCards: CardItems) => {
+  const offresCards = apiCards.filter(
+    (card: CardType) =>
+      card.category === 'Mes offres' && card.isDeleted === false
+  );
+  const candidaturesCards = apiCards.filter(
+    (card: CardType) =>
+      card.category === 'Mes candidatures' && card.isDeleted === false
+  );
+  const relancesCards = apiCards.filter(
+    (card: CardType) =>
+      card.category === 'Mes relances' && card.isDeleted === false
+  );
+  const entretiensCards = apiCards.filter(
+    (card: CardType) =>
+      card.category === 'Mes entretiens' && card.isDeleted === false
+  );
+  const corbeilleCards = apiCards.filter(
+    (card: CardType) => card.isDeleted === true
+  );
+  storedCards.offres.items = offresCards;
+  storedCards.candidatures.items = candidaturesCards;
+  storedCards.relances.items = relancesCards;
+  storedCards.entretiens.items = entretiensCards;
+  storedCards.corbeille.items = corbeilleCards;
+};
+
 export const getAllCards = createAsyncThunk<CardType[]>(
   'cards/GET_ALL_CARDS',
   async () => {
@@ -92,7 +124,7 @@ export const moveCard = createAsyncThunk(
       `Déplacement de la carte ${movingCardId} vers l'index ${movingCardindex} de la catégorie ${movingCardcategory}`
     );
     const cardMoved = await securedFetch('/moveCard', 'PATCH', movingCardInfos);
-    return cardMoved;
+    return cardMoved.data;
   }
 );
 
@@ -128,22 +160,7 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       console.log(`Erreur au chargement des cartes: ${state.error}`);
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
-      const offresCards = action.payload.filter(
-        (card) => card.category === 'Mes offres'
-      );
-      const candidaturesCards = action.payload.filter(
-        (card) => card.category === 'Mes candidatures'
-      );
-      const relancesCards = action.payload.filter(
-        (card) => card.category === 'Mes relances'
-      );
-      const entretiensCards = action.payload.filter(
-        (card) => card.category === 'Mes entretiens'
-      );
-      state.items.offres.items = offresCards;
-      state.items.candidatures.items = candidaturesCards;
-      state.items.relances.items = relancesCards;
-      state.items.entretiens.items = entretiensCards;
+      storeCardsFromApi(action.payload, state.items);
       state.loadedCards = true;
       console.log('Cartes chargées dans le store');
     })
@@ -172,16 +189,8 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.error = action.error.message;
     })
     .addCase(moveCard.fulfilled, (state, action) => {
-      const { id } = action.payload.data;
-      const movingCard = Object.values(state.items)
-        .flatMap((category) => category.items)
-        .find((card) => card.id === id);
-
-      if (movingCard) {
-        movingCard.category = action.payload.data.category;
-        movingCard.index = action.payload.data.index;
-        console.log(`Carte déplacée ${movingCard.id}`);
-      }
+      storeCardsFromApi(action.payload.updatedCards, state.items);
+      state.loadedCards = true;
     })
     .addCase(sendCardToTrash.pending, () => {
       console.log("Suppression d'une carte");

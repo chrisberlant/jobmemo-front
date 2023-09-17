@@ -8,6 +8,7 @@ import {
   moveCard,
   sendCardToTrash,
 } from '../../store/reducers/cards';
+import { CardItems } from '../../@types/jobmemo';
 
 // Cet extrait de code définit une fonction appelée onDragEnd qui est utilisée comme rappel pour gérer la fin d'un événement glisser. Il prend trois paramètres : result, columns et setColumns.
 // La fonction vérifie d'abord s'il existe une destination valide pour l'événement glisser. Sinon, il revient à sa place.
@@ -34,6 +35,7 @@ const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
     movingCardcategory: destColumn.name,
   };
   dispatch(moveCard(newCardInfos));
+  console.log(newCardInfos);
 
   // If the source and destination droppableIds are different
   if (source.droppableId !== destination.droppableId) {
@@ -109,7 +111,7 @@ const onDragEnd = (result, columns, setColumns, dispatch, movingCardId) => {
 function Kanban() {
   // Initialize state with the categories object
   const cards = useAppSelector((state) => state.cards.items);
-  const [columns, setColumns] = useState(cards);
+  const [columns, setColumns] = useState<CardItems>(cards);
   const loadedCards = useAppSelector((state) => state.cards.loadedCards);
   const dispatch = useAppDispatch();
   const movingCardId = useAppSelector((state) => state.cards.movingCardId);
@@ -123,7 +125,6 @@ function Kanban() {
 
   useEffect(() => {
     setColumns(cards);
-    console.log(cards);
   }, [cards]);
 
   return (
