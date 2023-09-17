@@ -22,22 +22,24 @@ const onDragEnd = (result, columns, dispatch, movingCardId) => {
   // Destructure the source and destination from the result object
   const { source, destination } = result;
   const sourceColumn = columns[source.droppableId];
+  // TODO FIX THIS BUG, remove columns from parameters ?
   const destColumn = columns[destination.droppableId];
 
   // Get the source and destination columns based on the droppableIds
   // Create copies of the source and destination items arrays
 
-  const newCardInfos = {
-    movingCardId,
-    movingCardindex: destination.index,
-    movingCardcategory: destColumn.name,
-  };
-  dispatch(moveCard(newCardInfos)); // TODO tester si l'index dest et source sont identiques
+  if (destination.droppableId !== 'corbeille') {
+    const newCardInfos = {
+      movingCardId,
+      movingCardindex: destination.index,
+      movingCardcategory: destColumn?.name,
+    };
+    dispatch(moveCard(newCardInfos)); // TODO tester si l'index dest et source sont identiques
+  }
 
   // If the source and destination droppableIds are different
   if (source.droppableId !== destination.droppableId) {
-    console.log(destColumn.className);
-    if (destColumn.className === 'corbeille') {
+    if (destination.droppableId === 'corbeille') {
       dispatch(sendCardToTrash(movingCardId));
     }
   }
