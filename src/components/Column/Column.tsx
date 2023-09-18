@@ -6,7 +6,6 @@ import addCardIcon from '../../assets/icons/icon-add-card.svg';
 import './Column.scss';
 
 interface ColumnProps {
-  trashColumn: boolean;
   droppableId: string;
   column: {
     color: string;
@@ -17,6 +16,7 @@ interface ColumnProps {
       id: React.Key;
     }>;
   };
+  trashColumn: boolean;
 }
 
 // Rendu de la colonne avec fonctions glissables et déposables à l'aide du composant Droppable de la bibliothèque react-beautiful-dnd. Le composant Column prend en charge deux props: droppableId et column.

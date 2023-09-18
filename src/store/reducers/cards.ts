@@ -125,7 +125,8 @@ const cardsReducer = createReducer(initialValue, (builder) => {
           state.items = state.items.map((otherCard) => {
             if (
               otherCard.category === oldCategory &&
-              otherCard.index > oldIndex
+              otherCard.index > oldIndex &&
+              otherCard.id !== id
             ) {
               return {
                 ...otherCard,
@@ -137,7 +138,11 @@ const cardsReducer = createReducer(initialValue, (builder) => {
         }
         // Update the state to increment other cards' index from the new category
         state.items = state.items.map((otherCard) => {
-          if (otherCard.category === category && otherCard.index >= index) {
+          if (
+            otherCard.category === category &&
+            otherCard.index >= index &&
+            otherCard.id !== id
+          ) {
             return {
               ...otherCard,
               index: otherCard.index + 1,
@@ -146,6 +151,7 @@ const cardsReducer = createReducer(initialValue, (builder) => {
           return otherCard;
         });
       }
+      console.log(state.items);
 
       state.loadedCards = true;
     })

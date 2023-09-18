@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Link } from 'react-router-dom';
-
-import { useAppDispatch } from '../../store/hook/redux';
-import { setMovingCardId } from '../../store/reducers/cards';
 import './Card.scss';
 
 // Ce composant restitue un élément déplaçable à l'aide du composant Draggable de la bibliothèque 'react-beautifull-dnd'.

@@ -25,7 +25,7 @@ export const login = createAsyncThunk(
   async (credentials: FormData) => {
     try {
       const loginRequest = await securedFetch('/login', 'POST', credentials);
-      // TODO Gestion d'erreurs
+
       if (loginRequest.status !== 200) {
         throw new Error(loginRequest.data);
       }
