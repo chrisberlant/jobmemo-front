@@ -52,7 +52,7 @@ export interface CardItems {
 }
 
 export interface CardTable {
-  items: CardItems;
+  items: CardType[];
   trashedItems: CardType[];
   isLoading: boolean;
   error: string | undefined;
@@ -63,8 +63,8 @@ export interface CardTable {
 
 export interface MovingCard {
   movingCardId: string;
-  movingCardindex: number;
-  movingCardcategory: string;
+  movingCardIndex: number;
+  movingCardCategory: string;
 }
 
 export interface ColumnType {

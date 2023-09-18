@@ -11,7 +11,6 @@ interface ColumnProps {
   column: {
     color: string;
     className: string;
-    name: string;
     id: number;
     items?: Array<{
       index: number;
@@ -29,8 +28,8 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
     : [];
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
-      {(provided, snapshot) => {
-        const route = `/addCard/${column.name.replace(/\s+/g, '-')}`;
+      {(provided) => {
+        const route = `/addCard/${column.className}`;
 
         return (
           <div
@@ -38,9 +37,10 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
             ref={provided.innerRef}
             className="column"
           >
-            {sortedItems?.map((item: { id: React.Key }, index: number) => {
-              return <Card key={item.id} item={item} index={index} />;
-            })}
+            {!trashColumn &&
+              sortedItems?.map((item: { id: React.Key }, index: number) => {
+                return <Card key={item.id} item={item} index={index} />;
+              })}
             {provided.placeholder}
             {!trashColumn && (
               <Link to={route}>

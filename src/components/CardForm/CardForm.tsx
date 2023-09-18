@@ -37,11 +37,6 @@ function CardForm() {
     window.location.reload();
   };
 
-  const back = () => {
-    navigate('/dashboard');
-    window.location.reload();
-  };
-
   // ANIMATION ////////////////////////////////////////////////////
 
   // Animation des champs email et mot de passe avec GSAP >>
@@ -200,10 +195,15 @@ function CardForm() {
           {/* <div className="input-wrap">
             <input type="reset" defaultValue="Annuler" />
           </div> */}
+          <input
+            type="button"
+            name="cancel-button"
+            className="button--cancel"
+            value="Annuler"
+            aria-label="Annuler"
+            onClick={() => navigate('/dashboard')}
+          />
         </form>
-        <button type="button" onClick={back}>
-          Retour
-        </button>
       </div>
     </div>
   );

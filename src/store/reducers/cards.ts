@@ -5,69 +5,16 @@ import {
   createAction,
 } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
-import {
-  CardItems,
-  CardTable,
-  CardType,
-  MovingCard,
-} from '../../@types/jobmemo';
+import { CardTable, MovingCard } from '../../@types/jobmemo';
 
 const initialValue: CardTable = {
-  items: {
-    offres: {
-      id: 0,
-      name: 'Mes offres',
-      color: '#eee',
-      items: [],
-      className: 'offres',
-    },
-    candidatures: {
-      id: 1,
-      name: 'Mes candidatures',
-      color: '#eee',
-      items: [],
-      className: 'candidatures',
-    },
-    relances: {
-      id: 2,
-      name: 'Mes relances',
-      color: '#eee',
-      items: [],
-      className: 'relances',
-    },
-    entretiens: {
-      id: 3,
-      name: 'Mes entretiens',
-      color: '#eee',
-      items: [],
-      className: 'entretiens',
-    },
-  },
+  items: [],
   trashedItems: [],
   isLoading: false,
   error: undefined,
   isEmpty: false,
   loadedCards: false,
   movingCardId: '',
-};
-
-const storeCardsFromApi = (apiCards: CardType[], storedCards: CardItems) => {
-  storedCards.offres.items = apiCards.filter(
-    (card: CardType) =>
-      card.category === 'Mes offres' && card.isDeleted === false
-  );
-  storedCards.candidatures.items = apiCards.filter(
-    (card: CardType) =>
-      card.category === 'Mes candidatures' && card.isDeleted === false
-  );
-  storedCards.relances.items = apiCards.filter(
-    (card: CardType) =>
-      card.category === 'Mes relances' && card.isDeleted === false
-  );
-  storedCards.entretiens.items = apiCards.filter(
-    (card: CardType) =>
-      card.category === 'Mes entretiens' && card.isDeleted === false
-  );
 };
 
 export const getAllCards = createAsyncThunk('cards/GET_ALL_CARDS', async () => {
@@ -98,13 +45,13 @@ export const setMovingCardId = createAction<string>('cards/SET_MOVING_CARD_ID');
 
 export const moveCard = createAsyncThunk(
   'cards/MOVE_CARD',
-  async ({ movingCardId, movingCardindex, movingCardcategory }: MovingCard) => {
+  async ({ movingCardId, movingCardIndex, movingCardCategory }: MovingCard) => {
     const movingCardInfos = new FormData();
     movingCardInfos.append('id', movingCardId);
-    movingCardInfos.append('index', movingCardindex.toString());
-    movingCardInfos.append('category', movingCardcategory);
+    movingCardInfos.append('newIndex', movingCardIndex.toString());
+    movingCardInfos.append('newCategory', movingCardCategory);
     console.log(
-      `Déplacement de la carte ${movingCardId} vers l'index ${movingCardindex} de la catégorie ${movingCardcategory}`
+      `Déplacement de la carte ${movingCardId} vers l'index ${movingCardIndex} de la catégorie ${movingCardCategory}`
     );
     const cardMoved = await securedFetch('/moveCard', 'PATCH', movingCardInfos);
     return cardMoved.data;
@@ -122,7 +69,7 @@ export const sendCardToTrash = createAsyncThunk(
       cardForm
     );
     console.log(`Carte ${id} placée dans la corbeille`);
-    return cardIsTrashed;
+    return cardIsTrashed.data;
   }
 );
 
@@ -143,9 +90,8 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       console.log(`Erreur au chargement des cartes: ${state.error}`);
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
-      storeCardsFromApi(action.payload.dashboardCards, state.items);
+      state.items = action.payload.dashboardCards;
       state.trashedItems = action.payload.trashedCards;
-      console.log(action.payload.trashedCards);
       state.loadedCards = true;
       console.log('Cartes chargées dans le store');
     })
@@ -157,13 +103,12 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.error = action.error.message;
     })
     .addCase(modifyCard.fulfilled, (state, action) => {
+      const { id } = action.payload;
       const updatedInfos = action.payload;
-      const cardToUpdate = Object.values(state.items)
-        .flatMap((category) => category.items)
-        .find((card) => card.id === action.payload.id);
+      let cardToUpdate = state.items.find((card) => card.id === id);
 
       if (cardToUpdate) {
-        Object.assign(cardToUpdate, updatedInfos);
+        cardToUpdate = updatedInfos;
         console.log('Fiche modifiée');
       }
     })
@@ -174,7 +119,43 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.error = action.error.message;
     })
     .addCase(moveCard.fulfilled, (state, action) => {
-      storeCardsFromApi(action.payload.updatedCards, state.items);
+      const { card, oldCategory, oldIndex } = action.payload;
+      const { id, category, index } = card;
+      const cardMoved = state.items.find(
+        (searchedCard) => searchedCard.id === id
+      );
+
+      if (cardMoved) {
+        // Update the state to decrement other cards' index from the old category
+        cardMoved.index = index;
+        cardMoved.category = category;
+        // If the card changed category
+        if (oldCategory !== category) {
+          state.items = state.items.map((otherCard) => {
+            if (
+              otherCard.category === oldCategory &&
+              otherCard.index > oldIndex
+            ) {
+              return {
+                ...otherCard,
+                index: otherCard.index - 1,
+              };
+            }
+            return otherCard;
+          });
+        }
+        // Update the state to increment other cards' index from the new category
+        state.items = state.items.map((otherCard) => {
+          if (otherCard.category === category && otherCard.index >= index) {
+            return {
+              ...otherCard,
+              index: otherCard.index + 1,
+            };
+          }
+          return otherCard;
+        });
+      }
+
       state.loadedCards = true;
     })
     .addCase(sendCardToTrash.pending, () => {
@@ -184,27 +165,16 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       console.log("Erreur lors de la suppression d'une carte");
     })
     .addCase(sendCardToTrash.fulfilled, (state, action) => {
-      const { id } = action.payload.data;
-      // Iterate on every item of every category to find the card
-      const cardToTrash = Object.values(state.items)
-        .flatMap((category) => category.items)
-        .find((card) => card.id === id);
-
+      const { id } = action.payload;
+      const cardToTrash = state.items.find((card) => card.id === id);
       if (cardToTrash) {
         cardToTrash.isDeleted = true;
-        // Create a copy of the card
-        const cardTrashed = {
-          ...cardToTrash,
-          isDeleted: true,
-        };
-        // Remove the card from the items
-        Object.values(state.items).forEach((category) => {
-          category.items = category.items.filter((card) => card.id !== id);
-        });
-        // Add it to the trashed items
-        state.trashedItems.push(cardTrashed);
+        state.trashedItems.push(cardToTrash);
+        const indexToTrash = state.items.indexOf(cardToTrash);
+        state.items.splice(indexToTrash, 1);
+        console.log(state.items);
       }
-      console.log('Carte supprimée');
+      console.log('Carte envoyée à la corbeille');
     });
 });
 
