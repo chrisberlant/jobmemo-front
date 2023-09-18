@@ -23,9 +23,7 @@ interface ColumnProps {
 // Il utilise ensuite ces accessoires pour définir le droppableId du composant Droppable et restituer une liste de composants Card basée sur le tableau column.items
 
 function Column({ droppableId, column, trashColumn }: ColumnProps) {
-  const sortedItems = column?.items
-    ? [...column.items].sort((a, b) => a.index - b.index)
-    : [];
+  const sortedItems = column.items?.sort((a, b) => a.index - b.index);
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
       {(provided) => {

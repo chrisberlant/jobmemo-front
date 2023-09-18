@@ -1,13 +1,9 @@
 const useToken = () => {
-  if (
-    document.cookie
-      .split(';')
-      .some((cookie) => cookie.trim().startsWith('jobmemo_token='))
-  ) {
-    console.log('Cookie existant');
+  if (localStorage.getItem('firstName')) {
+    console.log('Local existant');
     return true;
   }
-  console.log('Cookie inexistant');
+  console.log('Local inexistant');
   return false;
 };
 

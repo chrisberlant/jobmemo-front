@@ -11,7 +11,7 @@ async function securedFetch(route: string, method?: string, body?: FormData) {
   const data = await response.json();
 
   // If the JWT has been altered
-  if (response.status === 403) {
+  if (response.status === 403 || response.status === 401) {
     localStorage.clear();
     await securedFetch('/logout');
     window.location.replace('/login');

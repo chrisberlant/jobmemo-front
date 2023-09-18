@@ -62,8 +62,6 @@ export const modifyUserInfos = createAsyncThunk(
   }
 );
 
-export const disconnectUser = createAction('user/DISCONNECT_USER');
-
 const userReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(login.pending, (state) => {
@@ -78,7 +76,6 @@ const userReducer = createReducer(initialValue, (builder) => {
     .addCase(login.fulfilled, (state, action) => {
       localStorage.setItem('firstName', action.payload.firstName);
       state.infos = action.payload;
-      console.log(action.payload);
     })
     .addCase(getUserInfos.pending, (state) => {
       console.log('Infos utilisateur en cours de récupération');
@@ -109,10 +106,6 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.infos = action.payload;
       localStorage.setItem('firstName', action.payload.firstName);
       console.log('Infos utilisateur modifiées');
-    })
-    .addCase(disconnectUser, (state, action) => {
-      state.error = 'Vous avez été deconnecté';
-      localStorage.clear();
     });
 });
 

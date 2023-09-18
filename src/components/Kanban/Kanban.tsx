@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import Column from '../Column/Column';
@@ -46,9 +46,9 @@ const onDragEnd = (result, dispatch, movingCardId) => {
 
 function Kanban() {
   const dispatch = useAppDispatch();
+  let movingCardId: string;
   const dashboardCards = useAppSelector((state) => state.cards.items);
   const loadedCards = useAppSelector((state) => state.cards.loadedCards);
-  const movingCardId = useAppSelector((state) => state.cards.movingCardId);
   const offresColumn = {
     color: '#eee',
     className: 'Mes offres',
@@ -99,12 +99,15 @@ function Kanban() {
   useEffect(() => {
     if (!loadedCards) {
       dispatch(getAllCards());
-      console.log('fetch');
     }
   }, [dispatch, loadedCards]);
 
   return (
     <DragDropContext
+      onDragStart={(start) => {
+        // Get the id of the dragged card here
+        movingCardId = start.draggableId;
+      }}
       // Call the onDragEnd function with the result, columns, and setColumns arguments
       onDragEnd={(result) => onDragEnd(result, dispatch, movingCardId)}
     >

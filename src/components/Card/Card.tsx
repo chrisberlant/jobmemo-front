@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
+import { useAppDispatch } from '../../store/hook/redux';
 import { setMovingCardId } from '../../store/reducers/cards';
 import './Card.scss';
 
@@ -24,7 +24,6 @@ type CardProps = {
 };
 
 function Card({ item, index }: CardProps) {
-  const dispatch = useAppDispatch();
   const [checked, setChecked] = useState<boolean>(false);
   const handleChange = () => {
     setChecked(!checked);
@@ -33,11 +32,7 @@ function Card({ item, index }: CardProps) {
 
   return (
     <Draggable key={item.id} draggableId={item.id} index={index}>
-      {(provided, snapshot) => {
-        if (snapshot.isDropAnimating) {
-          dispatch(setMovingCardId(item.id));
-        }
-
+      {(provided) => {
         return (
           <div
             ref={provided.innerRef}

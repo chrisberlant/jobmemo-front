@@ -1,9 +1,5 @@
 /* eslint-disable no-console */
-import {
-  createReducer,
-  createAsyncThunk,
-  createAction,
-} from '@reduxjs/toolkit';
+import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
 import { CardTable, MovingCard } from '../../@types/jobmemo';
 
@@ -41,8 +37,6 @@ export const modifyCard = createAsyncThunk(
   }
 );
 
-export const setMovingCardId = createAction<string>('cards/SET_MOVING_CARD_ID');
-
 export const moveCard = createAsyncThunk(
   'cards/MOVE_CARD',
   async ({ movingCardId, movingCardIndex, movingCardCategory }: MovingCard) => {
@@ -54,6 +48,7 @@ export const moveCard = createAsyncThunk(
       `Déplacement de la carte ${movingCardId} vers l'index ${movingCardIndex} de la catégorie ${movingCardCategory}`
     );
     const cardMoved = await securedFetch('/moveCard', 'PATCH', movingCardInfos);
+    console.log(cardMoved.data);
     return cardMoved.data;
   }
 );
@@ -75,10 +70,6 @@ export const sendCardToTrash = createAsyncThunk(
 
 const cardsReducer = createReducer(initialValue, (builder) => {
   builder
-    .addCase(setMovingCardId, (state, action) => {
-      state.movingCardId = action.payload;
-      console.log(`Id de la carte déplacée : ${state.movingCardId}`);
-    })
     .addCase(getAllCards.pending, (state) => {
       state.isLoading = true;
       state.error = undefined;

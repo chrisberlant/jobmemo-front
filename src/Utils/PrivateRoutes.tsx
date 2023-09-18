@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar/Navbar';
 function PrivateRoutes() {
   // If there is the firstName in localstorage, we assume user is logged in
   const authenticatedUser = localStorage.getItem('firstName');
+  console.log('Route privée');
   return authenticatedUser ? (
     <>
       <Navbar />

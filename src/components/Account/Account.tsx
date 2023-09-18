@@ -5,6 +5,7 @@ import logo from '../../assets/images/logo.svg';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import './Account.scss';
 import { getUserInfos, modifyUserInfos } from '../../store/reducers/user';
+import securedFetch from '../../Utils/securedFetch';
 
 function Account() {
   const dispatch = useAppDispatch();
@@ -26,10 +27,10 @@ function Account() {
   }, [userInfos, dispatch]);
 
   // logout function
-  const logOut = () => {
-    // TODO FIX fetch logout
+  const logOut = async () => {
     localStorage.clear();
-    window.location.reload();
+    await securedFetch('/logout');
+    window.location.replace('/login');
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
