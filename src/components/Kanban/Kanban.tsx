@@ -8,6 +8,7 @@ import {
   moveCard,
   sendCardToTrash,
 } from '../../store/reducers/cards';
+import { ColumnsData } from '../../@types/jobmemo';
 
 // Cet extrait de code définit une fonction appelée onDragEnd qui est utilisée comme rappel pour gérer la fin d'un événement glisser. Il prend trois paramètres : result, columns et setColumns.
 // La fonction vérifie d'abord s'il existe une destination valide pour l'événement glisser. Sinon, il revient à sa place.
@@ -16,11 +17,11 @@ import {
 // Si la source et la destination proviennent du même conteneur de dépôt, la fonction déplace l'élément déplacé dans la même colonne. Il suit un processus similaire au précédent, mais avec une seule colonne impliquée.
 
 const onDragEnd = (result, dispatch, movingCardId: string) => {
-  // Check if there is a destination for the dragged item
-  if (!result.destination) return;
-
   // Destructure the source and destination from the result object
   const { source, destination } = result;
+
+  // Check if there is a destination for the dragged item
+  if (!result.destination) return;
 
   // If card is dragged to the exact same location
   if (
@@ -50,51 +51,44 @@ function Kanban() {
   const dashboardCards = useAppSelector((state) => state.cards.items);
   const loadedCards = useAppSelector((state) => state.cards.loadedCards);
   const offresColumn = {
-    color: '#eee',
     className: 'Mes offres',
     id: 1,
+    color: '#eee',
     items: dashboardCards.filter((card) => card.category === 'Mes offres'),
   };
   const candidaturesColumn = {
-    color: '#eee',
     className: 'candidatures',
     id: 2,
+    color: '#eee',
     items: dashboardCards.filter(
       (card) => card.category === 'Mes candidatures'
     ),
   };
   const relancesColumn = {
-    color: '#eee',
     className: 'relances',
     id: 3,
+    color: '#eee',
     items: dashboardCards.filter((card) => card.category === 'Mes relances'),
   };
   const entretiensColumn = {
-    color: '#eee',
     className: 'entretiens',
     id: 4,
+    color: '#eee',
     items: dashboardCards.filter((card) => card.category === 'Mes entretiens'),
   };
   const corbeilleColumn = {
-    color: '#eee',
     className: 'corbeille',
     id: 5,
+    color: '#eee',
   };
 
-  const columnsNames = [
-    'Mes offres',
-    'Mes candidatures',
-    'Mes relances',
-    'Mes entretiens',
-    'Ma corbeille',
-  ];
-  const columnsData = [
-    offresColumn,
-    candidaturesColumn,
-    relancesColumn,
-    entretiensColumn,
-    corbeilleColumn,
-  ];
+  const columnsData: ColumnsData = {
+    'Mes offres': offresColumn,
+    'Mes candidatures': candidaturesColumn,
+    'Mes relances': relancesColumn,
+    'Mes entretiens': entretiensColumn,
+    'Ma corbeille': corbeilleColumn,
+  };
 
   useEffect(() => {
     if (!loadedCards) {
@@ -112,20 +106,20 @@ function Kanban() {
       onDragEnd={(result) => onDragEnd(result, dispatch, movingCardId)}
     >
       <div className="kanban">
-        {columnsNames.map((column, index) => {
-          const isTrashBin = column === 'Ma corbeille';
+        {Object.keys(columnsData).map((columnName) => {
+          const isTrashBin = columnName === 'Ma corbeille';
           return (
             <div
-              key={column}
-              id={column}
-              className={`column ${column.replace(/^[^ ]+\s*/, '')}`}
+              key={columnName}
+              id={columnName}
+              className={`column ${columnName.replace(/^[^ ]+\s*/, '')}`}
             >
-              <h3 className="column-title">{column}</h3>
+              <h3 className="column-title">{columnName}</h3>
               <div className="column-wrapper">
                 <Column
-                  droppableId={column}
-                  key={column}
-                  column={columnsData[index]}
+                  droppableId={columnName}
+                  key={columnName}
+                  column={columnsData[columnName]}
                   trashColumn={!!isTrashBin}
                 />
               </div>

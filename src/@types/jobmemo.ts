@@ -20,35 +20,27 @@ export interface CardType {
   reminder: Date;
 }
 
-export interface CardItems {
-  offres: {
-    id: 0;
-    name: 'Mes offres';
-    color: '#eee';
-    items: CardType[];
-    className: 'offres';
+export interface ColumnsData {
+  [key: string]: {
+    className: string;
+    id: number;
+    color: string;
+    items?: CardType[];
   };
-  candidatures: {
-    id: 1;
-    name: 'Mes candidatures';
-    color: '#eee';
-    items: CardType[];
-    className: 'candidatures';
+}
+
+export interface ColumnProps {
+  droppableId: string;
+  column: {
+    className: string;
+    id: number;
+    color: string;
+    items?: Array<{
+      index: number;
+      id: React.Key;
+    }>;
   };
-  relances: {
-    id: 2;
-    name: 'Mes relances';
-    color: '#eee';
-    items: CardType[];
-    className: 'relances';
-  };
-  entretiens: {
-    id: 3;
-    name: 'Mes entretiens';
-    color: '#eee';
-    items: CardType[];
-    className: 'entretiens';
-  };
+  trashColumn: boolean;
 }
 
 export interface CardTable {
@@ -65,22 +57,6 @@ export interface MovingCard {
   movingCardId: string;
   movingCardIndex: number;
   movingCardCategory: string;
-}
-
-export interface ColumnType {
-  id: number;
-  title: string;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  color: string;
-  items: CardType[];
-  className: string;
-}
-export interface Categories {
-  [key: string]: Category;
 }
 
 export interface ContactType {

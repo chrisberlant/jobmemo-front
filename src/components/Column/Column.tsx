@@ -3,21 +3,8 @@ import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
 import recycleBinIcon from '../../assets/icons/icon-recycle-bin.svg';
 import addCardIcon from '../../assets/icons/icon-add-card.svg';
+import { ColumnProps } from '../../@types/jobmemo';
 import './Column.scss';
-
-interface ColumnProps {
-  droppableId: string;
-  column: {
-    color: string;
-    className: string;
-    id: number;
-    items?: Array<{
-      index: number;
-      id: React.Key;
-    }>;
-  };
-  trashColumn: boolean;
-}
 
 // Rendu de la colonne avec fonctions glissables et déposables à l'aide du composant Droppable de la bibliothèque react-beautiful-dnd. Le composant Column prend en charge deux props: droppableId et column.
 // Il utilise ensuite ces accessoires pour définir le droppableId du composant Droppable et restituer une liste de composants Card basée sur le tableau column.items
@@ -45,7 +32,7 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
                 <div className="add-card">
                   <img
                     src={addCardIcon}
-                    alt="icon-add-card"
+                    alt="Ajouter une fiche"
                     className="icon-add-card"
                   />
                 </div>
@@ -56,7 +43,7 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
                 <div className="recycle-bin">
                   <img
                     src={recycleBinIcon}
-                    alt="icon-recycle-bin"
+                    alt="Accéder à la corbeille"
                     className="icon-recycle-bin"
                   />
                 </div>
