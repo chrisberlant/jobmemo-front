@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import Column from '../Column/Column';
-import './Kanban.scss';
 import {
   getAllCards,
   moveCard,
   sendCardToTrash,
 } from '../../store/reducers/cards';
 import { ColumnsData } from '../../@types/jobmemo';
+import './Kanban.scss';
 
 // Cet extrait de code définit une fonction appelée onDragEnd qui est utilisée comme rappel pour gérer la fin d'un événement glisser. Il prend trois paramètres : result, columns et setColumns.
 // La fonction vérifie d'abord s'il existe une destination valide pour l'événement glisser. Sinon, il revient à sa place.

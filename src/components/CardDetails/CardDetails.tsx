@@ -12,9 +12,9 @@ function CardDetails() {
   const dispatch = useAppDispatch();
 
   const card = useAppSelector((state) =>
-    Object.values(state.cards.items)
-      .flatMap((category) => category.items)
-      .find((searchedCard) => searchedCard.id === id)
+    Object.values(state.cards.items).find(
+      (searchedCard) => searchedCard.id === id
+    )
   );
 
   const [infos, setInfos] = useState({

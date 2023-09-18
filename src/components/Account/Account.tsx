@@ -1,11 +1,11 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
-import logo from '../../assets/images/logo.svg';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
-import './Account.scss';
 import { getUserInfos, modifyUserInfos } from '../../store/reducers/user';
 import securedFetch from '../../Utils/securedFetch';
+import logo from '../../assets/images/logo.svg';
+import './Account.scss';
 
 function Account() {
   const dispatch = useAppDispatch();

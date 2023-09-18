@@ -8,7 +8,7 @@ import ChangePassword from './components/Account/ChangePassword/ChangePassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import RecycleBin from './components/RecycleBin/RecycleBin';
 import Contacts from './components/Contacts/Contacts';
-import CardForm from './components/CardForm/CardForm';
+import CardCreation from './components/CardCreation/CardCreation';
 import CardDetails from './components/CardDetails/CardDetails';
 import ContactCreation from './components/ContactCreation/ContactCreation';
 import ContactDetails from './components/Contacts/ContactDetails/ContactDetails';
@@ -37,7 +37,7 @@ function App() {
             <Route element={<ContactDetails />} path="/contact/:id" />
             <Route element={<ContactCreation />} path="/createContact" />
             <Route element={<CardDetails />} path="/card/:id" />
-            <Route element={<CardForm />} path="/addCard/:category" />
+            <Route element={<CardCreation />} path="/addCard/:category" />
           </Route>
         </Routes>
       </Router>
