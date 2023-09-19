@@ -1,23 +1,7 @@
 .kanban {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr) auto;
-  gap: 16px;
+  display: flex;
+  width: 98%;
+  gap: 8px;
   margin: 0 16px;
-  overflow-x: scroll;
-
-  .column-wrapper {
-    border-right: 2px solid #d3d3d3;
-    height: 100%;
-    width: 100%;
-  }
-  
-  .column-title {
-    color: rgba(0, 0, 0, 0.4);
-    font-size: 20px;
-    font-weight: 900;
-    margin-bottom: -14px;
-    width: 100%;
-    margin-left: -16px;
-    text-transform: uppercase;
-  }
+  overflow: auto;
 }

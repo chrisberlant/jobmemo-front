@@ -115,14 +115,13 @@ function Kanban() {
               className={`column ${columnName.replace(/^[^ ]+\s*/, '')}`}
             >
               <h3 className="column-title">{columnName}</h3>
-              <div className="column-wrapper">
-                <Column
-                  droppableId={columnName}
-                  key={columnName}
-                  column={columnsData[columnName]}
-                  trashColumn={!!isTrashBin}
-                />
-              </div>
+
+              <Column
+                droppableId={columnName}
+                key={columnName}
+                column={columnsData[columnName]}
+                trashColumn={!!isTrashBin}
+              />
             </div>
           );
         })}

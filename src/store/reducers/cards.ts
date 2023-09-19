@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
-import { CardTable, MovingCard } from '../../@types/jobmemo';
+import { CardTable, CardType, MovingCard } from '../../@types/jobmemo';
 
 const initialValue: CardTable = {
   items: [],
@@ -13,14 +13,17 @@ const initialValue: CardTable = {
   movingCardId: '',
 };
 
-export const getAllCards = createAsyncThunk('cards/GET_ALL_CARDS', async () => {
-  const cardsRequest = await securedFetch('/userCards');
+export const getAllCards = createAsyncThunk<CardType[]>(
+  'cards/GET_ALL_CARDS',
+  async () => {
+    const cardsRequest = await securedFetch('/userCards');
 
-  if (cardsRequest.status !== 200) {
-    throw new Error(cardsRequest.data);
+    if (cardsRequest.status !== 200) {
+      throw new Error(cardsRequest.data);
+    }
+    return cardsRequest.data;
   }
-  return cardsRequest.data;
-});
+);
 
 export const modifyCard = createAsyncThunk(
   'contacts/MODIFY_CARD',
@@ -81,8 +84,10 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       console.log(`Erreur au chargement des cartes: ${state.error}`);
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
-      state.items = action.payload.dashboardCards;
-      state.trashedItems = action.payload.trashedCards;
+      state.items = action.payload.filter((card) => card.isDeleted === false);
+      state.trashedItems = action.payload.filter(
+        (card) => card.isDeleted === true
+      );
       state.loadedCards = true;
       console.log('Cartes chargées dans le store');
     })

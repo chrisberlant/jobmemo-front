@@ -20,7 +20,7 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="column"
+            className="column-content"
           >
             {!trashColumn &&
               sortedItems?.map((item: { id: React.Key }, index: number) => {
