@@ -29,24 +29,20 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
             {provided.placeholder}
             {!trashColumn && (
               <Link to={route}>
-                <div className="add-card">
-                  <img
-                    src={addCardIcon}
-                    alt="Ajouter une fiche"
-                    className="icon-add-card"
-                  />
-                </div>
+                <img
+                  src={addCardIcon}
+                  alt="Ajouter une fiche"
+                  className="kanban-button add-card"
+                />
               </Link>
             )}
             {trashColumn && (
               <Link to="/recyclebin">
-                <div className="recycle-bin">
-                  <img
-                    src={recycleBinIcon}
-                    alt="Accéder à la corbeille"
-                    className="icon-recycle-bin"
-                  />
-                </div>
+                <img
+                  src={recycleBinIcon}
+                  alt="Accéder à la corbeille"
+                  className="kanban-button recycle-bin"
+                />
               </Link>
             )}
           </div>

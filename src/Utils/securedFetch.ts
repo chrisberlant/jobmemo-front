@@ -10,15 +10,15 @@ async function securedFetch(route: string, method?: string, body?: FormData) {
 
   const data = await response.json();
 
-  // If the JWT has been altered
-  if (response.status === 403 || response.status === 401) {
+  // If the API replies with invalid token or non existent token
+  if (JSON.stringify(data).toLowerCase().includes('token')) {
     localStorage.clear();
     await securedFetch('/logout');
-    window.location.replace('/login');
+    window.location.href = '/login';
   }
 
+  // If request failed
   // if (response.status > 299 || response.status < 200) {
-  //   // If request failed
   // }
 
   const returnedData = { status: response.status, data };

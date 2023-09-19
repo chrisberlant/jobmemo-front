@@ -6,14 +6,16 @@ import {
   appearanceAnimation,
 } from '../../Utils/animatedForm';
 import logo from '../../assets/images/logo.svg';
-// import check from '../../assets/icons/check.svg';
-// import error from '../../assets/icons/error.svg';
+import { useAppSelector, useAppDispatch } from '../../store/hook/redux';
+import { register } from '../../store/reducers/user';
 import './Register.scss';
 
 function Register() {
   const registerRef = useRef(null);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const tl = useRef();
+  const error = useAppSelector((state) => state.user.error);
   const [infos, setInfos] = useState({
     firstName: '',
     lastName: '',
@@ -24,7 +26,15 @@ function Register() {
 
   useEffect(() => {
     appearanceAnimation(registerRef, tl);
-  }, []);
+    if (error)
+      setInfos((prevInfos) => ({
+        ...prevInfos,
+        password: '',
+        confirmPassword: '',
+      }));
+    const isLogged = localStorage.getItem('firstName');
+    if (isLogged) navigate('/dashboard');
+  }, [navigate, error]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [e.target.name]: e.target.value });
@@ -35,26 +45,13 @@ function Register() {
 
     const form = e.target;
     const formData = new FormData(form);
-
-    try {
-      const fetchParams = {
-        method: 'POST',
-        body: formData,
-      };
-      const response = await fetch(
-        'http://localhost:3000/register',
-        fetchParams
-      );
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-    navigate('/login');
+    dispatch(register(formData));
+    // navigate('/login');
   };
 
   return (
     <div className="register" ref={registerRef}>
+      {error && <span className="error">{error}</span>}
       <div className="box">
         <h2>Créer votre compte</h2>
         <img className="logo" src={logo} alt="logo" />
@@ -68,6 +65,7 @@ function Register() {
               name="firstName"
               id="firstName"
               autoComplete="given-name"
+              value={infos.firstName}
               onChange={handleChange}
               required
             />
@@ -82,6 +80,7 @@ function Register() {
               name="lastName"
               id="lastName"
               autoComplete="family-name"
+              value={infos.lastName}
               onChange={handleChange}
               required
             />
@@ -96,6 +95,7 @@ function Register() {
               name="email"
               id="email"
               autoComplete="email"
+              value={infos.email}
               onChange={handleChange}
               required
             />
@@ -110,6 +110,7 @@ function Register() {
               name="password"
               id="password"
               autoComplete="new-password"
+              value={infos.password}
               onChange={handleChange}
               required
             />
@@ -124,6 +125,7 @@ function Register() {
               name="confirmPassword"
               id="confirmPassword"
               autoComplete="new-password"
+              value={infos.confirmPassword}
               onChange={handleChange}
               required
             />

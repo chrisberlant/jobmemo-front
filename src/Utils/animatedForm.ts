@@ -78,6 +78,7 @@ export const appearanceAnimation = (
   tlRef: MutableRefObject<gsap.core.Timeline | undefined>
 ) => {
   const ctx = gsap.context((self) => {
+    const message: string | undefined = self.selector('.message');
     const loginBox = self.selector('.box');
     const loginElements = self.selector('.box *');
     const labels = self.selector('label');
@@ -94,7 +95,7 @@ export const appearanceAnimation = (
           'polygon(0px 250px, 50px 200px, 300px 200px, 300px 250px, 250px 300px, 0px 300px)',
       })
 
-      .from(loginElements, {
+      .from([loginElements, message], {
         opacity: 0,
         stagger: 0.01,
       })
