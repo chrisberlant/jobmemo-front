@@ -93,7 +93,7 @@ function ResetPassword() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <input type="submit" className="submit-button" value="Valider" />
+          <input type="submit" className="button--submit" value="Valider" />
         </div>
         <div className="input-wrap">
           <input

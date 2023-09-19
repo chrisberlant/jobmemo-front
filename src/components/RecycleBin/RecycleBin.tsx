@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getAllCards } from '../../store/reducers/cards';
 import './RecycleBin.scss';
-import CardItem from '../CardItem/CardItem';
+import CardDetails from '../CardDetails/CardDetails';
 import Card from '../Card/Card';
 
 function RecycleBin() {

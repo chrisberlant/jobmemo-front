@@ -1,11 +1,10 @@
-import { UserToken } from '../@types/jobmemo';
-
 const useToken = () => {
-  const localStorageToken = localStorage.getItem('token');
-  const userToken = localStorageToken
-    ? (JSON.parse(localStorageToken) as UserToken)
-    : null;
-  return userToken;
+  if (localStorage.getItem('firstName')) {
+    console.log('Local existant');
+    return true;
+  }
+  console.log('Local inexistant');
+  return false;
 };
 
 export default useToken;

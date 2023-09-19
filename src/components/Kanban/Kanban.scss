@@ -1,25 +1,33 @@
-@use '../../styles/variables' as v;
-
 .kanban {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr) auto;
-  gap: 16px;
-  margin: 0 16px;
-  overflow-x: scroll;
+  display: flex;
+  width: 99%;
+  overflow: auto;
 
-  .column-wrapper {
+  .column {
+    display: flex;
     border-right: 2px solid #d3d3d3;
-    height: 100%;
-    width: 100%;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 16px;
+    min-width: 270px;
+    padding-bottom: 30px;
+
+    .column-title {
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 20px;
+      width: 100%;
+      text-transform: uppercase;
+    }
   }
   
-  .column-title {
-    color: rgba(0, 0, 0, 0.4);
-    font-size: 20px;
-    font-weight: 900;
-    margin-bottom: -14px;
-    width: 100%;
-    margin-left: -16px;
-    text-transform: uppercase;
-  }
+  // @media screen and (max-width: 768px) {
+  //   .column {
+  //     width: 90%;
+  //   }
+  // }
+
 }

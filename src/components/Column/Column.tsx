@@ -3,68 +3,46 @@ import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
 import recycleBinIcon from '../../assets/icons/icon-recycle-bin.svg';
 import addCardIcon from '../../assets/icons/icon-add-card.svg';
+import { ColumnProps } from '../../@types/jobmemo';
 import './Column.scss';
-
-interface ColumnProps {
-  droppableId: string;
-  column: {
-    color: string;
-    className: string;
-    name: string;
-    id: number;
-    items?: Array<{
-      index: number;
-      id: React.Key;
-    }>;
-  };
-}
 
 // Rendu de la colonne avec fonctions glissables et déposables à l'aide du composant Droppable de la bibliothèque react-beautiful-dnd. Le composant Column prend en charge deux props: droppableId et column.
 // Il utilise ensuite ces accessoires pour définir le droppableId du composant Droppable et restituer une liste de composants Card basée sur le tableau column.items
 
-function Column({ droppableId, column }: ColumnProps) {
-  const isNotRecycleBin = column.className !== 'recycle-bin';
-  const sortedItems = column?.items?.sort((a, b) => a.index - b.index);
+function Column({ droppableId, column, trashColumn }: ColumnProps) {
+  const sortedItems = column.items?.sort((a, b) => a.index - b.index);
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
-      {(provided, snapshot) => {
-        const route = `/addCard/${column.name.replace(/\s+/g, '-')}`;
+      {(provided) => {
+        const route = `/addCard/${column.className}`;
 
         return (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="column"
-            // style={{
-            //   background: snapshot.isDraggingOver
-            //     ? 'lightsteelblue'
-            //     : 'lavender',
-            // }}
+            className="column-content"
           >
-            {sortedItems?.map((item: { id: React.Key }, index: number) => {
-              return <Card key={item.id} item={item} index={index} />;
-            })}
+            {!trashColumn &&
+              sortedItems?.map((item: { id: React.Key }, index: number) => {
+                return <Card key={item.id} item={item} index={index} />;
+              })}
             {provided.placeholder}
-            {!isNotRecycleBin && (
-              <Link to="/recyclebin">
-                <div className="recycle-bin">
-                  <img
-                    src={recycleBinIcon}
-                    alt="icon-recycle-bin"
-                    className="icon-recycle-bin"
-                  />
-                </div>
+            {!trashColumn && (
+              <Link to={route}>
+                <img
+                  src={addCardIcon}
+                  alt="Ajouter une fiche"
+                  className="kanban-button add-card"
+                />
               </Link>
             )}
-            {isNotRecycleBin && (
-              <Link to={route}>
-                <div className="add-card">
-                  <img
-                    src={addCardIcon}
-                    alt="icon-add-card"
-                    className="icon-add-card"
-                  />
-                </div>
+            {trashColumn && (
+              <Link to="/recyclebin">
+                <img
+                  src={recycleBinIcon}
+                  alt="Accéder à la corbeille"
+                  className="kanban-button recycle-bin"
+                />
               </Link>
             )}
           </div>

@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { handleFocus, handleBlur } from '../../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../../store/hook/redux';
 import securedFetch from '../../../Utils/securedFetch';
@@ -40,7 +40,7 @@ function ContactForm() {
     fetchContact();
   }, [contact, id, navigate]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [e.target.name]: e.target.value });
   };
 
@@ -86,7 +86,7 @@ function ContactForm() {
           <input
             id="occupation"
             name="occupation"
-            value={infos.occupation ?? ''}
+            value={infos.occupation}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -98,7 +98,7 @@ function ContactForm() {
           <input
             id="email"
             name="email"
-            value={infos.email ?? ''}
+            value={infos.email}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -110,7 +110,7 @@ function ContactForm() {
           <input
             id="phone"
             name="phone"
-            value={infos.phone ?? ''}
+            value={infos.phone}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -122,7 +122,7 @@ function ContactForm() {
           <input
             id="linkedinProfile"
             name="linkedinProfile"
-            value={infos.linkedinProfile ?? ''}
+            value={infos.linkedinProfile}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -134,7 +134,7 @@ function ContactForm() {
           <input
             id="enterprise"
             name="enterprise"
-            value={infos.enterprise ?? ''}
+            value={infos.enterprise}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -147,7 +147,7 @@ function ContactForm() {
             id="comments"
             name="comments"
             type="textarea"
-            value={infos.comments ?? ''}
+            value={infos.comments}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}

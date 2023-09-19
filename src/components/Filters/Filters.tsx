@@ -1,7 +1,5 @@
 import { useRef, createRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
-import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
-import { getAllCards } from '../../store/reducers/cards';
 import './Filters.scss';
 
 /*--------------------
@@ -32,8 +30,6 @@ const items: MenuItem[] = [
 ];
 
 function Menu({ items }: { items: MenuItem[] }) {
-  console.log(getAllCards());
-  
   const filters = useRef<HTMLDivElement>(null);
   const indicator1 = useRef<HTMLDivElement>(null);
   const indicator2 = useRef<HTMLDivElement>(null);
@@ -49,7 +45,7 @@ function Menu({ items }: { items: MenuItem[] }) {
       activeItem?.getBoundingClientRect() || {};
 
     const settings = {
-      x: left ? left - menuOffset?.x -4 : 0,
+      x: left ? left - menuOffset?.x - 4 : 0,
       y: top ? top - menuOffset?.y : 0,
       width: width + 8 || 0,
       height: height || 0,

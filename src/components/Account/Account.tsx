@@ -1,10 +1,11 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
-import logo from '../../assets/images/logo.svg';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
+import { getUserInfos, modifyUserInfos } from '../../store/reducers/user';
+import securedFetch from '../../Utils/securedFetch';
+import logo from '../../assets/images/logo.svg';
 import './Account.scss';
-import { modifyUserInfos } from '../../store/reducers/user';
 
 function Account() {
   const dispatch = useAppDispatch();
@@ -18,19 +19,18 @@ function Account() {
   });
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
     if (userInfos.email !== '') {
       setInfos(userInfos);
-    } else if (storedUser) {
-      const parsedStoredUser = JSON.parse(storedUser);
-      setInfos(parsedStoredUser);
+    } else {
+      dispatch(getUserInfos());
     }
-  }, [userInfos]);
+  }, [userInfos, dispatch]);
 
   // logout function
-  const logOut = () => {
+  const logOut = async () => {
     localStorage.clear();
-    window.location.reload();
+    await securedFetch('/logout');
+    window.location.replace('/login');
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -99,24 +99,33 @@ function Account() {
             name="address"
             id="address"
             onChange={handleChange}
-            value={infos.address ?? ''} // TODO remplacer ça dans le useState ?
+            value={infos.address}
           />
           <div className="line" />
         </div>
         <input
           type="submit"
-          className="button button--submit"
+          className="button--submit"
           value="Enregistrer les modifications"
         />
       </form>
-      <Link to="/changePassword" className="link">
-        Changer le mot de passe
+      <Link className="other-buttons" to="/changePassword">
+        <input
+          type="button"
+          className="button--password"
+          value="Changer le mot de passe"
+        />
       </Link>
-      <Link to="/deleteAccount" className="link">
+
+      <input
+        type="button"
+        className="button--logout"
+        value="Se déconnecter"
+        onClick={logOut}
+      />
+
+      <Link to="/deleteAccount" className="delete-account">
         Supprimer le compte
-      </Link>
-      <Link to="/login" className="link" onClick={logOut}>
-        Se déconnecter
       </Link>
     </div>
   );

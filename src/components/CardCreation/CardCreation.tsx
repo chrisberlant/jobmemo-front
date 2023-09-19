@@ -1,11 +1,10 @@
 /* eslint-disable object-shorthand */
-/* eslint-disable no-alert */
+import { ChangeEvent, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { gsap } from 'gsap';
-import { ChangeEvent } from 'react';
-import logo from '../../assets/images/logo.svg';
-import './CardForm.scss';
+import { authHandleFocus, authHandleBlur } from '../../Utils/animatedForm';
 import securedFetch from '../../Utils/securedFetch';
+import logo from '../../assets/images/logo.svg';
+import './CardCreation.scss';
 
 function randomColor(): string {
   const randomInt = (min: number, max: number): number => {
@@ -17,9 +16,25 @@ function randomColor(): string {
     ${randomInt(60, 70)}%)`;
 }
 
-function CardForm() {
+function CardCreation() {
+  const { category } = useParams();
   const navigate = useNavigate();
-  // onSubmit : catch all entries from Form
+  const [infos, setInfos] = useState({
+    index: 0,
+    category: '',
+    jobTitle: '',
+    enterpriseName: '',
+    title: '',
+    offerUrl: '',
+    contractType: '',
+    description: '',
+    salary: '',
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInfos({ ...infos, [event.target.name]: event.target.value });
+  };
+
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target;
@@ -27,62 +42,13 @@ function CardForm() {
     formData.append('color', randomColor());
     try {
       const response = await securedFetch('/createNewCard', 'POST', formData);
-      console.log(response.data);
       alert('👏 votre nouvelle fiche a été crée');
     } catch (error) {
-      console.error(error);
       alert('🥺 Une erreur est survenue lors de la création');
     }
     navigate('/dashboard');
-    window.location.reload();
   };
-
-  const back = () => {
-    navigate('/dashboard');
-    window.location.reload();
-  };
-
-  // ANIMATION ////////////////////////////////////////////////////
-
-  // Animation des champs email et mot de passe avec GSAP >>
-  // Animation lorsqu'il y'a une action sur le champ
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    const label = e.target.parentNode?.querySelector('label');
-    const line = e.target.parentNode?.querySelector('.line');
-    if (label && line) {
-      gsap.to(label, {
-        duration: 0.2,
-        y: -16,
-        color: '#4a65ff',
-      });
-      gsap.to(line, {
-        scaleX: 1,
-      });
-    }
-  };
-  // Animation lorsque l'on sort du champ
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const label = e.target.parentNode?.querySelector('label');
-    const line = e.target.parentNode?.querySelector('.line');
-
-    if (label && line) {
-      if (e.target.value === '') {
-        gsap.to(label, {
-          duration: 0.1,
-          y: 0,
-          color: '#999',
-        });
-        gsap.to(line, {
-          scaleX: 0,
-        });
-      }
-    }
-  };
-  // FIN ANIMATION /////////////////////////////////////////////////////
-
-  const { category } = useParams();
-  // console.log(category);
-
+  // TODO values, voir si copier le form existant
   return (
     <div className="box-wrap">
       <div className="box-cardform">
@@ -94,7 +60,8 @@ function CardForm() {
             <label htmlFor="category">Catégorie : </label>
             <select
               name="category"
-              defaultValue={category?.replace(/-/g, ' ')}
+              value={category?.replace(/-/g, ' ')}
+              // TODO OnChange ?
               className="category"
             >
               <option value="Mes offres">Mes offres</option>
@@ -107,48 +74,48 @@ function CardForm() {
           <div className="input-wrap">
             <label htmlFor="title">Titre : </label>
             <input
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={authHandleFocus}
+              onBlur={authHandleBlur}
               type="text"
               name="title"
               id="title"
-              autoComplete="off"
+              onChange={handleChange}
             />
             <div className="line" />
           </div>
           <div className="input-wrap">
             <label htmlFor="enterpriseName">Entreprise : </label>
             <input
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={authHandleFocus}
+              onBlur={authHandleBlur}
               type="text"
               name="enterpriseName"
               id="enterpriseName"
-              autoComplete="off"
+              onChange={handleChange}
             />
             <div className="line" />
           </div>
           <div className="input-wrap">
             <label htmlFor="jobTitle">Intitulé de l&apos;annonce : </label>
             <input
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={authHandleFocus}
+              onBlur={authHandleBlur}
               type="text"
               name="jobTitle"
               id="jobTitle"
-              autoComplete="off"
+              onChange={handleChange}
             />
             <div className="line" />
           </div>
           <div className="input-wrap">
             <label htmlFor="offerUrl">Source / Lien de l&apos;annonce : </label>
             <input
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={authHandleFocus}
+              onBlur={authHandleBlur}
               type="text"
               name="offerUrl"
               id="offerUrl"
-              autoComplete="off"
+              onChange={handleChange}
             />
             <div className="line" />
           </div>
@@ -168,23 +135,27 @@ function CardForm() {
           </div>
           <div className="input-wrap">
             <label htmlFor="description">Descriptif du poste : </label>
-            <textarea name="description" id="description" autoComplete="off" />
+            <input
+              name="description"
+              id="description"
+              onChange={handleChange}
+            />
             <div className="line" />
           </div>
           <div className="input-wrap">
             <label htmlFor="salary">Salaire : </label>
             <input
-              onFocus={handleFocus}
-              onBlur={handleBlur}
+              onFocus={authHandleFocus}
+              onBlur={authHandleBlur}
               type="text"
               name="salary"
               id="salary"
-              autoComplete="off"
+              onChange={handleChange}
             />
             <div className="line" />
           </div>
           <div className="input-wrap">
-            <label htmlFor="notation">Note </label>
+            <label htmlFor="notation">Note</label>
             <select className="notation" name="notation" defaultValue="DEFAULT">
               <option value="DEFAULT" disabled>
                 Modifier la note
@@ -201,13 +172,18 @@ function CardForm() {
           {/* <div className="input-wrap">
             <input type="reset" defaultValue="Annuler" />
           </div> */}
+          <input
+            type="button"
+            name="cancel-button"
+            className="button--cancel"
+            value="Annuler"
+            aria-label="Annuler"
+            onClick={() => navigate('/dashboard')}
+          />
         </form>
-        <button type="button" onClick={back}>
-          Retour
-        </button>
       </div>
     </div>
   );
 }
 
-export default CardForm;
+export default CardCreation;

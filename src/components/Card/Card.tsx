@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Link, useNavigate } from 'react-router-dom';
-import logo from '../../assets/images/logo.svg';
-import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
-import { setMovingCardId } from '../../store/reducers/cards';
+import { Link } from 'react-router-dom';
 import './Card.scss';
 
 // Ce composant restitue un élément déplaçable à l'aide du composant Draggable de la bibliothèque 'react-beautifull-dnd'.
@@ -23,28 +20,16 @@ type CardProps = {
   index: number;
 };
 
-function Card({ item, index }: CardProps): JSX.Element {
-  const dispatch = useAppDispatch();
+function Card({ item, index }: CardProps) {
   const [checked, setChecked] = useState<boolean>(false);
-  const handleChange = (): void => {
+  const handleChange = () => {
     setChecked(!checked);
     console.log(item.title, item.id, 'is checked');
   };
 
   return (
     <Draggable key={item.id} draggableId={item.id} index={index}>
-      {(provided, snapshot) => {
-        if (snapshot.isDropAnimating) {
-          dispatch(setMovingCardId(item.id));
-        }
-
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const navigate = useNavigate();
-
-        const navigateToCardItem = () => {
-          navigate(`/card/${item.id}`);
-        };
-
+      {(provided) => {
         return (
           <div
             ref={provided.innerRef}
@@ -71,9 +56,9 @@ function Card({ item, index }: CardProps): JSX.Element {
                 <h4 className="company-title">{item.enterpriseName}</h4>
                 <h3 className="card-title">{item.title}</h3>
                 <div className="action-wrapper">
-                  <button type="button" onClick={navigateToCardItem}>
-                    Voir la fiche
-                  </button>
+                  <Link to={`/card/${item.id}`}>
+                    <button type="button">Voir la fiche</button>
+                  </Link>
                   <input
                     type="checkbox"
                     checked={checked}

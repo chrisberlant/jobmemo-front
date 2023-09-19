@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 // import * as MaIcons from 'react-icons/md';
 // import Calendar from 'react-calendar';
 import logoWhite from '../../assets/images/logo-white.svg';
@@ -10,18 +9,9 @@ import iconContacts from '../../assets/icons/icon-contacts.svg';
 import './Navbar.scss';
 
 function Navbar() {
-  const navigate = useNavigate();
-
-  const back = () => {
-    navigate('/dashboard');
-    window.location.reload();
-  };
   // Show/Hide Menu
-  let user = null;
-  const userString = localStorage.getItem('user');
-  if (userString) {
-    user = JSON.parse(userString).firstName;
-  }
+  const userFirstName = localStorage.getItem('firstName');
+
   // React Calendar
   // const [date, setDate] = useState(new Date());
   /* const onchange = () => {
@@ -36,7 +26,7 @@ function Navbar() {
       </div>
       <div className="welcome-wrapper">
         <span>Bienvenue à bord</span>
-        <span>{user} !</span>
+        <span>{userFirstName ?? 'Utilisateur'} !</span>
       </div>
       <div className="navigation-wrapper">
         <NavLink

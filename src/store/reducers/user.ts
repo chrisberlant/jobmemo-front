@@ -1,11 +1,6 @@
-import {
-  createAction,
-  createReducer,
-  createAsyncThunk,
-} from '@reduxjs/toolkit';
-
-import securedFetch, { baseUrl } from '../../Utils/securedFetch';
-import { UserType, UserInfosType } from '../../@types/jobmemo';
+import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
+import securedFetch from '../../Utils/securedFetch';
+import { UserType } from '../../@types/jobmemo';
 
 const initialValue: UserType = {
   infos: {
@@ -24,22 +19,41 @@ export const login = createAsyncThunk(
   'user/LOGIN',
   async (credentials: FormData) => {
     try {
-      const fetchLoginParams = {
-        method: 'POST',
-        body: credentials,
-      };
-      // TODO Gestion d'erreurs
-      const response = await fetch(`${baseUrl}/login`, fetchLoginParams);
-      const data = await response.json();
-
-      if (response.status !== 200) {
-        throw new Error(data);
+      const loginRequest = await securedFetch('/login', 'POST', credentials);
+      if (loginRequest.status !== 200) {
+        throw new Error(loginRequest.data);
       }
-      return data;
+      return loginRequest.data;
     } catch (error) {
-      console.error(error);
       throw new Error();
     }
+  }
+);
+
+export const register = createAsyncThunk(
+  'user/REGISTER',
+  async (infos: FormData) => {
+    try {
+      const registerRequest = await securedFetch('/register', 'POST', infos);
+      if (registerRequest.status !== 201) {
+        throw new Error(registerRequest.data);
+      }
+      return registerRequest.data;
+    } catch (error) {
+      console.log(error);
+      throw new Error();
+    }
+  }
+);
+
+export const getUserInfos = createAsyncThunk(
+  'user/GET_USER_INFOS',
+  async () => {
+    const getInfosRequest = await securedFetch('/getUserInfos');
+    if (getInfosRequest.status !== 200) {
+      throw new Error(getInfosRequest.data);
+    }
+    return getInfosRequest.data;
   }
 );
 
@@ -70,25 +84,55 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.error = 'Email ou mot de passe incorrect';
     })
     .addCase(login.fulfilled, (state, action) => {
-      const { token } = action.payload;
-      state.infos = action.payload.user;
-      state.error = null;
-      // Adding token to local storage if login is fulfilled
-      localStorage.setItem('token', JSON.stringify(token));
-      const userInfos = state.infos;
-      localStorage.setItem('user', JSON.stringify(userInfos));
+      localStorage.setItem('firstName', action.payload.firstName);
+      state.infos = action.payload;
+    })
+    .addCase(register.pending, (state) => {
+      console.log('Utilisateur en cours de création');
+      state.isLoading = true;
+    })
+    .addCase(register.rejected, (state, action) => {
+      // TODO récupérer message d'erreur du serveur
+      console.log(action.payload);
+      console.log(action.error);
+      console.log(action.error.message);
+      state.isLoading = false;
+      state.error =
+        'Impossible de créer le compte avec les informations fournies.';
+    })
+    .addCase(register.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.message =
+        'Votre compte a été créé, vous pouvez désormais vous connecter.';
+      console.log('Utilisateur créé');
+    })
+    .addCase(getUserInfos.pending, (state) => {
+      console.log('Infos utilisateur en cours de récupération');
+      state.isLoading = true;
+    })
+    .addCase(getUserInfos.rejected, (state) => {
+      state.isLoading = false;
+      state.error = 'Impossible de récupérer les infos';
+      console.log('Impossible de récupérer les infos');
+    })
+    .addCase(getUserInfos.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.infos = action.payload;
+      console.log('Infos utilisateur récupérées');
     })
     .addCase(modifyUserInfos.pending, (state) => {
       console.log('Infos utilisateur en cours de modification');
       state.isLoading = true;
     })
     .addCase(modifyUserInfos.rejected, (state) => {
+      state.isLoading = false;
       state.error = 'Impossible de modifier les infos';
       console.log('Impossible de modifier les infos');
     })
     .addCase(modifyUserInfos.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.infos = action.payload;
-      localStorage.setItem('user', JSON.stringify(state.infos));
+      localStorage.setItem('firstName', action.payload.firstName);
       console.log('Infos utilisateur modifiées');
     });
 });

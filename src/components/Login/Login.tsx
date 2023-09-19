@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   authHandleBlur,
   authHandleFocus,
@@ -16,23 +16,39 @@ function Login() {
   const loginRef = useRef(null);
   const tl = useRef();
   const error = useAppSelector((state) => state.user.error);
+  const message = useAppSelector((state) => state.user.message);
+  const [infos, setInfos] = useState({
+    email: '',
+    password: '',
+  });
 
   useEffect(() => {
     appearanceAnimation(loginRef, tl);
-  }, []);
+    const isLogged = localStorage.getItem('firstName');
+    if (isLogged) navigate('/dashboard');
+  }, [navigate]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInfos({ ...infos, [e.target.name]: e.target.value });
+  };
 
   // Login form submit
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const form = e.target;
-    const formData = new FormData(form);
+    const formData = new FormData(e.target);
     await dispatch(login(formData));
-    if (!error) navigate('/dashboard');
+    const isLogged = localStorage.getItem('firstName');
+    if (isLogged) navigate('/dashboard');
   };
 
   return (
     <div className="login" ref={loginRef}>
+      {message && (
+        <span className="message">
+          Votre compte a été créé, vous pouvez désormais vous connecter.
+        </span>
+      )}
       <div className="box">
         <h2>Bienvenue</h2>
         <img className="logo" src={logo} alt="logo" />
@@ -45,6 +61,8 @@ function Login() {
               type="email"
               name="email"
               id="email"
+              onChange={handleChange}
+              required
             />
             <div className="line" />
           </div>
@@ -57,13 +75,15 @@ function Login() {
               name="password"
               id="password"
               autoComplete="off"
+              onChange={handleChange}
+              required
             />
             <div className="line" />
           </div>
           <div className="input-wrap">
             <input
               type="submit"
-              className="submit-button"
+              className="button--submit"
               value="Se connecter"
             />
           </div>

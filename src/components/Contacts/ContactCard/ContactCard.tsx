@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './Contact.scss';
+import './ContactCard.scss';
 
 interface ContactProps {
   id: string;
@@ -9,7 +9,7 @@ interface ContactProps {
   occupation: string;
 }
 
-function Contact({
+function ContactCard({
   id,
   firstName,
   lastName,
@@ -30,4 +30,4 @@ function Contact({
   );
 }
 
-export default Contact;
+export default ContactCard;

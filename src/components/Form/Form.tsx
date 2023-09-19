@@ -38,7 +38,7 @@ function Form({
         </div>
       ))}
       <div className="input-wrap">
-        <button type="submit" className="submit-button">
+        <button type="submit" className="button--submit">
           Modifier le contact
         </button>
       </div>

@@ -18,41 +18,45 @@ export interface CardType {
   notes: string;
   createdAt: Date;
   reminder: Date;
-  userId: number;
 }
 
-export interface MovingCard {
-  movingCardId: string;
-  movingCardindex: number;
-  movingCardcategory: string;
+export interface ColumnsData {
+  [key: string]: {
+    className: string;
+    id: number;
+    color: string;
+    items?: CardType[];
+  };
+}
+
+export interface ColumnProps {
+  droppableId: string;
+  column: {
+    className: string;
+    id: number;
+    color: string;
+    items?: Array<{
+      index: number;
+      id: React.Key;
+    }>;
+  };
+  trashColumn: boolean;
 }
 
 export interface CardTable {
   items: CardType[];
+  trashedItems: CardType[];
   isLoading: boolean;
   error: string | undefined;
   loadedCards: boolean;
   movingCardId: string;
+  isEmpty: boolean;
 }
 
-export interface ColumnType {
-  id: number;
-  title: string;
-}
-
-export interface UserToken {
-  token: string;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  color: string;
-  items: CardType[];
-  className: string;
-}
-export interface Categories {
-  [key: string]: Category;
+export interface MovingCard {
+  movingCardId: string;
+  movingCardIndex: number;
+  movingCardCategory: string;
 }
 
 export interface ContactType {
