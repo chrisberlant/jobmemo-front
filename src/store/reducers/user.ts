@@ -1,4 +1,8 @@
-import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createReducer,
+  createAsyncThunk,
+  createAction,
+} from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
 import { UserType } from '../../@types/jobmemo';
 
@@ -48,6 +52,21 @@ export const getUserInfos = createAsyncThunk(
   }
 );
 
+export const modifyUserPassword = createAsyncThunk(
+  'user/MODIFY_USER_PASSWORD',
+  async (infos: FormData) => {
+    const modificationRequest = await securedFetch(
+      '/modifyUserPassword',
+      'PATCH',
+      infos
+    );
+    if (modificationRequest.failed) {
+      throw new Error(modificationRequest.data);
+    }
+    return modificationRequest.data;
+  }
+);
+
 export const modifyUserInfos = createAsyncThunk(
   'user/MODIFY_USER_INFOS',
   async (infos: FormData) => {
@@ -62,6 +81,8 @@ export const modifyUserInfos = createAsyncThunk(
     return modificationRequest.data;
   }
 );
+
+export const removeAllMessages = createAction('user/REMOVE_ALL_MESSAGES');
 
 const userReducer = createReducer(initialValue, (builder) => {
   builder
@@ -84,7 +105,6 @@ const userReducer = createReducer(initialValue, (builder) => {
       state.isLoading = true;
     })
     .addCase(register.rejected, (state, action) => {
-      // TODO récupérer message d'erreur du serveur
       state.isLoading = false;
       if (action.error.message) state.error = action.error.message;
     })
@@ -115,14 +135,30 @@ const userReducer = createReducer(initialValue, (builder) => {
     .addCase(modifyUserInfos.rejected, (state, action) => {
       state.isLoading = false;
       console.log(action.error.message);
-      state.error = 'Impossible de modifier les infos';
-      console.log('Impossible de modifier les infos');
+      if (action.error.message) state.error = action.error.message;
     })
     .addCase(modifyUserInfos.fulfilled, (state, action) => {
       state.isLoading = false;
       state.infos = action.payload;
       localStorage.setItem('firstName', action.payload.firstName);
       console.log('Infos utilisateur modifiées');
+    })
+    .addCase(modifyUserPassword.pending, (state) => {
+      console.log('Mot de passe en cours de modification');
+      state.isLoading = true;
+    })
+    .addCase(modifyUserPassword.rejected, (state, action) => {
+      state.isLoading = false;
+      if (action.error.message) state.error = action.error.message;
+    })
+    .addCase(modifyUserPassword.fulfilled, (state) => {
+      state.isLoading = false;
+      state.message =
+        'Mot de passe changé avec succès, vous allez être déconnecté.';
+    })
+    .addCase(removeAllMessages, (state) => {
+      state.message = null;
+      state.error = null;
     });
 });
 

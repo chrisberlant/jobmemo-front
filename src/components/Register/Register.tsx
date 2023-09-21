@@ -51,7 +51,7 @@ function Register() {
 
   return (
     <div className="register" ref={registerRef}>
-      {error && <span className="error">{error}</span>}
+      {error && <span className="infoMessage">{error}</span>}
       <div className="box">
         <h2>Créer votre compte</h2>
         <img className="logo" src={logo} alt="logo" />

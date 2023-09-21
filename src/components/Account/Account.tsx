@@ -1,9 +1,9 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import logOut from '../../Utils/logout';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getUserInfos, modifyUserInfos } from '../../store/reducers/user';
-import securedFetch from '../../Utils/securedFetch';
 import logo from '../../assets/images/logo.svg';
 import './Account.scss';
 
@@ -26,18 +26,11 @@ function Account() {
     }
   }, [userInfos, dispatch]);
 
-  // logout function
-  const logOut = async () => {
-    localStorage.clear();
-    await securedFetch('/logout');
-    window.location.replace('/login');
-  };
-
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     dispatch(modifyUserInfos(formData));

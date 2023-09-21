@@ -79,4 +79,18 @@
       color: red;
     }
   }
+
+  .infoMessage {
+    position: relative;
+    bottom: 20px;
+    font-weight: bold;
+  }
+
+  .errorMessage {
+    color: red;
+    position: relative;
+    bottom: 20px;
+    font-weight: bold;
+  }
 }
+
