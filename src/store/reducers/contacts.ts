@@ -16,7 +16,7 @@ export const getAllContacts = createAsyncThunk(
   'contacts/GET_ALL_CONTACTS',
   async () => {
     const contactsRequest = await securedFetch('/allContacts');
-    if (contactsRequest.status !== 200) {
+    if (contactsRequest.failed) {
       throw new Error(contactsRequest.data);
     }
     return contactsRequest.data;
@@ -32,7 +32,7 @@ export const createNewContact = createAsyncThunk(
       'POST',
       contact
     );
-    if (creationRequest.status !== 201) {
+    if (creationRequest.failed) {
       throw new Error(creationRequest.data);
     }
     return creationRequest.data;
@@ -47,7 +47,7 @@ export const modifyContact = createAsyncThunk(
       'PATCH',
       infos
     );
-    if (modificationRequest.status !== 200) {
+    if (modificationRequest.failed) {
       throw new Error(modificationRequest.data);
     }
     return modificationRequest.data;
@@ -97,8 +97,6 @@ const contactsReducer = createReducer(initialValue, (builder) => {
       if (contactIndexToUpdate) {
         state.items[contactIndexToUpdate] = updatedInfos;
         console.log('Contact modifié');
-        // state.error = false;
-        // state.message = `Contact ${state.items[contactIndexToUpdate].firstName} ${state.items[contactIndexToUpdate].lastName} modifié`;
       }
     });
 });

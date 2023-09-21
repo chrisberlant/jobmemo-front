@@ -17,8 +17,7 @@ export const getAllCards = createAsyncThunk<CardType[]>(
   'cards/GET_ALL_CARDS',
   async () => {
     const cardsRequest = await securedFetch('/userCards');
-
-    if (cardsRequest.status !== 200) {
+    if (cardsRequest.failed) {
       throw new Error(cardsRequest.data);
     }
     return cardsRequest.data;
@@ -33,7 +32,7 @@ export const modifyCard = createAsyncThunk(
       'PATCH',
       infos
     );
-    if (modificationRequest.status !== 200) {
+    if (modificationRequest.failed) {
       throw new Error(modificationRequest.data);
     }
     return modificationRequest.data;
@@ -50,9 +49,15 @@ export const moveCard = createAsyncThunk(
     console.log(
       `Déplacement de la carte ${movingCardId} vers l'index ${movingCardIndex} de la catégorie ${movingCardCategory}`
     );
-    const cardMoved = await securedFetch('/moveCard', 'PATCH', movingCardInfos);
-    console.log(cardMoved.data);
-    return cardMoved.data;
+    const cardMoveRequest = await securedFetch(
+      '/moveCard',
+      'PATCH',
+      movingCardInfos
+    );
+    if (cardMoveRequest.failed) {
+      throw new Error(cardMoveRequest.data);
+    }
+    return cardMoveRequest.data;
   }
 );
 
@@ -61,13 +66,15 @@ export const sendCardToTrash = createAsyncThunk(
   async (id: string) => {
     const cardForm = new FormData();
     cardForm.append('id', id);
-    const cardIsTrashed = await securedFetch(
+    const sendToTrashRequest = await securedFetch(
       '/sendCardToTrash',
       'PATCH',
       cardForm
     );
-    console.log(`Carte ${id} placée dans la corbeille`);
-    return cardIsTrashed.data;
+    if (sendToTrashRequest.failed) {
+      throw new Error(sendToTrashRequest.data);
+    }
+    return sendToTrashRequest.data;
   }
 );
 

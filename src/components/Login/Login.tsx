@@ -44,11 +44,7 @@ function Login() {
 
   return (
     <div className="login" ref={loginRef}>
-      {message && (
-        <span className="message">
-          Votre compte a été créé, vous pouvez désormais vous connecter.
-        </span>
-      )}
+      {message && <span className="message">{message}</span>}
       <div className="box">
         <h2>Bienvenue</h2>
         <img className="logo" src={logo} alt="logo" />

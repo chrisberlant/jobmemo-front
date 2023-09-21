@@ -18,31 +18,22 @@ const initialValue: UserType = {
 export const login = createAsyncThunk(
   'user/LOGIN',
   async (credentials: FormData) => {
-    try {
-      const loginRequest = await securedFetch('/login', 'POST', credentials);
-      if (loginRequest.status !== 200) {
-        throw new Error(loginRequest.data);
-      }
-      return loginRequest.data;
-    } catch (error) {
-      throw new Error();
+    const loginRequest = await securedFetch('/login', 'POST', credentials);
+    if (loginRequest.failed) {
+      throw new Error(loginRequest.data);
     }
+    return loginRequest.data;
   }
 );
 
 export const register = createAsyncThunk(
   'user/REGISTER',
   async (infos: FormData) => {
-    try {
-      const registerRequest = await securedFetch('/register', 'POST', infos);
-      if (registerRequest.status !== 201) {
-        throw new Error(registerRequest.data);
-      }
-      return registerRequest.data;
-    } catch (error) {
-      console.log(error);
-      throw new Error();
+    const registerRequest = await securedFetch('/register', 'POST', infos);
+    if (registerRequest.failed) {
+      throw new Error(registerRequest.data);
     }
+    return registerRequest.data;
   }
 );
 
@@ -50,7 +41,7 @@ export const getUserInfos = createAsyncThunk(
   'user/GET_USER_INFOS',
   async () => {
     const getInfosRequest = await securedFetch('/getUserInfos');
-    if (getInfosRequest.status !== 200) {
+    if (getInfosRequest.failed) {
       throw new Error(getInfosRequest.data);
     }
     return getInfosRequest.data;
@@ -65,7 +56,7 @@ export const modifyUserInfos = createAsyncThunk(
       'PATCH',
       infos
     );
-    if (modificationRequest.status !== 200) {
+    if (modificationRequest.failed) {
       throw new Error(modificationRequest.data);
     }
     return modificationRequest.data;
@@ -86,6 +77,7 @@ const userReducer = createReducer(initialValue, (builder) => {
     .addCase(login.fulfilled, (state, action) => {
       localStorage.setItem('firstName', action.payload.firstName);
       state.infos = action.payload;
+      state.message = null;
     })
     .addCase(register.pending, (state) => {
       console.log('Utilisateur en cours de création');
@@ -93,12 +85,8 @@ const userReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(register.rejected, (state, action) => {
       // TODO récupérer message d'erreur du serveur
-      console.log(action.payload);
-      console.log(action.error);
-      console.log(action.error.message);
       state.isLoading = false;
-      state.error =
-        'Impossible de créer le compte avec les informations fournies.';
+      if (action.error.message) state.error = action.error.message;
     })
     .addCase(register.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -124,8 +112,9 @@ const userReducer = createReducer(initialValue, (builder) => {
       console.log('Infos utilisateur en cours de modification');
       state.isLoading = true;
     })
-    .addCase(modifyUserInfos.rejected, (state) => {
+    .addCase(modifyUserInfos.rejected, (state, action) => {
       state.isLoading = false;
+      console.log(action.error.message);
       state.error = 'Impossible de modifier les infos';
       console.log('Impossible de modifier les infos');
     })
