@@ -9,7 +9,7 @@ import '../Account.scss';
 
 function ChangePassword() {
   const dispatch = useAppDispatch();
-  const message = useAppSelector((state) => state.user.message);
+  const changedPassword = useAppSelector((state) => state.user.changedPassword);
   const error = useAppSelector((state) => state.user.error);
   const navigate = useNavigate();
   const [infos, setInfos] = useState({
@@ -20,7 +20,7 @@ function ChangePassword() {
 
   useEffect(() => {
     // If password has been succesfully changed
-    if (message) {
+    if (changedPassword) {
       setTimeout(() => {
         logOut();
       }, 2000);
@@ -29,7 +29,7 @@ function ChangePassword() {
     if (error) {
       setInfos({ oldPassword: '', newPassword: '', confirmPassword: '' });
     }
-  }, [message, error]);
+  }, [changedPassword, error]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [event.target.name]: event.target.value });
@@ -102,7 +102,9 @@ function ChangePassword() {
           value="Annuler"
         />
       </form>
-      {message && <span className="infoMessage">{message}</span>}
+      {changedPassword && (
+        <span className="infoMessage">{changedPassword}</span>
+      )}
       {error && <span className="errorMessage--password">{error}</span>}
     </div>
   );

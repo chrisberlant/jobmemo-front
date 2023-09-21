@@ -93,4 +93,5 @@ export interface UserType {
   isLoading: boolean;
   error: string | null;
   message: string | null;
+  changedPassword: string | null;
 }

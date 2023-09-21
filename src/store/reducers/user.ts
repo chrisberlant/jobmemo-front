@@ -17,6 +17,7 @@ const initialValue: UserType = {
   isLoading: false,
   error: null,
   message: null,
+  changedPassword: null,
 };
 
 export const login = createAsyncThunk(
@@ -164,7 +165,8 @@ const userReducer = createReducer(initialValue, (builder) => {
     .addCase(modifyUserPassword.fulfilled, (state) => {
       state.isLoading = false;
       state.error = null;
-      state.message =
+      state.message = null;
+      state.changedPassword =
         'Mot de passe changé avec succès, vous allez être déconnecté.';
     })
     .addCase(removeAllMessages, (state) => {
