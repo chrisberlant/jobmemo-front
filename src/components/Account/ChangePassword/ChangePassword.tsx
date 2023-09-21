@@ -94,20 +94,16 @@ function ChangePassword() {
           />
           <div className="line" />
         </div>
-        <div className="input-wrap">
-          <input type="submit" className="button--submit" value="Valider" />
-        </div>
-        <div className="input-wrap">
-          <input
-            type="button"
-            className="button--cancel"
-            onClick={() => navigate('/account')}
-            value="Annuler"
-          />
-        </div>
+        <input type="submit" className="button--submit" value="Valider" />
+        <input
+          type="button"
+          className="button--cancel"
+          onClick={() => navigate('/account')}
+          value="Annuler"
+        />
       </form>
       {message && <span className="infoMessage">{message}</span>}
-      {error && <span className="errorMessage">{error}</span>}
+      {error && <span className="errorMessage--password">{error}</span>}
     </div>
   );
 }

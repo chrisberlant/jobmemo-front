@@ -69,7 +69,7 @@
   }
 
   .delete-account {
-    margin-top: 20px;
+    margin-top: 40px;
     font-size: 10px;
     text-decoration: none;
     &:visited {
@@ -81,16 +81,27 @@
   }
 
   .infoMessage {
+    color: #009000;
     position: relative;
-    bottom: 20px;
+    top: 10px;
     font-weight: bold;
+    
+    &--password {
+      @extend .infoMessage;
+      bottom: 10px;
+    }
   }
 
   .errorMessage {
     color: red;
     position: relative;
-    bottom: 20px;
+    top: 10px;
     font-weight: bold;
+    
+    &--password {
+      @extend .errorMessage;
+      bottom: 10px;
+    }
   }
 }
 

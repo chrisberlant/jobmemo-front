@@ -106,7 +106,10 @@ const userReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(register.rejected, (state, action) => {
       state.isLoading = false;
-      if (action.error.message) state.error = action.error.message;
+      if (action.error.message) {
+        state.message = null;
+        state.error = action.error.message;
+      }
     })
     .addCase(register.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -135,13 +138,17 @@ const userReducer = createReducer(initialValue, (builder) => {
     .addCase(modifyUserInfos.rejected, (state, action) => {
       state.isLoading = false;
       console.log(action.error.message);
-      if (action.error.message) state.error = action.error.message;
+      if (action.error.message) {
+        state.message = null;
+        state.error = action.error.message;
+      }
     })
     .addCase(modifyUserInfos.fulfilled, (state, action) => {
       state.isLoading = false;
       state.infos = action.payload;
       localStorage.setItem('firstName', action.payload.firstName);
-      console.log('Infos utilisateur modifiées');
+      state.error = null;
+      state.message = 'Informations modifiées avec succès';
     })
     .addCase(modifyUserPassword.pending, (state) => {
       console.log('Mot de passe en cours de modification');
@@ -149,10 +156,14 @@ const userReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(modifyUserPassword.rejected, (state, action) => {
       state.isLoading = false;
-      if (action.error.message) state.error = action.error.message;
+      if (action.error.message) {
+        state.message = null;
+        state.error = action.error.message;
+      }
     })
     .addCase(modifyUserPassword.fulfilled, (state) => {
       state.isLoading = false;
+      state.error = null;
       state.message =
         'Mot de passe changé avec succès, vous allez être déconnecté.';
     })
