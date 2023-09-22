@@ -43,8 +43,8 @@ function ContactForm() {
 
   const handleContactDelete = async () => {
     if (id) {
+      dispatch(deleteContact(id));
       navigate('/contacts');
-      await dispatch(deleteContact(id));
     }
   };
 

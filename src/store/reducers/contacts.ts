@@ -125,6 +125,7 @@ const contactsReducer = createReducer(initialValue, (builder) => {
       console.log('Requête de suppression de contact refusée');
     })
     .addCase(deleteContact.fulfilled, (state, action) => {
+      state.isLoading = false;
       const contactToDelete = state.items.find(
         (contact) => contact.id === action.payload
       );
