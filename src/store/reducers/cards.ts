@@ -64,12 +64,12 @@ export const moveCard = createAsyncThunk(
 export const sendCardToTrash = createAsyncThunk(
   'cards/SEND_CARD_TO_TRASH',
   async (id: string) => {
-    const cardForm = new FormData();
-    cardForm.append('id', id);
+    const cardToTrash = new FormData();
+    cardToTrash.append('id', id);
     const sendToTrashRequest = await securedFetch(
       '/sendCardToTrash',
       'PATCH',
-      cardForm
+      cardToTrash
     );
     if (sendToTrashRequest.failed) {
       throw new Error(sendToTrashRequest.data);

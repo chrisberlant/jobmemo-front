@@ -26,6 +26,9 @@ function Register() {
 
   useEffect(() => {
     appearanceAnimation(registerRef, tl);
+  }, []);
+
+  useEffect(() => {
     if (error)
       setInfos((prevInfos) => ({
         ...prevInfos,
@@ -51,7 +54,6 @@ function Register() {
 
   return (
     <div className="register" ref={registerRef}>
-      {error && <span className="infoMessage">{error}</span>}
       <div className="box">
         <h2>Créer votre compte</h2>
         <img className="logo" src={logo} alt="logo" />
@@ -131,18 +133,18 @@ function Register() {
             />
             <div className="line" />
           </div>
-          <div className="input-wrap">
-            <input
-              type="submit"
-              className="button--submit"
-              value="S'enregistrer"
-            />
-          </div>
+
+          <input
+            type="submit"
+            className="button button--submit"
+            value="S'enregistrer"
+          />
         </form>
         <span className="existing-account">
           Déjà un compte ? <Link to="/login">Se connecter</Link>
         </span>
       </div>
+      {error && <span className="infoMessage">{error}</span>}
     </div>
   );
 }

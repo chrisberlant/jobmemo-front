@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logOut from '../../Utils/logout';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
@@ -8,6 +8,7 @@ import logo from '../../assets/images/logo.svg';
 import './Account.scss';
 
 function Account() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const message = useAppSelector((state) => state.user.message);
   const error = useAppSelector((state) => state.user.error);
@@ -101,21 +102,19 @@ function Account() {
         </div>
         <input
           type="submit"
-          className="button--submit"
+          className="button button--submit"
           value="Enregistrer les modifications"
         />
       </form>
-      <Link className="other-buttons" to="/changePassword">
-        <input
-          type="button"
-          className="button--password"
-          value="Changer le mot de passe"
-        />
-      </Link>
-
       <input
         type="button"
-        className="button--logout"
+        className="button button--password"
+        value="Changer le mot de passe"
+        onClick={() => navigate('/changePassword')}
+      />
+      <input
+        type="button"
+        className="button button--logout"
         value="Se déconnecter"
         onClick={logOut}
       />

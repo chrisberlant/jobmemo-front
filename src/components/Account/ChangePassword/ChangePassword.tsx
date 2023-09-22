@@ -94,10 +94,14 @@ function ChangePassword() {
           />
           <div className="line" />
         </div>
-        <input type="submit" className="button--submit" value="Valider" />
+        <input
+          type="submit"
+          className="button button--submit"
+          value="Valider"
+        />
         <input
           type="button"
-          className="button--cancel"
+          className="button button--cancel"
           onClick={() => navigate('/account')}
           value="Annuler"
         />

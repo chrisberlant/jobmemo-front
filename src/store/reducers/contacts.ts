@@ -54,6 +54,23 @@ export const modifyContact = createAsyncThunk(
   }
 );
 
+export const deleteContact = createAsyncThunk(
+  'contacts/DELETE_CONTACT',
+  async (id: string) => {
+    const contactToDelete = new FormData();
+    contactToDelete.append('id', id);
+    const deleteRequest = await securedFetch(
+      '/deleteContact',
+      'DELETE',
+      contactToDelete
+    );
+    if (deleteRequest.failed) {
+      throw new Error(deleteRequest.data);
+    }
+    return id;
+  }
+);
+
 const contactsReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(getAllContacts.pending, (state, action) => {
@@ -98,6 +115,25 @@ const contactsReducer = createReducer(initialValue, (builder) => {
         state.items[contactIndexToUpdate] = updatedInfos;
         console.log('Contact modifié');
       }
+    })
+    .addCase(deleteContact.pending, (state, action) => {
+      state.isLoading = true;
+      console.log('Suppression du contact en cours');
+    })
+    .addCase(deleteContact.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log('Requête de suppression de contact refusée');
+    })
+    .addCase(deleteContact.fulfilled, (state, action) => {
+      const contactToDelete = state.items.find(
+        (contact) => contact.id === action.payload
+      );
+      if (contactToDelete) {
+        const indexContactToDelete = state.items.indexOf(contactToDelete);
+        state.items.splice(indexContactToDelete, 1);
+      }
+      console.log('Contact créé');
+      console.log(state.items);
     });
 });
 

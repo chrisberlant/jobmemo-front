@@ -49,14 +49,17 @@ function DeleteAccount() {
         <input
           type="button"
           value="Supprimer le compte"
-          className="button--delete"
+          className="button button--delete-account"
           onClick={handleDelete}
         />
       </form>
       <span>Attention cette action est irréversible</span>
-      <Link className="other-buttons" to="/dashboard">
-        <input type="button" className="button--cancel" value="Annuler" />
-      </Link>
+      <input
+        type="button"
+        className="button button--cancel"
+        value="Annuler"
+        onClick={() => navigate('/account')}
+      />
     </div>
   );
 }

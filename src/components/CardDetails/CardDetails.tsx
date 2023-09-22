@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import securedFetch from '../../Utils/securedFetch';
-import { modifyCard } from '../../store/reducers/cards';
+import { modifyCard, sendCardToTrash } from '../../store/reducers/cards';
 import './CardDetails.scss';
 
 function CardDetails() {
@@ -26,6 +26,13 @@ function CardDetails() {
     description: '',
     salary: '',
   });
+
+  const deleteCard = async () => {
+    if (id) {
+      navigate('/dashboard');
+      await dispatch(sendCardToTrash(id));
+    }
+  };
 
   useEffect(() => {
     const fetchCard = async () => {
@@ -149,7 +156,15 @@ function CardDetails() {
         <input
           type="submit"
           className="button button--submit"
+          aria-label="Modifier la fiche"
           value="Modifier la fiche"
+        />
+        <input
+          type="button"
+          className="button button--delete"
+          value="Supprimer la fiche"
+          aria-label="Supprimer la fiche"
+          onClick={deleteCard}
         />
         <input
           type="button"

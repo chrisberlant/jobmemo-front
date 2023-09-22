@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { handleFocus, handleBlur } from '../../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../../store/hook/redux';
 import securedFetch from '../../../Utils/securedFetch';
-import { modifyContact } from '../../../store/reducers/contacts';
+import { modifyContact, deleteContact } from '../../../store/reducers/contacts';
 import './ContactDetails.scss';
 
 function ContactForm() {
@@ -30,8 +30,9 @@ function ContactForm() {
       if (contact) {
         setInfos(contact);
       } else {
+        // Get contact from API if not in the store
         const fetchedContact = await securedFetch(`/contact/${id}`);
-        if (fetchedContact.status !== 200) {
+        if (fetchedContact.failed) {
           navigate('/404');
         }
         setInfos(fetchedContact.data);
@@ -39,6 +40,13 @@ function ContactForm() {
     };
     fetchContact();
   }, [contact, id, navigate]);
+
+  const handleContactDelete = async () => {
+    if (id) {
+      navigate('/contacts');
+      await dispatch(deleteContact(id));
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [e.target.name]: e.target.value });
@@ -159,6 +167,13 @@ function ContactForm() {
           type="submit"
           className="button button--submit"
           value="Modifier le contact"
+        />
+        <input
+          type="button"
+          className="button button--delete"
+          value="Supprimer le contact"
+          aria-label="Supprimer le contact"
+          onClick={handleContactDelete}
         />
         <input
           type="button"

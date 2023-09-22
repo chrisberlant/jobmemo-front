@@ -79,7 +79,7 @@ function Login() {
           <div className="input-wrap">
             <input
               type="submit"
-              className="button--submit"
+              className="button button--submit"
               value="Se connecter"
             />
           </div>

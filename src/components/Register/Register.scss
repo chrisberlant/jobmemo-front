@@ -9,7 +9,7 @@
 
   .box {
     width: 300px;
-    height: 600px;
+    height: 630px;
     clip-path: polygon(
       0px 50px,
       50px 0px,
@@ -77,22 +77,11 @@
           left: 0;
           color: #999;
         }
+      }
 
-        input {
-          width: 100%;
-          padding: 4px 0;
-          outline: none;
-          border: none;
-          border-bottom: 1px solid #999;
-          font-size: 16px;
-          font-weight: 700;
-        }
-
-        img {
-          width: 20px;
-          position: absolute;
-          right: 0;
-        }
+      .existing-account {
+        position: relative;
+        bottom: 50px;
       }
 
     }
@@ -100,7 +89,7 @@
 
   .infoMessage {
     position: relative;
-    bottom: 20px;
+    top: 6px;
     font-weight: bold;
   }
 }

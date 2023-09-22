@@ -46,12 +46,7 @@
     }
   }
 
-  .other-buttons {
-    width: 100%;
-  }
-
   .button--logout {
-    @extend .button;
     background: orange;
 
     &:hover {
@@ -61,6 +56,7 @@
 
   .button--password {
     @extend .button;
+    width: 100%;
     background: #6495ED;
 
     &:hover {
@@ -68,22 +64,10 @@
     }
   }
 
-  .delete-account {
-    margin-top: 40px;
-    font-size: 10px;
-    text-decoration: none;
-    &:visited {
-      color:inherit;
-    }
-    &:hover {
-      color: red;
-    }
-  }
-
   .infoMessage {
     color: #009000;
     position: relative;
-    top: 10px;
+    bottom: 6px;
     font-weight: bold;
     
     &--password {
