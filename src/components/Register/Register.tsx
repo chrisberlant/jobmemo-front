@@ -6,16 +6,15 @@ import {
   appearanceAnimation,
 } from '../../Utils/animatedForm';
 import logo from '../../assets/images/logo.svg';
-import { useAppSelector, useAppDispatch } from '../../store/hook/redux';
-import { register } from '../../store/reducers/user';
+import securedFetch from '../../Utils/securedFetch';
 import './Register.scss';
 
 function Register() {
   const registerRef = useRef(null);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const tl = useRef();
-  const error = useAppSelector((state) => state.user.error);
+  const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [infos, setInfos] = useState({
     firstName: '',
     lastName: '',
@@ -29,15 +28,14 @@ function Register() {
   }, []);
 
   useEffect(() => {
-    if (error)
-      setInfos((prevInfos) => ({
-        ...prevInfos,
-        password: '',
-        confirmPassword: '',
-      }));
-    const isLogged = localStorage.getItem('firstName');
-    if (isLogged) navigate('/dashboard');
-  }, [navigate, error]);
+    if (message) {
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+    }
+
+    if (localStorage.getItem('firstName')) navigate('/dashboard');
+  }, [navigate, message]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [e.target.name]: e.target.value });
@@ -48,8 +46,20 @@ function Register() {
 
     const form = e.target;
     const formData = new FormData(form);
-    dispatch(register(formData));
-    // navigate('/login');
+    const request = await securedFetch('/register', 'POST', formData);
+    if (request.failed) {
+      setError(request.data);
+      setInfos((prevInfos) => ({
+        ...prevInfos,
+        password: '',
+        confirmPassword: '',
+      }));
+    } else {
+      setError(null);
+      setMessage(
+        'Compte créé avec succès, vous allez être redirigé(e) vers la page de connexion.'
+      );
+    }
   };
 
   return (
@@ -144,7 +154,9 @@ function Register() {
           Déjà un compte ? <Link to="/login">Se connecter</Link>
         </span>
       </div>
-      {error && <span className="infoMessage">{error}</span>}
+      {(error || message) && (
+        <span className="infoMessage">{error || message}</span>
+      )}
     </div>
   );
 }

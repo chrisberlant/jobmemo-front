@@ -31,17 +31,6 @@ export const login = createAsyncThunk(
   }
 );
 
-export const register = createAsyncThunk(
-  'user/REGISTER',
-  async (infos: FormData) => {
-    const registerRequest = await securedFetch('/register', 'POST', infos);
-    if (registerRequest.failed) {
-      throw new Error(registerRequest.data);
-    }
-    return registerRequest.data;
-  }
-);
-
 export const getUserInfos = createAsyncThunk(
   'user/GET_USER_INFOS',
   async () => {
@@ -50,21 +39,6 @@ export const getUserInfos = createAsyncThunk(
       throw new Error(getInfosRequest.data);
     }
     return getInfosRequest.data;
-  }
-);
-
-export const modifyUserPassword = createAsyncThunk(
-  'user/MODIFY_USER_PASSWORD',
-  async (infos: FormData) => {
-    const modificationRequest = await securedFetch(
-      '/modifyUserPassword',
-      'PATCH',
-      infos
-    );
-    if (modificationRequest.failed) {
-      throw new Error(modificationRequest.data);
-    }
-    return modificationRequest.data;
   }
 );
 
@@ -92,31 +66,16 @@ const userReducer = createReducer(initialValue, (builder) => {
       console.log('Chargement en cours');
       state.error = null;
     })
-    .addCase(login.rejected, (state) => {
+    .addCase(login.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = 'Email ou mot de passe incorrect';
+      if (action.error.message) {
+        state.error = action.error.message;
+      }
     })
     .addCase(login.fulfilled, (state, action) => {
       localStorage.setItem('firstName', action.payload.firstName);
       state.infos = action.payload;
       state.message = null;
-    })
-    .addCase(register.pending, (state) => {
-      console.log('Utilisateur en cours de création');
-      state.isLoading = true;
-    })
-    .addCase(register.rejected, (state, action) => {
-      state.isLoading = false;
-      if (action.error.message) {
-        state.message = null;
-        state.error = action.error.message;
-      }
-    })
-    .addCase(register.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.message =
-        'Votre compte a été créé, vous pouvez désormais vous connecter.';
-      console.log('Utilisateur créé');
     })
     .addCase(getUserInfos.pending, (state) => {
       console.log('Infos utilisateur en cours de récupération');
@@ -150,24 +109,6 @@ const userReducer = createReducer(initialValue, (builder) => {
       localStorage.setItem('firstName', action.payload.firstName);
       state.error = null;
       state.message = 'Informations modifiées avec succès';
-    })
-    .addCase(modifyUserPassword.pending, (state) => {
-      console.log('Mot de passe en cours de modification');
-      state.isLoading = true;
-    })
-    .addCase(modifyUserPassword.rejected, (state, action) => {
-      state.isLoading = false;
-      if (action.error.message) {
-        state.message = null;
-        state.error = action.error.message;
-      }
-    })
-    .addCase(modifyUserPassword.fulfilled, (state) => {
-      state.isLoading = false;
-      state.error = null;
-      state.message = null;
-      state.changedPassword =
-        'Mot de passe changé avec succès, vous allez être déconnecté.';
     })
     .addCase(removeAllMessages, (state) => {
       state.message = null;

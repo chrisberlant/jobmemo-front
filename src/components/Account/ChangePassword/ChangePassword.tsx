@@ -2,15 +2,13 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { handleFocus, handleBlur } from '../../../Utils/animatedForm';
 import logo from '../../../assets/images/logo.svg';
-import { modifyUserPassword } from '../../../store/reducers/user';
-import { useAppDispatch, useAppSelector } from '../../../store/hook/redux';
 import logOut from '../../../Utils/logout';
 import '../Account.scss';
+import securedFetch from '../../../Utils/securedFetch';
 
 function ChangePassword() {
-  const dispatch = useAppDispatch();
-  const changedPassword = useAppSelector((state) => state.user.changedPassword);
-  const error = useAppSelector((state) => state.user.error);
+  const [changedPassword, setChangedPassword] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [infos, setInfos] = useState({
     oldPassword: '',
@@ -25,20 +23,29 @@ function ChangePassword() {
         logOut();
       }, 2000);
     }
-    // If it failed, erase all every input
-    if (error) {
-      setInfos({ oldPassword: '', newPassword: '', confirmPassword: '' });
-    }
-  }, [changedPassword, error]);
+  }, [changedPassword]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    dispatch(modifyUserPassword(formData));
+    const request = await securedFetch(
+      '/modifyUserPassword',
+      'PATCH',
+      formData
+    );
+    if (request.failed) {
+      setError(request.data);
+      setInfos({ oldPassword: '', newPassword: '', confirmPassword: '' });
+    } else {
+      setError(null);
+      setChangedPassword(
+        'Mot de passe changé avec succès, vous allez être déconnecté.'
+      );
+    }
   };
 
   return (

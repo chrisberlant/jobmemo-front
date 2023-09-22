@@ -24,9 +24,7 @@ function Login() {
 
   useEffect(() => {
     appearanceAnimation(loginRef, tl);
-    const isLogged = localStorage.getItem('firstName');
-    if (isLogged) navigate('/dashboard');
-  }, [navigate]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [e.target.name]: e.target.value });
@@ -37,9 +35,10 @@ function Login() {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    await dispatch(login(formData));
-    const isLogged = localStorage.getItem('firstName');
-    if (isLogged) navigate('/dashboard');
+    const dispatchResult = await dispatch(login(formData));
+    if (dispatchResult.meta.requestStatus === 'fulfilled') {
+      navigate('/dashboard');
+    }
   };
 
   return (
