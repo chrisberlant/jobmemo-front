@@ -25,7 +25,7 @@ export const getAllCards = createAsyncThunk<CardType[]>(
 );
 
 export const modifyCard = createAsyncThunk(
-  'contacts/MODIFY_CARD',
+  'cards/MODIFY_CARD',
   async (infos: FormData) => {
     const modificationRequest = await securedFetch(
       '/modifyCard',
@@ -99,7 +99,7 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       console.log('Cartes chargées dans le store');
     })
     .addCase(modifyCard.pending, (state, action) => {
-      console.log('Modification du contact en cours');
+      console.log('Modification de la fiche en cours');
     })
     .addCase(modifyCard.rejected, (state, action) => {
       console.log('Requête de modification de contact refusée');
@@ -108,10 +108,9 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     .addCase(modifyCard.fulfilled, (state, action) => {
       const { id } = action.payload;
       const updatedInfos = action.payload;
-      let cardToUpdate = state.items.find((card) => card.id === id);
-
+      const cardToUpdate = state.items.find((card) => card.id === id);
       if (cardToUpdate) {
-        cardToUpdate = updatedInfos;
+        Object.assign(cardToUpdate, updatedInfos);
         console.log('Fiche modifiée');
       }
     })

@@ -25,6 +25,7 @@ function CardDetails() {
     contractType: '',
     description: '',
     salary: '',
+    notation: 0,
   });
 
   const deleteCard = async () => {
@@ -40,7 +41,7 @@ function CardDetails() {
         setInfos(card);
       } else {
         const fetchedCard = await securedFetch(`/card/${id}`);
-        if (fetchedCard.status !== 200) {
+        if (fetchedCard.failed) {
           navigate('/404');
         }
         setInfos(fetchedCard.data);
@@ -57,8 +58,8 @@ function CardDetails() {
     e.preventDefault();
     const formData = new FormData(e.target);
     console.log(formData);
-    await dispatch(modifyCard(formData));
-    navigate('/dashboard');
+    const request = await dispatch(modifyCard(formData));
+    if (request.meta.requestStatus === 'fulfilled') navigate('/dashboard');
   };
 
   return (
@@ -151,6 +152,61 @@ function CardDetails() {
             onChange={handleChange}
           />
           <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <input
+            className="radio-input"
+            type="radio"
+            id="star5"
+            name="notation"
+            value="5"
+          />
+          <label className="radio-label" htmlFor="star5" title="5 stars">
+            5 stars
+          </label>
+
+          <input
+            className="radio-input"
+            type="radio"
+            id="star4"
+            name="notation"
+            value="4"
+          />
+          <label className="radio-label" htmlFor="star4" title="4 stars">
+            4 stars
+          </label>
+
+          <input
+            className="radio-input"
+            type="radio"
+            id="star3"
+            name="notation"
+            value="3"
+          />
+          <label className="radio-label" htmlFor="star3" title="3 stars">
+            3 stars
+          </label>
+
+          <input
+            className="radio-input"
+            type="radio"
+            id="star2"
+            name="notation"
+            value="2"
+          />
+          <label className="radio-label" htmlFor="star2" title="2 stars">
+            2 stars
+          </label>
+          <input
+            className="radio-input"
+            type="radio"
+            id="star1"
+            name="notation"
+            value="1"
+          />
+          <label className="radio-label" htmlFor="star1" title="1 star">
+            1 star
+          </label>
         </div>
         <input type="hidden" name="id" value={id} />
         <input

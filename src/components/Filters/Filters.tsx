@@ -1,35 +1,27 @@
 import { useRef, createRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
+import { MenuItem } from '../../@types/jobmemo';
 import './Filters.scss';
 
-/*--------------------
-Items
---------------------*/
-interface MenuItem {
-  name: string;
-  color: string;
-}
-
-const items: MenuItem[] = [
-  {
-    name: 'Aucun',
-    color: '#4a65ff',
-  },
-  {
-    name: 'Par note',
-    color: '#00d948',
-  },
-  {
-    name: 'Par date',
-    color: '#fcd200',
-  },
-  {
-    name: 'Par salaire',
-    color: '#ff0368',
-  },
-];
-
-function Menu({ items }: { items: MenuItem[] }) {
+function Filters() {
+  const items: MenuItem[] = [
+    {
+      name: 'Aucun',
+      color: '#4a65ff',
+    },
+    {
+      name: 'Par note',
+      color: '#00d948',
+    },
+    {
+      name: 'Par date',
+      color: '#fcd200',
+    },
+    {
+      name: 'Par salaire',
+      color: '#ff0368',
+    },
+  ];
   const filters = useRef<HTMLDivElement>(null);
   const indicator1 = useRef<HTMLDivElement>(null);
   const indicator2 = useRef<HTMLDivElement>(null);
@@ -64,14 +56,6 @@ function Menu({ items }: { items: MenuItem[] }) {
     });
   };
 
-  // Use Stagger Apparition elements
-  // useEffect(() => {
-  //   console.log(btns);
-  //   gsap.to(btns, {
-  //     autoAlpha: 0,
-  //   });
-  // }, []);
-
   useEffect(() => {
     animate();
     window.addEventListener('resize', animate);
@@ -82,7 +66,7 @@ function Menu({ items }: { items: MenuItem[] }) {
   }, [active]);
 
   return (
-    <div ref={filters} className="menu">
+    <div ref={filters} className="filters">
       <span>Filtres :</span>
       {items.map((item, index) => (
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -104,9 +88,6 @@ function Menu({ items }: { items: MenuItem[] }) {
       <div ref={indicator2} className="indicator" />
     </div>
   );
-}
-function Filters() {
-  return <Menu items={items} />;
 }
 
 export default Filters;

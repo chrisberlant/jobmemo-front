@@ -20,6 +20,19 @@ export interface CardType {
   reminder: Date;
 }
 
+export interface DashboardCard {
+  item: {
+    id: string;
+    title: string;
+    enterpriseName: string;
+    createdAt: string;
+    color: string;
+    isDeleted: boolean;
+    notation: number;
+  };
+  index: number;
+}
+
 export interface ColumnsData {
   [key: string]: {
     className: string;
@@ -94,4 +107,9 @@ export interface UserType {
   error: string | null;
   message: string | null;
   changedPassword: string | null;
+}
+
+export interface MenuItem {
+  name: string;
+  color: string;
 }

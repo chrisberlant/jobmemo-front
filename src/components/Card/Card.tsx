@@ -1,26 +1,14 @@
 import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Link } from 'react-router-dom';
+import { DashboardCard } from '../../@types/jobmemo';
 import './Card.scss';
 
 // Ce composant restitue un élément déplaçable à l'aide du composant Draggable de la bibliothèque 'react-beautifull-dnd'.
 // Il définit la clé, draggableId et les accessoires d'index en fonction de l'accessoire d'élément.
 // Dans le composant Draggable, il y a une fonction qui reçoit fourni et un instantané en tant que paramètres.
 
-type CardProps = {
-  item: {
-    id: string;
-    title: string;
-    enterpriseName: string;
-    createdAt: string;
-    color: string;
-    isDeleted: boolean;
-    notation: number;
-  };
-  index: number;
-};
-
-function Card({ item, index }: CardProps) {
+function Card({ item, index }: DashboardCard) {
   const [checked, setChecked] = useState<boolean>(false);
   const handleChange = () => {
     setChecked(!checked);

@@ -25,17 +25,8 @@ function Register() {
 
   useEffect(() => {
     appearanceAnimation(registerRef, tl);
-  }, []);
-
-  useEffect(() => {
-    if (message) {
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
-    }
-
     if (localStorage.getItem('firstName')) navigate('/dashboard');
-  }, [navigate, message]);
+  }, [navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [e.target.name]: e.target.value });
@@ -59,6 +50,9 @@ function Register() {
       setMessage(
         'Compte créé avec succès, vous allez être redirigé(e) vers la page de connexion.'
       );
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     }
   };
 
