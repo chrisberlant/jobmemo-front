@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { FaStar } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
@@ -23,10 +24,12 @@ function CardDetails() {
     title: '',
     offerUrl: '',
     contractType: '',
-    description: '',
+    comments: '',
     salary: '',
-    notation: 0,
+    rating: 0,
   });
+  console.log(infos);
+  const [hover, setHover] = useState<number>(infos.rating);
 
   const deleteCard = async () => {
     if (id) {
@@ -50,14 +53,17 @@ function CardDetails() {
     fetchCard();
   }, [card, id, navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setInfos({ ...infos, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.log(formData);
     const request = await dispatch(modifyCard(formData));
     if (request.meta.requestStatus === 'fulfilled') navigate('/dashboard');
   };
@@ -81,7 +87,18 @@ function CardDetails() {
         </div>
         <div className="input-wrap">
           <label htmlFor="category">Catégorie : </label>
-          <input
+          <select
+            id="category"
+            name="category"
+            value={infos.category}
+            onChange={handleChange}
+          >
+            <option value="Mes offres">Mes offres</option>
+            <option value="Mes candidatures">Mes candidatures</option>
+            <option value="Mes relances">Mes relances</option>
+            <option value="Mes entretiens">Mes entretiens</option>
+          </select>
+          {/* <input
             id="category"
             name="category"
             value={infos.category}
@@ -90,7 +107,7 @@ function CardDetails() {
             onChange={handleChange}
             required
           />
-          <div className="line" />
+          <div className="line" /> */}
         </div>
 
         <div className="input-wrap">
@@ -130,18 +147,6 @@ function CardDetails() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <label htmlFor="description">Descriptif du poste :</label>
-          <input
-            id="description"
-            name="description"
-            value={infos.description}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onChange={handleChange}
-          />
-          <div className="line" />
-        </div>
-        <div className="input-wrap">
           <label htmlFor="salary">Salaire :</label>
           <input
             id="salary"
@@ -154,59 +159,45 @@ function CardDetails() {
           <div className="line" />
         </div>
         <div className="input-wrap">
+          <label htmlFor="comments">Commentaires :</label>
           <input
-            className="radio-input"
-            type="radio"
-            id="star5"
-            name="notation"
-            value="5"
+            id="comments"
+            name="comments"
+            value={infos.comments}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={handleChange}
           />
-          <label className="radio-label" htmlFor="star5" title="5 stars">
-            5 stars
-          </label>
-
-          <input
-            className="radio-input"
-            type="radio"
-            id="star4"
-            name="notation"
-            value="4"
-          />
-          <label className="radio-label" htmlFor="star4" title="4 stars">
-            4 stars
-          </label>
-
-          <input
-            className="radio-input"
-            type="radio"
-            id="star3"
-            name="notation"
-            value="3"
-          />
-          <label className="radio-label" htmlFor="star3" title="3 stars">
-            3 stars
-          </label>
-
-          <input
-            className="radio-input"
-            type="radio"
-            id="star2"
-            name="notation"
-            value="2"
-          />
-          <label className="radio-label" htmlFor="star2" title="2 stars">
-            2 stars
-          </label>
-          <input
-            className="radio-input"
-            type="radio"
-            id="star1"
-            name="notation"
-            value="1"
-          />
-          <label className="radio-label" htmlFor="star1" title="1 star">
-            1 star
-          </label>
+          <div className="line" />
+        </div>
+        <div className="rating">
+          Note :
+          {[...Array(5)].map((star, index) => {
+            const currentRating = index + 1;
+            return (
+              // eslint-disable-next-line react/jsx-key
+              <label>
+                <input
+                  className="star-rating"
+                  type="radio"
+                  name="rating"
+                  value={currentRating}
+                  // onChange={handleChange}
+                />
+                <FaStar
+                  className="star-element"
+                  size={30}
+                  color={
+                    currentRating <= (hover || infos.rating) // TODO FIX COLOR
+                      ? '#ffc107'
+                      : '€e4e5e9'
+                  }
+                  onMouseEnter={() => setHover(currentRating)}
+                  onMouseLeave={() => setHover(infos.rating)}
+                />
+              </label>
+            );
+          })}
         </div>
         <input type="hidden" name="id" value={id} />
         <input

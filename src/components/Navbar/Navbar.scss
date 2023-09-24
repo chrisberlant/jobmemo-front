@@ -9,6 +9,10 @@
   border-right: 10px solid #dbdbdb;
   box-sizing: border-box;
 
+  .mobile-menu {
+    display: none;
+  }
+
   .brand-wrapper {
     display: flex;
     align-items: center;
@@ -69,17 +73,42 @@
       }
     }
   }
-  .calendar-wrapper {
-    // background: lightcoral;
-    // padding: 0 16px;
-    // height: 50px;
-    // font-size: 10px;
-  }
 }
 
 // Do not display the navbar when the screen is smartphone sized
 @media screen and (max-width: 768px) {
-  .navbar {
-  	display: none;
+  .navbar { 
+   all:unset;
+    .navbar-content {
+      display: none;
+    }
+
+    .mobile-menu {
+      display: flex; /* Utilisation de flexbox */
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      all: unset;
+      position: fixed; // TODO FIX
+      bottom: 10px;
+      right: 20px;
+      height: 100px;
+      width: 100px;
+      border: red solid 2px;
+      border-radius: 40%;
+      font-size: 50px;
+      
+      .menu-deploy {
+        display: block;
+        background-color: blue;
+        flex: 1;
+        position: relative;
+        // top: 10px;
+        // left: 30px;
+      }
+    }
+
+
+
   }
 }

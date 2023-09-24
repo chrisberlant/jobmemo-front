@@ -7,15 +7,14 @@ export interface CardType {
   logoUrl: string;
   enterpriseActivity: string;
   contractType: string;
-  description: string;
+  comments: string;
   offerUrl: string;
   location: string;
   salary: string;
   jobTitle: string;
-  notation: number;
+  rating: number;
   color: string;
   isDeleted: boolean;
-  notes: string;
   createdAt: Date;
   reminder: Date;
 }
@@ -28,7 +27,7 @@ export interface DashboardCard {
     createdAt: string;
     color: string;
     isDeleted: boolean;
-    notation: number;
+    rating: number;
   };
   index: number;
 }

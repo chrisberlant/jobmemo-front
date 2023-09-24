@@ -39,7 +39,7 @@ function Card({ item, index }: DashboardCard) {
                 </div>
                 <div className="stars-wrapper">
                   <span>★★★★★</span>
-                  <span className="notation">{'★'.repeat(item.notation)}</span>
+                  <span className="rating">{'★'.repeat(item.rating)}</span>
                 </div>
                 <h4 className="company-title">{item.enterpriseName}</h4>
                 <h3 className="card-title">{item.title}</h3>

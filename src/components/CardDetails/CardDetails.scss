@@ -15,6 +15,33 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 350px;
+    width: 500px;
     }
+    
+    select {
+      width: 50%;
+      padding: 4px 0;
+      outline: none;
+      background: none;
+      border: none;
+      border-bottom: 1px solid #999;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    
+    .rating {
+      display: flex;
+      flex-direction: row;
+
+      .star-rating {
+        display:none;
+      }
+
+      .star-element {
+        cursor: pointer;
+      }
+    
+  }
+
+
 }

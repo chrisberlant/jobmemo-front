@@ -20,52 +20,57 @@ function Navbar() {
 
   return (
     <div className="navbar">
-      <div className="brand-wrapper">
-        <img src={logoWhite} alt="logo jobmemo" />
-        <h2>Jobmemo</h2>
+      <div className="navbar-content">
+        <div className="brand-wrapper">
+          <img src={logoWhite} alt="logo jobmemo" />
+          <h2>Jobmemo</h2>
+        </div>
+        <div className="welcome-wrapper">
+          <span>Bienvenue à bord</span>
+          <span>{userFirstName ?? 'Utilisateur'} !</span>
+        </div>
+        <div className="navigation-wrapper">
+          <NavLink
+            to="/dashboard"
+            className="btn-navigation"
+            style={({ isActive }) => ({
+              background: isActive ? '#4a65ff' : '',
+            })}
+          >
+            <img src={iconDashboard} alt="icone tableau de bord" />
+            <span>Tableau de bord</span>
+          </NavLink>
+          <NavLink
+            to="/account"
+            className="btn-navigation"
+            style={({ isActive }) => ({
+              background: isActive ? '#4a65ff' : '',
+            })}
+          >
+            <img src={iconAccount} alt="icone compte" />
+            <span>Mon compte</span>
+          </NavLink>
+          <NavLink to="#" className="btn-navigation">
+            <img src={iconDrive} alt="icone fichiers" />
+            <span>Mes fichiers</span>
+          </NavLink>
+          <NavLink
+            to="/contacts"
+            className="btn-navigation"
+            style={({ isActive }) => ({
+              background: isActive ? '#4a65ff' : '',
+            })}
+          >
+            <img src={iconContacts} alt="icone contacts" />
+            <span>Mes contacts</span>
+          </NavLink>
+        </div>
+        {/* <div className="calendar-wrapper">
+        <Calendar onChange={onchange} value={date} />
+      </div> */}
       </div>
-      <div className="welcome-wrapper">
-        <span>Bienvenue à bord</span>
-        <span>{userFirstName ?? 'Utilisateur'} !</span>
-      </div>
-      <div className="navigation-wrapper">
-        <NavLink
-          to="/dashboard"
-          className="btn-navigation"
-          style={({ isActive }) => ({
-            background: isActive ? '#4a65ff' : '',
-          })}
-        >
-          <img src={iconDashboard} alt="icone tableau de bord" />
-          <span>Tableau de bord</span>
-        </NavLink>
-        <NavLink
-          to="/account"
-          className="btn-navigation"
-          style={({ isActive }) => ({
-            background: isActive ? '#4a65ff' : '',
-          })}
-        >
-          <img src={iconAccount} alt="icone compte" />
-          <span>Mon compte</span>
-        </NavLink>
-        <NavLink to="#" className="btn-navigation">
-          <img src={iconDrive} alt="icone fichiers" />
-          <span>Mes fichiers</span>
-        </NavLink>
-        <NavLink
-          to="/contacts"
-          className="btn-navigation"
-          style={({ isActive }) => ({
-            background: isActive ? '#4a65ff' : '',
-          })}
-        >
-          <img src={iconContacts} alt="icone contacts" />
-          <span>Mes contacts</span>
-        </NavLink>
-      </div>
-      <div className="calendar-wrapper">
-        {/* <Calendar onChange={onchange} value={date} /> */}
+      <div className="mobile-menu">
+        <span className="menu-deploy">+</span>
       </div>
     </div>
   );
