@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
-// import * as MaIcons from 'react-icons/md';
-// import Calendar from 'react-calendar';
+import { useState } from 'react';
+import { CiMenuBurger } from 'react-icons/ci';
+import { GiHamburgerMenu } from 'react-icons/Gi';
 import logoWhite from '../../assets/images/logo-white.svg';
 import iconDashboard from '../../assets/icons/icon-dashboard.svg';
 import iconAccount from '../../assets/icons/icon-account.svg';
@@ -9,17 +10,11 @@ import iconContacts from '../../assets/icons/icon-contacts.svg';
 import './Navbar.scss';
 
 function Navbar() {
-  // Show/Hide Menu
   const userFirstName = localStorage.getItem('firstName');
-
-  // React Calendar
-  // const [date, setDate] = useState(new Date());
-  /* const onchange = () => {
-    setDate(date);
-  }; */
+  const [mobileMenu, setMobileMenu] = useState(false);
 
   return (
-    <div className="navbar">
+    <div className={mobileMenu ? 'navbar--mobile' : 'navbar'}>
       <div className="navbar-content">
         <div className="brand-wrapper">
           <img src={logoWhite} alt="logo jobmemo" />
@@ -33,6 +28,7 @@ function Navbar() {
           <NavLink
             to="/dashboard"
             className="btn-navigation"
+            onClick={() => setMobileMenu(false)}
             style={({ isActive }) => ({
               background: isActive ? '#4a65ff' : '',
             })}
@@ -43,6 +39,7 @@ function Navbar() {
           <NavLink
             to="/account"
             className="btn-navigation"
+            onClick={() => setMobileMenu(false)}
             style={({ isActive }) => ({
               background: isActive ? '#4a65ff' : '',
             })}
@@ -50,13 +47,18 @@ function Navbar() {
             <img src={iconAccount} alt="icone compte" />
             <span>Mon compte</span>
           </NavLink>
-          <NavLink to="#" className="btn-navigation">
+          <NavLink
+            to="#"
+            className="btn-navigation"
+            onClick={() => setMobileMenu(false)}
+          >
             <img src={iconDrive} alt="icone fichiers" />
             <span>Mes fichiers</span>
           </NavLink>
           <NavLink
             to="/contacts"
             className="btn-navigation"
+            onClick={() => setMobileMenu(false)}
             style={({ isActive }) => ({
               background: isActive ? '#4a65ff' : '',
             })}
@@ -65,13 +67,15 @@ function Navbar() {
             <span>Mes contacts</span>
           </NavLink>
         </div>
-        {/* <div className="calendar-wrapper">
-        <Calendar onChange={onchange} value={date} />
-      </div> */}
       </div>
-      <div className="mobile-menu">
-        <span className="menu-deploy">+</span>
-      </div>
+      <button
+        type="button"
+        className="display-mobile-menu"
+        aria-label="Ouvrir la barre de navigation"
+        onClick={() => setMobileMenu(!mobileMenu)}
+      >
+        {mobileMenu ? <GiHamburgerMenu /> : <CiMenuBurger />}
+      </button>
     </div>
   );
 }

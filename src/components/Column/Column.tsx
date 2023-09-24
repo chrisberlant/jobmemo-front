@@ -14,8 +14,6 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
       {(provided) => {
-        const route = `/addCard/${column.className}`;
-
         return (
           <div
             {...provided.droppableProps}
@@ -28,7 +26,7 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
               })}
             {provided.placeholder}
             {!trashColumn && (
-              <Link to={route}>
+              <Link to={`/addCard/${column.className}`}>
                 <img
                   src={addCardIcon}
                   alt="Ajouter une fiche"

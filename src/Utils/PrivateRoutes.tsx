@@ -10,7 +10,7 @@ function PrivateRoutes() {
       <Navbar />
       <div className="protected-page-content">
         <Outlet />
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   ) : (

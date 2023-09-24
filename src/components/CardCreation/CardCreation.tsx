@@ -20,7 +20,6 @@ function CardCreation() {
   const { category } = useParams();
   const navigate = useNavigate();
   const [infos, setInfos] = useState({
-    index: 0,
     category: category,
     jobTitle: '',
     enterpriseName: '',

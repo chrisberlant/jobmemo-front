@@ -24,7 +24,8 @@ function Login() {
 
   useEffect(() => {
     appearanceAnimation(loginRef, tl);
-  }, []);
+    if (localStorage.getItem('firstName')) navigate('/dashboard');
+  }, [navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [e.target.name]: e.target.value });

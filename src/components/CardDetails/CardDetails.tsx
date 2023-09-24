@@ -17,7 +17,6 @@ function CardDetails() {
   );
 
   const [infos, setInfos] = useState({
-    index: 0,
     category: '',
     jobTitle: '',
     enterpriseName: '',
@@ -28,7 +27,6 @@ function CardDetails() {
     salary: '',
     rating: 0,
   });
-  console.log(infos);
   const [hover, setHover] = useState<number>(infos.rating);
 
   const deleteCard = async () => {
@@ -98,18 +96,7 @@ function CardDetails() {
             <option value="Mes relances">Mes relances</option>
             <option value="Mes entretiens">Mes entretiens</option>
           </select>
-          {/* <input
-            id="category"
-            name="category"
-            value={infos.category}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            required
-          />
-          <div className="line" /> */}
         </div>
-
         <div className="input-wrap">
           <label htmlFor="enterpriseName">Entreprise : </label>
           <input
@@ -123,7 +110,7 @@ function CardDetails() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <label htmlFor="jobTitle">Intitulé de l&apos;annonce :</label>
+          <label htmlFor="jobTitle">Intitulé du poste :</label>
           <input
             id="jobTitle"
             name="jobTitle"
@@ -135,15 +122,30 @@ function CardDetails() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <label htmlFor="contractType">Type de contrat : </label>
+          <label htmlFor="offerUrl">Source / Lien de l&apos;annonce : </label>
           <input
-            id="contractType"
-            name="contractType"
-            value={infos.contractType}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            type="text"
+            name="offerUrl"
+            id="offerUrl"
             onChange={handleChange}
           />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="contractType">Type de contrat : </label>
+          <select
+            id="contractType"
+            className="contractType"
+            name="contractType"
+            onChange={handleChange}
+          >
+            <option value="CDI">CDI</option>
+            <option value="CDD">CDD</option>
+            <option value="Alternance">Alternance</option>
+            <option value="Autre">Autre</option>
+          </select>
           <div className="line" />
         </div>
         <div className="input-wrap">

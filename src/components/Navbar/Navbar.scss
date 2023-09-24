@@ -9,7 +9,7 @@
   border-right: 10px solid #dbdbdb;
   box-sizing: border-box;
 
-  .mobile-menu {
+  .display-mobile-menu {
     display: none;
   }
 
@@ -55,7 +55,6 @@
     .btn-navigation {
       width: 100%;
       height: 32px;
-      // background: lightseagreen;
       padding: 0 16px;
       display: flex;
       align-items: center;
@@ -83,32 +82,87 @@
       display: none;
     }
 
-    .mobile-menu {
-      display: flex; /* Utilisation de flexbox */
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
+    .display-mobile-menu {
       all: unset;
-      position: fixed; // TODO FIX
+      z-index: 3;
+      position: fixed;
       bottom: 10px;
       right: 20px;
-      height: 100px;
-      width: 100px;
-      border: red solid 2px;
-      border-radius: 40%;
+      height: 40px;
+      width: 40px;
+      background-color: #4a65ff;
+      border-radius: 50%;
+      color: white;
+      text-align: center;
+      line-height: 30px;
       font-size: 50px;
-      
-      .menu-deploy {
-        display: block;
-        background-color: blue;
-        flex: 1;
-        position: relative;
-        // top: 10px;
-        // left: 30px;
+      padding: 8px;
+    }
+  }
+
+  .navbar--mobile {
+    transition: 0.3s;
+    position: fixed;
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #6E83FF;
+    border-top-left-radius: 90%;
+    padding: 70px 0px 12px 40px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 2;
+
+    .navbar-content {
+      height: 80%;
+      width: 50%;
+
+      .navigation-wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .btn-navigation {
+          display: flex;
+          justify-content: center;
+          span {
+            display: block;
+          }
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          text-decoration: none;
+          color: #fff;
+          font-weight: 900;
+        }
+      }
+
+
+      img, h2, .welcome-wrapper {
+        display: none;
       }
     }
-
-
-
+    .display-mobile-menu {
+      all: unset;
+      z-index: 3;
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
+      height: 40px;
+      width: 40px;
+      background-color: #4a65ff;
+      border-radius: 50%;
+      color: white;
+      text-align: center;
+      line-height: 30px;
+      font-size: 50px;
+      padding: 8px; 
+    }
   }
 }
