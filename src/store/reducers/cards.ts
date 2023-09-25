@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
-import { CardTable, CardType, MovingCard } from '../../@types/jobmemo';
+import { CardTable, CardType } from '../../@types/jobmemo';
 
 const initialValue: CardTable = {
   items: [],
@@ -10,7 +10,6 @@ const initialValue: CardTable = {
   error: undefined,
   isEmpty: false,
   loadedCards: false,
-  movingCardId: '',
 };
 
 export const getAllCards = createAsyncThunk<CardType[]>(
@@ -21,6 +20,17 @@ export const getAllCards = createAsyncThunk<CardType[]>(
       throw new Error(cardsRequest.data);
     }
     return cardsRequest.data;
+  }
+);
+
+export const createNewCard = createAsyncThunk(
+  'cards/CREATE_NEW_CARD',
+  async (infos: FormData) => {
+    const creationRequest = await securedFetch('/createNewCard', 'POST', infos);
+    if (creationRequest.failed) {
+      throw new Error(creationRequest.data);
+    }
+    return creationRequest.data;
   }
 );
 
@@ -41,19 +51,8 @@ export const modifyCard = createAsyncThunk(
 
 export const moveCard = createAsyncThunk(
   'cards/MOVE_CARD',
-  async ({ movingCardId, movingCardIndex, movingCardCategory }: MovingCard) => {
-    const movingCardInfos = new FormData();
-    movingCardInfos.append('id', movingCardId);
-    movingCardInfos.append('newIndex', movingCardIndex.toString());
-    movingCardInfos.append('newCategory', movingCardCategory);
-    console.log(
-      `Déplacement de la carte ${movingCardId} vers l'index ${movingCardIndex} de la catégorie ${movingCardCategory}`
-    );
-    const cardMoveRequest = await securedFetch(
-      '/moveCard',
-      'PATCH',
-      movingCardInfos
-    );
+  async (infos: FormData) => {
+    const cardMoveRequest = await securedFetch('/moveCard', 'PATCH', infos);
     if (cardMoveRequest.failed) {
       throw new Error(cardMoveRequest.data);
     }
@@ -97,6 +96,17 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       );
       state.loadedCards = true;
       console.log('Cartes chargées dans le store');
+    })
+    .addCase(createNewCard.pending, (state, action) => {
+      console.log('Création de la fiche en cours');
+    })
+    .addCase(createNewCard.rejected, (state, action) => {
+      console.log('Requête de création de fiche refusée');
+    })
+    .addCase(createNewCard.fulfilled, (state, action) => {
+      state.isEmpty = false;
+      state.items.push(action.payload);
+      console.log('Fiche créée');
     })
     .addCase(modifyCard.pending, (state, action) => {
       console.log('Modification de la fiche en cours');
@@ -162,7 +172,6 @@ const cardsReducer = createReducer(initialValue, (builder) => {
           return otherCard;
         });
       }
-      console.log(state.items);
 
       state.loadedCards = true;
     })

@@ -2,8 +2,9 @@ import { ChangeEvent, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import { authHandleFocus, authHandleBlur } from '../../Utils/animatedForm';
-import securedFetch from '../../Utils/securedFetch';
 import logo from '../../assets/images/logo.svg';
+import { useAppDispatch } from '../../store/hook/redux';
+import { createNewCard } from '../../store/reducers/cards';
 import './CardCreation.scss';
 
 function randomColor(): string {
@@ -18,6 +19,7 @@ function randomColor(): string {
 
 function CardCreation() {
   const { category } = useParams();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [infos, setInfos] = useState({
     category,
@@ -44,13 +46,8 @@ function CardCreation() {
     const form = e.target;
     const formData = new FormData(form);
     formData.append('color', randomColor());
-    const request = await securedFetch('/createNewCard', 'POST', formData);
-    if (request.failed) {
-      alert('🥺 Une erreur est survenue lors de la création');
-    } else {
-      alert('👏 votre nouvelle fiche a été crée');
-      navigate('/dashboard');
-    }
+    const request = await dispatch(createNewCard(formData));
+    if (request.meta.requestStatus === 'fulfilled') navigate('/dashboard');
   };
 
   return (

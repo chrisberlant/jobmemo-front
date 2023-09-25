@@ -17,7 +17,6 @@
     background: white;
     margin: 12px;
     flex-direction: column;
-    // align-items: center;
     }
     
     select {
@@ -34,6 +33,12 @@
     .rating {
       display: flex;
       flex-direction: row;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px; /* Espace entre l'étiquette et le champ d'entrée */
+      color: #999;
+      gap: 10px;
 
       .star-rating {
         display:none;

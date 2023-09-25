@@ -32,13 +32,11 @@ const onDragEnd = (result, dispatch, movingCardId: string) => {
 
   // If card is not dragged to trash bin
   if (destination.droppableId !== 'Ma corbeille') {
-    const newCardInfos = {
-      movingCardId,
-      movingCardIndex: destination.index,
-      movingCardCategory: destination.droppableId,
-    };
-
-    dispatch(moveCard(newCardInfos));
+    const movingCardInfos = new FormData();
+    movingCardInfos.append('id', movingCardId);
+    movingCardInfos.append('newIndex', destination.index);
+    movingCardInfos.append('newCategory', destination.droppableId);
+    dispatch(moveCard(movingCardInfos));
   } else {
     // Send to trash bin
     dispatch(sendCardToTrash(movingCardId));

@@ -25,12 +25,11 @@ export const getAllContacts = createAsyncThunk(
 
 export const createNewContact = createAsyncThunk(
   'contacts/CREATE_NEW_CONTACT',
-  async (contact: FormData) => {
-    console.log(contact);
+  async (infos: FormData) => {
     const creationRequest = await securedFetch(
       '/createNewContact',
       'POST',
-      contact
+      infos
     );
     if (creationRequest.failed) {
       throw new Error(creationRequest.data);

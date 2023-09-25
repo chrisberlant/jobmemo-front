@@ -61,14 +61,7 @@ export interface CardTable {
   isLoading: boolean;
   error: string | undefined;
   loadedCards: boolean;
-  movingCardId: string;
   isEmpty: boolean;
-}
-
-export interface MovingCard {
-  movingCardId: string;
-  movingCardIndex: number;
-  movingCardCategory: string;
 }
 
 export interface ContactType {
