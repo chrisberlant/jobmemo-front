@@ -49,7 +49,7 @@ function Kanban() {
   const dashboardCards = useAppSelector((state) => state.cards.items);
   const loadedCards = useAppSelector((state) => state.cards.loadedCards);
   const offresColumn = {
-    className: 'Mes offres',
+    className: 'offres',
     id: 1,
     color: '#eee',
     items: dashboardCards.filter((card) => card.category === 'Mes offres'),
@@ -105,12 +105,13 @@ function Kanban() {
     >
       <div className="kanban">
         {Object.keys(columnsData).map((columnName) => {
+          console.log(columnsData[columnName]);
           const isTrashBin = columnName === 'Ma corbeille';
           return (
             <div
               key={columnName}
               id={columnName}
-              className={`column ${columnName.replace(/^[^ ]+\s*/, '')}`}
+              className={`column ${columnsData[columnName].className}`}
             >
               <h3 className="column-title">{columnName}</h3>
 

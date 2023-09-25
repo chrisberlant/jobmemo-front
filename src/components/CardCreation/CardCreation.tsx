@@ -18,7 +18,10 @@ function randomColor(): string {
 }
 
 function CardCreation() {
-  const { category } = useParams();
+  const { categorySlug } = useParams();
+  console.log(categorySlug);
+  const category = categorySlug?.replace(/^/, 'Mes ');
+  console.log(category);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [infos, setInfos] = useState({

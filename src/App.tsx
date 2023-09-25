@@ -52,7 +52,7 @@ function AppRoutes() {
           <Route element={<ContactDetails />} path="/contact/:id" />
           <Route element={<ContactCreation />} path="/createContact" />
           <Route element={<CardDetails />} path="/card/:id" />
-          <Route element={<CardCreation />} path="/addCard/:category" />
+          <Route element={<CardCreation />} path="/addCard/:categorySlug" />
         </Route>
       </Routes>
     </div>
