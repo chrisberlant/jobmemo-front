@@ -23,7 +23,7 @@ function CardDetails() {
     contractType: '',
     comments: '',
     salary: '',
-    rating: 0,
+    rating: 1,
   });
   const [hover, setHover] = useState(0);
 
@@ -66,6 +66,8 @@ function CardDetails() {
     const request = await dispatch(modifyCard(formData));
     if (request.meta.requestStatus === 'fulfilled') navigate('/dashboard');
   };
+
+  // TODO vérifier statut isDeleted pour savoir si on propose de restaurer/supprimer
 
   return (
     <div className="card-details">

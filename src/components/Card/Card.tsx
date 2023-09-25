@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DashboardCard } from '../../@types/jobmemo';
 import './Card.scss';
 
@@ -9,6 +9,7 @@ import './Card.scss';
 // Dans le composant Draggable, il y a une fonction qui reçoit fourni et un instantané en tant que paramètres.
 
 function Card({ item, index }: DashboardCard) {
+  const navigate = useNavigate();
   const [checked, setChecked] = useState<boolean>(false);
   const handleChange = () => {
     setChecked(!checked);
@@ -34,7 +35,12 @@ function Card({ item, index }: DashboardCard) {
                 <div className="date-wrapper">
                   <span>Crée le : </span>
                   <span>
-                    {item.createdAt.slice(0, 10).split('-').reverse().join('/')}
+                    {item.createdAt
+                      .toString()
+                      .slice(0, 10)
+                      .split('-')
+                      .reverse()
+                      .join('/')}
                   </span>
                 </div>
                 <div className="stars-wrapper">
@@ -44,9 +50,9 @@ function Card({ item, index }: DashboardCard) {
                 <h4 className="company-title">{item.enterpriseName}</h4>
                 <h3 className="card-title">{item.title}</h3>
                 <div className="action-wrapper">
-                  <Link to={`/card/${item.id}`}>
-                    <button type="button">Voir la fiche</button>
-                  </Link>
+                  <button type="button" onClick={() => navigate(`/card/${id}`)}>
+                    Voir la fiche
+                  </button>
                   <input
                     type="checkbox"
                     checked={checked}

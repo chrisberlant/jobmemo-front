@@ -1,4 +1,62 @@
-.RecycleBin {
-	text-align: center;
+.recycle-bin {
+  display: flex;
+  flex-direction: column;
+	width: 100%;
+  height: 100%;
+  margin: 16px;
+	padding: 16px;
+  text-align: center;
 
+  .recycle-bin-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+
+    .restore-button {
+    	width: 40%;
+      border: none;
+      background: #4a65ff;
+      font-size: 14px;
+      height: 50px;
+      margin: 12px 0 12px;
+      color: black;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
+      clip-path: polygon(
+        0% 20px,
+        20px 0%,
+        100% 0%,
+        100% calc(100% - 20px),
+        calc(100% - 20px) 100%,
+        0% 100%
+      );
+      transition: background 0.2s ease;
+  
+      &:hover {
+        background: #000;
+      }
+    }
+  }
+
+	.trashed-cards-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+		gap: 50px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
+  
+
+@media screen and (max-width: 768px) {
+  .recycle-bin {
+    .trashed-cards-container {
+      justify-content: center;
+    }
+  }
 }

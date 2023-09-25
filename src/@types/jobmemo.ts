@@ -24,12 +24,21 @@ export interface DashboardCard {
     id: string;
     title: string;
     enterpriseName: string;
-    createdAt: string;
+    createdAt: Date;
     color: string;
     isDeleted: boolean;
     rating: number;
   };
   index: number;
+}
+
+export interface TrashedCardType {
+  id: string;
+  title: string;
+  enterpriseName: string;
+  createdAt: Date;
+  color: string;
+  rating: number;
 }
 
 export interface ColumnsData {

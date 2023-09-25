@@ -35,7 +35,7 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
               </Link>
             )}
             {trashColumn && (
-              <Link to="/recyclebin">
+              <Link to="/recycleBin">
                 <img
                   src={recycleBinIcon}
                   alt="Accéder à la corbeille"

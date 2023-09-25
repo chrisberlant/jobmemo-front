@@ -77,6 +77,23 @@ export const sendCardToTrash = createAsyncThunk(
   }
 );
 
+export const restoreCard = createAsyncThunk(
+  'cards/RESTORE_CARD',
+  async (id: string) => {
+    const cardToRestore = new FormData();
+    cardToRestore.append('id', id);
+    const restorationRequest = await securedFetch(
+      '/restoreCard',
+      'PATCH',
+      cardToRestore
+    );
+    if (restorationRequest.failed) {
+      throw new Error(restorationRequest.data);
+    }
+    return restorationRequest.data;
+  }
+);
+
 const cardsReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(getAllCards.pending, (state) => {
@@ -189,7 +206,23 @@ const cardsReducer = createReducer(initialValue, (builder) => {
         state.trashedItems.push(cardToTrash);
         const indexToTrash = state.items.indexOf(cardToTrash);
         state.items.splice(indexToTrash, 1);
-        console.log(state.items);
+      }
+      console.log('Carte restaurée');
+    })
+    .addCase(restoreCard.pending, () => {
+      console.log("Restauration d'une carte");
+    })
+    .addCase(restoreCard.rejected, () => {
+      console.log("Erreur lors de la récupération d'une carte");
+    })
+    .addCase(restoreCard.fulfilled, (state, action) => {
+      const { id } = action.payload;
+      const cardToRestore = state.trashedItems.find((card) => card.id === id);
+      if (cardToRestore) {
+        cardToRestore.isDeleted = false;
+        state.items.push(cardToRestore);
+        const indexToRestore = state.trashedItems.indexOf(cardToRestore);
+        state.items.splice(indexToRestore, 1);
       }
       console.log('Carte envoyée à la corbeille');
     });

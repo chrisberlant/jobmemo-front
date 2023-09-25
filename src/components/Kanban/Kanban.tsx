@@ -105,7 +105,6 @@ function Kanban() {
     >
       <div className="kanban">
         {Object.keys(columnsData).map((columnName) => {
-          console.log(columnsData[columnName]);
           const isTrashBin = columnName === 'Ma corbeille';
           return (
             <div
@@ -114,7 +113,6 @@ function Kanban() {
               className={`column ${columnsData[columnName].className}`}
             >
               <h3 className="column-title">{columnName}</h3>
-
               <Column
                 droppableId={columnName}
                 key={columnName}

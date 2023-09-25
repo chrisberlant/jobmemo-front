@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getAllContacts } from '../../store/reducers/contacts';
 import ContactCard from './ContactCard/ContactCard';
@@ -9,6 +9,7 @@ function Contacts() {
   const contacts = useAppSelector((state) => state.contacts.items);
   const isLoading = useAppSelector((state) => state.contacts.isLoading);
   const noContacts = useAppSelector((state) => state.contacts.isEmpty);
+  const navigate = useNavigate();
   const error = useAppSelector((state) => state.contacts.error);
   // const message = useAppSelector((state) => state.contacts.message);
   const dispatch = useAppDispatch();
@@ -28,11 +29,13 @@ function Contacts() {
       <div className="contacts-header">
         <h1>Vos contacts :</h1>
         {!isLoading && (
-          <Link to="/createContact">
-            <button type="button" className="add-contact-button">
-              Ajouter un nouveau contact
-            </button>
-          </Link>
+          <button
+            type="button"
+            className="add-contact-button"
+            onClick={() => navigate('/createContact')}
+          >
+            Ajouter un nouveau contact
+          </button>
         )}
       </div>
 

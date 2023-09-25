@@ -19,9 +19,7 @@ function randomColor(): string {
 
 function CardCreation() {
   const { categorySlug } = useParams();
-  console.log(categorySlug);
   const category = categorySlug?.replace(/^/, 'Mes ');
-  console.log(category);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [infos, setInfos] = useState({
@@ -33,9 +31,9 @@ function CardCreation() {
     contractType: '',
     comments: '',
     salary: '',
-    rating: 0,
+    rating: 1,
   });
-  const [hover, setHover] = useState(0);
+  const [hover, setHover] = useState(1);
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
