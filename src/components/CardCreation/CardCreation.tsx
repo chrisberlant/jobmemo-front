@@ -1,6 +1,6 @@
-/* eslint-disable object-shorthand */
 import { ChangeEvent, useState } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { FaStar } from 'react-icons/fa';
+import { useNavigate, useParams } from 'react-router-dom';
 import { authHandleFocus, authHandleBlur } from '../../Utils/animatedForm';
 import securedFetch from '../../Utils/securedFetch';
 import logo from '../../assets/images/logo.svg';
@@ -20,7 +20,7 @@ function CardCreation() {
   const { category } = useParams();
   const navigate = useNavigate();
   const [infos, setInfos] = useState({
-    category: category,
+    category,
     jobTitle: '',
     enterpriseName: '',
     title: '',
@@ -28,8 +28,9 @@ function CardCreation() {
     contractType: '',
     comments: '',
     salary: '',
+    rating: 0,
   });
-
+  const [hover, setHover] = useState(0);
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -69,20 +70,22 @@ function CardCreation() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <label htmlFor="category">Catégorie : </label>
-          <select
-            id="category"
-            name="category"
-            value={infos.category?.replace(/-/g, ' ')}
-            onChange={handleChange}
-            className="category"
-          >
-            <option value="Mes offres">Mes offres</option>
-            <option value="Mes candidatures">Mes candidatures</option>
-            <option value="Mes relances">Mes relances</option>
-            <option value="Mes entretiens">Mes entretiens</option>
-          </select>
-          <div className="line" />
+          <div className="select-input">
+            <label htmlFor="category">Catégorie : </label>
+            <select
+              id="category"
+              name="category"
+              value={infos.category?.replace(/-/g, ' ')}
+              onChange={handleChange}
+              className="category"
+            >
+              <option value="Mes offres">Mes offres</option>
+              <option value="Mes candidatures">Mes candidatures</option>
+              <option value="Mes relances">Mes relances</option>
+              <option value="Mes entretiens">Mes entretiens</option>
+            </select>
+            <div className="line" />
+          </div>
         </div>
         <div className="input-wrap">
           <label htmlFor="enterpriseName">Entreprise : </label>
@@ -121,19 +124,21 @@ function CardCreation() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <label htmlFor="contractType">Type de contrat : </label>
-          <select
-            id="contractType"
-            className="contractType"
-            name="contractType"
-            onChange={handleChange}
-          >
-            <option value="CDI">CDI</option>
-            <option value="CDD">CDD</option>
-            <option value="Alternance">Alternance</option>
-            <option value="Autre">Autre</option>
-          </select>
-          <div className="line" />
+          <div className="select-input">
+            <label htmlFor="contractType">Type de contrat : </label>
+            <select
+              id="contractType"
+              className="contractType"
+              name="contractType"
+              onChange={handleChange}
+            >
+              <option value="CDI">CDI</option>
+              <option value="CDD">CDD</option>
+              <option value="Alternance">Alternance</option>
+              <option value="Autre">Autre</option>
+            </select>
+            <div className="line" />
+          </div>
         </div>
         <div className="input-wrap">
           <label htmlFor="salary">Salaire : </label>
@@ -158,17 +163,31 @@ function CardCreation() {
           />
           <div className="line" />
         </div>
-        <div className="input-wrap">
-          <label htmlFor="rating">Note</label>
-          <select className="rating" name="rating" defaultValue="DEFAULT">
-            <option value="DEFAULT" disabled>
-              Modifier la note
-            </option>
-            <option value="1">⭑</option>
-            <option value="2">⭑⭑</option>
-            <option value="3">⭑⭑⭑</option>
-            <option value="4">⭑⭑⭑⭑</option>
-          </select>
+        <div className="rating">
+          <label htmlFor="rating">Note :</label>
+          {[...Array(5)].map((_star, index) => {
+            const currentRating = index + 1;
+            return (
+              <label key={currentRating}>
+                <input
+                  className="star-rating"
+                  id={`rating${currentRating}`}
+                  type="radio"
+                  name="rating"
+                  value={currentRating}
+                  onChange={handleChange}
+                  onClick={() => setInfos({ ...infos, rating: currentRating })}
+                />
+                <FaStar
+                  className="star-element"
+                  size={30}
+                  color={currentRating <= hover ? '#ffc107' : '#B7B7B7'}
+                  onMouseEnter={() => setHover(currentRating)}
+                  onMouseLeave={() => setHover(infos.rating)}
+                />
+              </label>
+            );
+          })}
         </div>
         <input
           type="submit"

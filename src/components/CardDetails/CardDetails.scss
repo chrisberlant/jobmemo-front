@@ -1,22 +1,23 @@
 .card-details {
-  width: 80%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .title {
-    text-align: center;
-    display: block;
+
   }
 
   .card-details-form {
-    filter: drop-shadow(10px 10px 0px #e6e6e6);
     height: 100%;
+    width: 100%;
+    filter: drop-shadow(10px 10px 0px #e6e6e6);
     display: flex;
     padding: 12px;
     background: white;
     margin: 12px;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 500px;
+    // align-items: center;
     }
     
     select {
@@ -41,8 +42,12 @@
       .star-element {
         cursor: pointer;
       }
-    
   }
+}
 
+@media screen and (max-width: 768px) {
 
+  .card-details {
+    width: 90%;
+  }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getAllContacts } from '../../store/reducers/contacts';
@@ -24,7 +24,7 @@ function Contacts() {
   }, [dispatch, contacts, noContacts]);
 
   return (
-    <div className="Contacts">
+    <div className="contacts">
       <div className="contacts-header">
         <h1>Vos contacts :</h1>
         {!isLoading && (

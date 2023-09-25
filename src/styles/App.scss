@@ -76,6 +76,13 @@ body {
     position: relative;
     margin-bottom: 32px;
 
+    .select-input {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+
     label {
       font-size: 13px;
       font-weight: 600;

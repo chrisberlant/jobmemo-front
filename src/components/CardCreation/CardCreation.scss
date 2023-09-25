@@ -1,13 +1,17 @@
 .card-creation {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .title {
-    text-align: center;
-    display: block;
+
   }
 
   .card-creation-form {
-    filter: drop-shadow(10px 10px 0px #e6e6e6);
     height: 100%;
+    width: 100%;
+    filter: drop-shadow(10px 10px 0px #e6e6e6);
     display: flex;
     padding: 12px;
     background: white;
@@ -15,7 +19,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 500px;
     }
     
     select {
@@ -42,6 +45,10 @@
       }
     
   }
+}
+@media screen and (max-width: 768px) {
 
-
+  .card-creation {
+    width: 90%;
+  }
 }

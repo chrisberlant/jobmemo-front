@@ -11,11 +11,9 @@ function CardDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const card = useAppSelector((state) =>
     state.cards.items.find((searchedCard) => searchedCard.id === id)
   );
-
   const [infos, setInfos] = useState({
     category: '',
     jobTitle: '',
@@ -27,7 +25,7 @@ function CardDetails() {
     salary: '',
     rating: 0,
   });
-  const [hover, setHover] = useState<number>(infos.rating);
+  const [hover, setHover] = useState(0);
 
   const deleteCard = async () => {
     if (id) {
@@ -40,12 +38,15 @@ function CardDetails() {
     const fetchCard = async () => {
       if (card) {
         setInfos(card);
+        setHover(card.rating);
       } else {
         const fetchedCard = await securedFetch(`/card/${id}`);
         if (fetchedCard.failed) {
           navigate('/404');
+        } else {
+          setInfos(fetchedCard.data);
+          setHover(fetchedCard.data.rating);
         }
-        setInfos(fetchedCard.data);
       }
     };
     fetchCard();
@@ -84,18 +85,20 @@ function CardDetails() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <label htmlFor="category">Catégorie : </label>
-          <select
-            id="category"
-            name="category"
-            value={infos.category}
-            onChange={handleChange}
-          >
-            <option value="Mes offres">Mes offres</option>
-            <option value="Mes candidatures">Mes candidatures</option>
-            <option value="Mes relances">Mes relances</option>
-            <option value="Mes entretiens">Mes entretiens</option>
-          </select>
+          <div className="select-input">
+            <label htmlFor="category">Catégorie : </label>
+            <select
+              id="category"
+              name="category"
+              value={infos.category}
+              onChange={handleChange}
+            >
+              <option value="Mes offres">Mes offres</option>
+              <option value="Mes candidatures">Mes candidatures</option>
+              <option value="Mes relances">Mes relances</option>
+              <option value="Mes entretiens">Mes entretiens</option>
+            </select>
+          </div>
         </div>
         <div className="input-wrap">
           <label htmlFor="enterpriseName">Entreprise : </label>
@@ -134,18 +137,20 @@ function CardDetails() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <label htmlFor="contractType">Type de contrat : </label>
-          <select
-            id="contractType"
-            className="contractType"
-            name="contractType"
-            onChange={handleChange}
-          >
-            <option value="CDI">CDI</option>
-            <option value="CDD">CDD</option>
-            <option value="Alternance">Alternance</option>
-            <option value="Autre">Autre</option>
-          </select>
+          <div className="select-input">
+            <label htmlFor="contractType">Type de contrat : </label>
+            <select
+              id="contractType"
+              className="contractType"
+              name="contractType"
+              onChange={handleChange}
+            >
+              <option value="CDI">CDI</option>
+              <option value="CDD">CDD</option>
+              <option value="Alternance">Alternance</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
           <div className="line" />
         </div>
         <div className="input-wrap">
@@ -173,27 +178,24 @@ function CardDetails() {
           <div className="line" />
         </div>
         <div className="rating">
-          Note :
-          {[...Array(5)].map((star, index) => {
+          <label htmlFor="rating">Note :</label>
+          {[...Array(5)].map((_star, index) => {
             const currentRating = index + 1;
             return (
-              // eslint-disable-next-line react/jsx-key
-              <label>
+              <label key={currentRating}>
                 <input
                   className="star-rating"
+                  id={`rating${currentRating}`}
                   type="radio"
                   name="rating"
                   value={currentRating}
-                  // onChange={handleChange}
+                  onChange={handleChange}
+                  onClick={() => setInfos({ ...infos, rating: currentRating })}
                 />
                 <FaStar
                   className="star-element"
                   size={30}
-                  color={
-                    currentRating <= (hover || infos.rating) // TODO FIX COLOR
-                      ? '#ffc107'
-                      : '€e4e5e9'
-                  }
+                  color={currentRating <= hover ? '#ffc107' : '#B7B7B7'}
                   onMouseEnter={() => setHover(currentRating)}
                   onMouseLeave={() => setHover(infos.rating)}
                 />
