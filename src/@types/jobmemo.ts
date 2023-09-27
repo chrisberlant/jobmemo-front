@@ -73,7 +73,6 @@ export interface CardTable {
   items: CardType[];
   trashedItems: CardType[];
   isLoading: boolean;
-  error: string | undefined;
   loadedCards: boolean;
   isEmpty: boolean;
 }
@@ -95,8 +94,6 @@ export interface Contacts {
   items: ContactType[];
   isLoading: boolean;
   isEmpty: boolean;
-  error: boolean;
-  message: string | null;
 }
 
 export interface UserInfosType {
@@ -110,8 +107,6 @@ export interface UserInfosType {
 export interface UserType {
   infos: UserInfosType;
   isLoading: boolean;
-  error: string | null;
-  message: string | null;
   changedPassword: string | null;
 }
 

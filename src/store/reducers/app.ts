@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createReducer, createAction } from '@reduxjs/toolkit';
 import { NotificationType } from '../../@types/jobmemo';
 

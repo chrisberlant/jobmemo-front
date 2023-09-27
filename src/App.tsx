@@ -21,7 +21,7 @@ import ContactDetails from './components/Contacts/ContactDetails/ContactDetails'
 import PageNotFound from './components/PageNotFound/PageNotFound';
 import PrivateRoutes from './Utils/PrivateRoutes';
 import { useAppDispatch } from './store/hook/redux';
-import { removeAllMessages } from './store/reducers/user';
+import { removeAllMessages } from './store/reducers/app';
 import './styles/reset.scss';
 import './styles/App.scss';
 

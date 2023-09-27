@@ -2,12 +2,12 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
 import { CardTable, CardType } from '../../@types/jobmemo';
+import { setError, setMessage } from './app';
 
 const initialValue: CardTable = {
   items: [],
   trashedItems: [],
   isLoading: false,
-  error: undefined,
   isEmpty: false,
   loadedCards: false,
 };
@@ -25,44 +25,50 @@ export const getAllCards = createAsyncThunk<CardType[]>(
 
 export const createNewCard = createAsyncThunk(
   'cards/CREATE_NEW_CARD',
-  async (infos: FormData) => {
+  async (infos: FormData, { dispatch }) => {
     const creationRequest = await securedFetch('/createNewCard', 'POST', infos);
     if (creationRequest.failed) {
+      dispatch(setError('Impossible de créer la fiche'));
       throw new Error(creationRequest.data);
     }
+    dispatch(setMessage('Fiche créée avec succès'));
     return creationRequest.data;
   }
 );
 
 export const modifyCard = createAsyncThunk(
   'cards/MODIFY_CARD',
-  async (infos: FormData) => {
+  async (infos: FormData, { dispatch }) => {
     const modificationRequest = await securedFetch(
       '/modifyCard',
       'PATCH',
       infos
     );
     if (modificationRequest.failed) {
+      dispatch(setError('Impossible de modifier la fiche'));
       throw new Error(modificationRequest.data);
     }
+    dispatch(setError('Fiche modifiée avec succès'));
     return modificationRequest.data;
   }
 );
 
 export const moveCard = createAsyncThunk(
   'cards/MOVE_CARD',
-  async (infos: FormData) => {
+  async (infos: FormData, { dispatch }) => {
     const cardMoveRequest = await securedFetch('/moveCard', 'PATCH', infos);
     if (cardMoveRequest.failed) {
+      dispatch(setError(cardMoveRequest.data));
       throw new Error(cardMoveRequest.data);
     }
+    dispatch(setMessage('Fiche déplacée avec succès'));
     return cardMoveRequest.data;
   }
 );
 
 export const sendCardToTrash = createAsyncThunk(
   'cards/SEND_CARD_TO_TRASH',
-  async (id: string) => {
+  async (id: string, { dispatch }) => {
     const cardToTrash = new FormData();
     cardToTrash.append('id', id);
     const sendToTrashRequest = await securedFetch(
@@ -71,15 +77,17 @@ export const sendCardToTrash = createAsyncThunk(
       cardToTrash
     );
     if (sendToTrashRequest.failed) {
+      dispatch(setMessage("Impossible d'envoyer la fiche à la corbeille"));
       throw new Error(sendToTrashRequest.data);
     }
+    dispatch(setMessage('Fiche envoyée à la corbeille avec succès'));
     return sendToTrashRequest.data;
   }
 );
 
 export const restoreCard = createAsyncThunk(
   'cards/RESTORE_CARD',
-  async (id: string) => {
+  async (id: string, { dispatch }) => {
     const cardToRestore = new FormData();
     cardToRestore.append('id', id);
     const restorationRequest = await securedFetch(
@@ -88,8 +96,12 @@ export const restoreCard = createAsyncThunk(
       cardToRestore
     );
     if (restorationRequest.failed) {
+      dispatch(
+        setMessage('Impossible de restaurer la fiche depuis la corbeille')
+      );
       throw new Error(restorationRequest.data);
     }
+    dispatch(setMessage('Fiche restaurée avec succès'));
     return restorationRequest.data;
   }
 );
@@ -98,13 +110,11 @@ const cardsReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(getAllCards.pending, (state) => {
       state.isLoading = true;
-      state.error = undefined;
       console.log('Chargement des cartes en cours');
     })
     .addCase(getAllCards.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message;
-      console.log(`Erreur au chargement des cartes: ${state.error}`);
+      console.log(`Erreur au chargement des cartes`);
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
       state.items = action.payload.filter((card) => card.isDeleted === false);
@@ -114,40 +124,46 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.loadedCards = true;
       console.log('Cartes chargées dans le store');
     })
-    .addCase(createNewCard.pending, (state, action) => {
+    .addCase(createNewCard.pending, (state) => {
+      state.isLoading = true;
       console.log('Création de la fiche en cours');
     })
-    .addCase(createNewCard.rejected, (state, action) => {
+    .addCase(createNewCard.rejected, (state) => {
+      state.isLoading = false;
       console.log('Requête de création de fiche refusée');
     })
     .addCase(createNewCard.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.isEmpty = false;
       state.items.push(action.payload);
       console.log('Fiche créée');
     })
-    .addCase(modifyCard.pending, (state, action) => {
+    .addCase(modifyCard.pending, (state) => {
+      state.isLoading = true;
       console.log('Modification de la fiche en cours');
     })
     .addCase(modifyCard.rejected, (state, action) => {
+      state.isLoading = false;
       console.log('Requête de modification de contact refusée');
-      state.error = action.error.message;
     })
     .addCase(modifyCard.fulfilled, (state, action) => {
+      state.isLoading = false;
       const { id } = action.payload;
       const updatedInfos = action.payload;
       const cardToUpdate = state.items.find((card) => card.id === id);
       if (cardToUpdate) {
         Object.assign(cardToUpdate, updatedInfos);
-        console.log('Fiche modifiée');
       }
     })
-    .addCase(moveCard.pending, () => {
-      console.log('Carte se déplaçant');
+    .addCase(moveCard.pending, (state) => {
+      state.isLoading = true;
+      console.log('Fiche se déplaçant');
     })
-    .addCase(moveCard.rejected, (state, action) => {
-      state.error = action.error.message;
+    .addCase(moveCard.rejected, (state) => {
+      state.isLoading = false;
     })
     .addCase(moveCard.fulfilled, (state, action) => {
+      state.isLoading = false;
       const { card, oldCategory, oldIndex } = action.payload;
       const { id, category, index } = card;
       const cardMoved = state.items.find(
@@ -192,30 +208,37 @@ const cardsReducer = createReducer(initialValue, (builder) => {
 
       state.loadedCards = true;
     })
-    .addCase(sendCardToTrash.pending, () => {
+    .addCase(sendCardToTrash.pending, (state) => {
+      state.isLoading = true;
       console.log("Suppression d'une carte");
     })
-    .addCase(sendCardToTrash.rejected, () => {
+    .addCase(sendCardToTrash.rejected, (state) => {
+      state.isLoading = false;
       console.log("Erreur lors de la suppression d'une carte");
     })
     .addCase(sendCardToTrash.fulfilled, (state, action) => {
+      state.isLoading = false;
       const { id } = action.payload;
-      const cardToTrash = state.items.find((card) => card.id === id);
-      if (cardToTrash) {
-        cardToTrash.isDeleted = true;
-        state.trashedItems.push(cardToTrash);
-        const indexToTrash = state.items.indexOf(cardToTrash);
-        state.items.splice(indexToTrash, 1);
-      }
+      state.items = state.items.filter((card) => {
+        if (card.id === id) {
+          card.isDeleted = true;
+          state.trashedItems.push(card);
+          return false;
+        }
+        return true;
+      });
       console.log('Carte restaurée');
     })
-    .addCase(restoreCard.pending, () => {
+    .addCase(restoreCard.pending, (state) => {
+      state.isLoading = true;
       console.log("Restauration d'une carte");
     })
-    .addCase(restoreCard.rejected, () => {
+    .addCase(restoreCard.rejected, (state) => {
+      state.isLoading = false;
       console.log("Erreur lors de la restauration d'une carte");
     })
     .addCase(restoreCard.fulfilled, (state, action) => {
+      state.isLoading = false;
       const { id } = action.payload;
       const cardToRestore = state.trashedItems.find((card) => card.id === id);
       if (cardToRestore) {

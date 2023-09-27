@@ -1,18 +1,13 @@
 .notification {
   background-color: #fff;
-
-  clip-path: polygon(
-    0% 20%,
-    20% 0%,
-    100% 0%,
-    100% calc(100% - 20%),
-    calc(100% - 20%) 100%,
-    0% 100%
-  );
+  filter: drop-shadow(4px 4px 0px #e6e6e6);
   position: fixed;
   right: 30px;
   bottom: 30px;
   padding: 8px;
+  display: flex;
+  // align-items: center;
+  gap: 4px;
 
   .error {
     font-weight: bold;
@@ -22,5 +17,11 @@
   .message {
     font-weight: bold;
     color: green;
+  }
+
+  .close-button {
+    position: relative;
+    top: -4px;
+    right: -4px;
   }
 }

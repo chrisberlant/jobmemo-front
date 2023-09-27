@@ -12,7 +12,7 @@ async function securedFetch(route: string, method?: string, body?: FormData) {
   const data = await response.json();
 
   // If request failed
-  if (response.status > 299 || response.status < 200) {
+  if (!response.ok) {
     failed = true;
     // If the API replies with invalid token or non existent token
     if (JSON.stringify(data).toLowerCase().includes('token')) {

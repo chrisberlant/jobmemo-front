@@ -11,8 +11,6 @@ import './Account.scss';
 function Account() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const message = useAppSelector((state) => state.user.message);
-  const error = useAppSelector((state) => state.user.error);
   const userInfos = useAppSelector((state) => state.user.infos);
 
   const [infos, setInfos] = useState({
@@ -38,9 +36,7 @@ function Account() {
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const request = await dispatch(modifyUserInfos(formData));
-    if (request.meta.requestStatus === 'fulfilled')
-      dispatch(setMessage('Informations modifiées avec succès'));
+    dispatch(modifyUserInfos(formData));
   };
 
   return (
@@ -121,8 +117,6 @@ function Account() {
         value="Se déconnecter"
         onClick={logOut}
       />
-      {message && <span className="infoMessage">{message}</span>}
-      {error && <span className="errorMessage">{error}</span>}
       <Link to="/deleteAccount" className="delete-account">
         Supprimer le compte
       </Link>
