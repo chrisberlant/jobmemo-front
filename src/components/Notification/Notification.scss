@@ -6,7 +6,6 @@
   bottom: 30px;
   padding: 8px;
   display: flex;
-  // align-items: center;
   gap: 4px;
 
   .error {
@@ -26,3 +25,19 @@
     cursor: pointer;
   }
 }
+
+.loader {
+  animation: animate 2s infinite;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+} 

@@ -116,6 +116,7 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.isLoading = false;
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.items = action.payload.filter((card) => card.isDeleted === false);
       state.trashedItems = action.payload.filter(
         (card) => card.isDeleted === true
