@@ -50,7 +50,10 @@ function Card({ item, index }: DashboardCard) {
                 <h4 className="company-title">{item.enterpriseName}</h4>
                 <h3 className="card-title">{item.title}</h3>
                 <div className="action-wrapper">
-                  <button type="button" onClick={() => navigate(`/card/${id}`)}>
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/card/${item.id}`)}
+                  >
                     Voir la fiche
                   </button>
                   <input
