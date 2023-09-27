@@ -213,7 +213,7 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       console.log("Restauration d'une carte");
     })
     .addCase(restoreCard.rejected, () => {
-      console.log("Erreur lors de la récupération d'une carte");
+      console.log("Erreur lors de la restauration d'une carte");
     })
     .addCase(restoreCard.fulfilled, (state, action) => {
       const { id } = action.payload;
@@ -224,7 +224,7 @@ const cardsReducer = createReducer(initialValue, (builder) => {
         const indexToRestore = state.trashedItems.indexOf(cardToRestore);
         state.items.splice(indexToRestore, 1);
       }
-      console.log('Carte envoyée à la corbeille');
+      console.log('Carte restaurée');
     });
 });
 

@@ -4,16 +4,31 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import securedFetch from '../../Utils/securedFetch';
-import { modifyCard, sendCardToTrash } from '../../store/reducers/cards';
+import {
+  modifyCard,
+  sendCardToTrash,
+  restoreCard,
+} from '../../store/reducers/cards';
 import './CardDetails.scss';
+import { CardType } from '../../@types/jobmemo';
 
 function CardDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const card = useAppSelector((state) =>
+  const dashboardCard = useAppSelector((state) =>
     state.cards.items.find((searchedCard) => searchedCard.id === id)
   );
+  const trashedCard = useAppSelector((state) =>
+    state.cards.trashedItems.find((searchedCard) => searchedCard.id === id)
+  );
+  let card: CardType | null = null;
+  if (dashboardCard) {
+    card = dashboardCard;
+  } else if (trashedCard) {
+    card = trashedCard;
+  }
+
   const [infos, setInfos] = useState({
     category: '',
     jobTitle: '',
@@ -25,12 +40,19 @@ function CardDetails() {
     salary: '',
     rating: 1,
   });
-  const [hover, setHover] = useState(0);
+  const [hover, setHover] = useState(1);
 
-  const deleteCard = async () => {
+  const sendSelectedCardTotrash = async () => {
     if (id) {
-      navigate('/dashboard');
       await dispatch(sendCardToTrash(id));
+      navigate('/dashboard');
+    }
+  };
+
+  const restoreSelectedCard = async () => {
+    if (id) {
+      await dispatch(restoreCard(id));
+      navigate('/recycle-bin');
     }
   };
 
@@ -212,13 +234,23 @@ function CardDetails() {
           aria-label="Modifier la fiche"
           value="Modifier la fiche"
         />
-        <input
-          type="button"
-          className="button button--delete"
-          value="Supprimer la fiche"
-          aria-label="Supprimer la fiche"
-          onClick={deleteCard}
-        />
+        {card?.isDeleted ? (
+          <input
+            type="button"
+            className="button button--restore"
+            value="Restaurer la fiche"
+            aria-label="Restaurer la fiche"
+            onClick={restoreSelectedCard}
+          />
+        ) : (
+          <input
+            type="button"
+            className="button button--delete"
+            value="Supprimer la fiche"
+            aria-label="Supprimer la fiche"
+            onClick={sendSelectedCardTotrash}
+          />
+        )}
         <input
           type="button"
           className="button button--cancel"

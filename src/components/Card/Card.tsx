@@ -4,10 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { DashboardCard } from '../../@types/jobmemo';
 import './Card.scss';
 
-// Ce composant restitue un élément déplaçable à l'aide du composant Draggable de la bibliothèque 'react-beautifull-dnd'.
-// Il définit la clé, draggableId et les accessoires d'index en fonction de l'accessoire d'élément.
-// Dans le composant Draggable, il y a une fonction qui reçoit fourni et un instantané en tant que paramètres.
-
 function Card({ item, index }: DashboardCard) {
   const navigate = useNavigate();
   const [checked, setChecked] = useState<boolean>(false);

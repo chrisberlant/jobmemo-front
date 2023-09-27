@@ -17,6 +17,7 @@ function TrashedCard({
 
   const handleCardRestore = async () => {
     const request = await dispatch(restoreCard(id));
+    navigate('/recycle-bin');
     // TODO confirmation/erreur
   };
   return (

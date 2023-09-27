@@ -1,0 +1,26 @@
+.notification {
+  background-color: #fff;
+
+  clip-path: polygon(
+    0% 20%,
+    20% 0%,
+    100% 0%,
+    100% calc(100% - 20%),
+    calc(100% - 20%) 100%,
+    0% 100%
+  );
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  padding: 8px;
+
+  .error {
+    font-weight: bold;
+    color: red;
+  }
+  
+  .message {
+    font-weight: bold;
+    color: green;
+  }
+}

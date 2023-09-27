@@ -1,5 +1,6 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import Footer from '../components/Footer/Footer';
+import Notification from '../components/Notification/Notification';
 import Navbar from '../components/Navbar/Navbar';
 
 function PrivateRoutes() {
@@ -10,6 +11,7 @@ function PrivateRoutes() {
       <Navbar />
       <div className="protected-page-content">
         <Outlet />
+        <Notification />
         {/* <Footer /> */}
       </div>
     </>

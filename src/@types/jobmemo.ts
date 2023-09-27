@@ -1,3 +1,8 @@
+export interface NotificationType {
+  text: string;
+  error: boolean;
+}
+
 export interface CardType {
   id: string;
   title: string;

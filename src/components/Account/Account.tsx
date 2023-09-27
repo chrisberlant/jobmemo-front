@@ -5,6 +5,7 @@ import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getUserInfos, modifyUserInfos } from '../../store/reducers/user';
 import logo from '../../assets/images/logo.svg';
+import { setError, setMessage } from '../../store/reducers/app';
 import './Account.scss';
 
 function Account() {
@@ -34,10 +35,12 @@ function Account() {
     setInfos({ ...infos, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    dispatch(modifyUserInfos(formData));
+    const request = await dispatch(modifyUserInfos(formData));
+    if (request.meta.requestStatus === 'fulfilled')
+      dispatch(setMessage('Informations modifiées avec succès'));
   };
 
   return (

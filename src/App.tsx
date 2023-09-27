@@ -47,7 +47,7 @@ function AppRoutes() {
           <Route element={<Account />} path="/account" />
           <Route element={<DeleteAccount />} path="/deleteAccount" />
           <Route element={<ChangePassword />} path="/changePassword" />
-          <Route element={<RecycleBin />} path="/recycleBin" />
+          <Route element={<RecycleBin />} path="/recycle-bin" />
           <Route element={<Contacts />} path="/contacts" />
           <Route element={<ContactDetails />} path="/contact/:id" />
           <Route element={<ContactCreation />} path="/createContact" />
