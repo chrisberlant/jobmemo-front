@@ -12,9 +12,10 @@ const initialValue: Contacts = {
 
 export const getAllContacts = createAsyncThunk(
   'contacts/GET_ALL_CONTACTS',
-  async () => {
+  async (_, { dispatch }) => {
     const contactsRequest = await securedFetch('/allContacts');
     if (contactsRequest.failed) {
+      dispatch(setError('Impossible de récupérer les contacts'));
       throw new Error(contactsRequest.data);
     }
     return contactsRequest.data;
@@ -33,7 +34,7 @@ export const createNewContact = createAsyncThunk(
       dispatch(setError('Impossible de créer le contact'));
       throw new Error(creationRequest.data);
     }
-    dispatch(setError('Contact créé avec succès'));
+    dispatch(setMessage('Contact créé avec succès'));
     return creationRequest.data;
   }
 );

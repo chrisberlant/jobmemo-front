@@ -14,9 +14,10 @@ const initialValue: CardTable = {
 
 export const getAllCards = createAsyncThunk<CardType[]>(
   'cards/GET_ALL_CARDS',
-  async () => {
+  async (_, { dispatch }) => {
     const cardsRequest = await securedFetch('/userCards');
     if (cardsRequest.failed) {
+      dispatch(setError('Impossible de récupérer les fiches'));
       throw new Error(cardsRequest.data);
     }
     return cardsRequest.data;
@@ -48,7 +49,7 @@ export const modifyCard = createAsyncThunk(
       dispatch(setError('Impossible de modifier la fiche'));
       throw new Error(modificationRequest.data);
     }
-    dispatch(setError('Fiche modifiée avec succès'));
+    dispatch(setMessage('Fiche modifiée avec succès'));
     return modificationRequest.data;
   }
 );
@@ -58,7 +59,7 @@ export const moveCard = createAsyncThunk(
   async (infos: FormData, { dispatch }) => {
     const cardMoveRequest = await securedFetch('/moveCard', 'PATCH', infos);
     if (cardMoveRequest.failed) {
-      dispatch(setError(cardMoveRequest.data));
+      dispatch(setError('Impossible de déplacer la fiche'));
       throw new Error(cardMoveRequest.data);
     }
     dispatch(setMessage('Fiche déplacée avec succès'));
@@ -77,7 +78,7 @@ export const sendCardToTrash = createAsyncThunk(
       cardToTrash
     );
     if (sendToTrashRequest.failed) {
-      dispatch(setMessage("Impossible d'envoyer la fiche à la corbeille"));
+      dispatch(setError("Impossible d'envoyer la fiche à la corbeille"));
       throw new Error(sendToTrashRequest.data);
     }
     dispatch(setMessage('Fiche envoyée à la corbeille avec succès'));
@@ -97,7 +98,7 @@ export const restoreCard = createAsyncThunk(
     );
     if (restorationRequest.failed) {
       dispatch(
-        setMessage('Impossible de restaurer la fiche depuis la corbeille')
+        setError('Impossible de restaurer la fiche depuis la corbeille')
       );
       throw new Error(restorationRequest.data);
     }
@@ -110,11 +111,9 @@ const cardsReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(getAllCards.pending, (state) => {
       state.isLoading = true;
-      console.log('Chargement des cartes en cours');
     })
-    .addCase(getAllCards.rejected, (state, action) => {
+    .addCase(getAllCards.rejected, (state) => {
       state.isLoading = false;
-      console.log(`Erreur au chargement des cartes`);
     })
     .addCase(getAllCards.fulfilled, (state, action) => {
       state.items = action.payload.filter((card) => card.isDeleted === false);
@@ -122,29 +121,23 @@ const cardsReducer = createReducer(initialValue, (builder) => {
         (card) => card.isDeleted === true
       );
       state.loadedCards = true;
-      console.log('Cartes chargées dans le store');
     })
     .addCase(createNewCard.pending, (state) => {
       state.isLoading = true;
-      console.log('Création de la fiche en cours');
     })
     .addCase(createNewCard.rejected, (state) => {
       state.isLoading = false;
-      console.log('Requête de création de fiche refusée');
     })
     .addCase(createNewCard.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isEmpty = false;
       state.items.push(action.payload);
-      console.log('Fiche créée');
     })
     .addCase(modifyCard.pending, (state) => {
       state.isLoading = true;
-      console.log('Modification de la fiche en cours');
     })
-    .addCase(modifyCard.rejected, (state, action) => {
+    .addCase(modifyCard.rejected, (state) => {
       state.isLoading = false;
-      console.log('Requête de modification de contact refusée');
     })
     .addCase(modifyCard.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -210,11 +203,9 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(sendCardToTrash.pending, (state) => {
       state.isLoading = true;
-      console.log("Suppression d'une carte");
     })
     .addCase(sendCardToTrash.rejected, (state) => {
       state.isLoading = false;
-      console.log("Erreur lors de la suppression d'une carte");
     })
     .addCase(sendCardToTrash.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -227,15 +218,12 @@ const cardsReducer = createReducer(initialValue, (builder) => {
         }
         return true;
       });
-      console.log('Carte restaurée');
     })
     .addCase(restoreCard.pending, (state) => {
       state.isLoading = true;
-      console.log("Restauration d'une carte");
     })
     .addCase(restoreCard.rejected, (state) => {
       state.isLoading = false;
-      console.log("Erreur lors de la restauration d'une carte");
     })
     .addCase(restoreCard.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -247,7 +235,6 @@ const cardsReducer = createReducer(initialValue, (builder) => {
         const indexToRestore = state.trashedItems.indexOf(cardToRestore);
         state.items.splice(indexToRestore, 1);
       }
-      console.log('Carte restaurée');
     });
 });
 

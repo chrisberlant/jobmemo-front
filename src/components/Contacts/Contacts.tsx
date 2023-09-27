@@ -9,7 +9,7 @@ function Contacts() {
   const contacts = useAppSelector((state) => state.contacts.items);
   const noContacts = useAppSelector((state) => state.contacts.isEmpty);
   const isLoading = useAppSelector((state) => state.contacts.isLoading);
-  const error = useAppSelector((state) => state.contacts.error);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   // Get the contacts from the API and dispatch them to the store on first render
@@ -39,9 +39,6 @@ function Contacts() {
 
       <div className="contacts-container">
         {isLoading && <span>Chargement en cours</span>}
-        {!isLoading && error && (
-          <span>Erreur lors de la récupération/modification des contacts</span>
-        )}
         {!isLoading && noContacts ? (
           <span>Aucun contact pour le moment</span>
         ) : (
