@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
 import { CardTable, CardType } from '../../@types/jobmemo';

@@ -36,7 +36,6 @@ function Account() {
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.log(formData);
     dispatch(modifyUserInfos(formData));
   };
 

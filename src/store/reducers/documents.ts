@@ -26,17 +26,14 @@ const documentsReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(getAllDocuments.pending, (state) => {
       state.isLoading = true;
-      console.log('Récupération des documents');
     })
     .addCase(getAllDocuments.rejected, (state) => {
-      console.log('Impossible de récupérer les documents');
       state.isLoading = false;
     })
     .addCase(getAllDocuments.fulfilled, (state, action) => {
       state.isLoading = false;
       if (action.payload.length === 0) state.isEmpty = true;
       else state.items = action.payload;
-      console.log('Documents récupérés');
     });
 });
 

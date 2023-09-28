@@ -24,7 +24,7 @@ function Upload() {
     formData.append('title', infos.title);
     formData.append('type', infos.type);
     formData.append('file', infos.file);
-    await securedFetch('/uploadFile', 'POST', formData);
+    await securedFetch('/uploadNewDocument', 'POST', formData);
   };
 
   const handleChange = (

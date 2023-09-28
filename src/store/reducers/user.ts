@@ -1,10 +1,6 @@
-import {
-  createReducer,
-  createAsyncThunk,
-  createAction,
-} from '@reduxjs/toolkit';
+import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
-import { UserType, UserInfosType } from '../../@types/jobmemo';
+import { UserType } from '../../@types/jobmemo';
 import { setMessage, setError } from './app';
 
 const initialValue: UserType = {
