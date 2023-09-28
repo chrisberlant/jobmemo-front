@@ -48,12 +48,15 @@ function Navbar() {
             <span>Mon compte</span>
           </NavLink>
           <NavLink
-            to="/files"
+            to="/documents"
             className="btn-navigation"
             onClick={() => setMobileMenu(false)}
+            style={({ isActive }) => ({
+              background: isActive ? '#4a65ff' : '',
+            })}
           >
             <img src={iconDrive} alt="icone fichiers" />
-            <span>Mes fichiers</span>
+            <span>Mes documents</span>
           </NavLink>
           <NavLink
             to="/contacts"

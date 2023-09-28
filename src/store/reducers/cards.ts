@@ -15,7 +15,7 @@ const initialValue: CardTable = {
 export const getAllCards = createAsyncThunk<CardType[]>(
   'cards/GET_ALL_CARDS',
   async (_, { dispatch }) => {
-    const cardsRequest = await securedFetch('/userCards');
+    const cardsRequest = await securedFetch('/allCards');
     if (cardsRequest.failed) {
       dispatch(setError('Impossible de récupérer les fiches'));
       throw new Error(cardsRequest.data);

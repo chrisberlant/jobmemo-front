@@ -1,0 +1,31 @@
+.page-not-found {
+  // background-image: url('../../styles/404-background.png');
+  // background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 30px;
+
+  h1 {
+    color: #4a65ff; 
+  }
+
+  .return-home {
+    margin-top: 10%;
+    text-decoration: none;
+    color: #4a65ff;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .page-not-found {
+    text-align: center;
+    font-size: 20px;
+  }
+}

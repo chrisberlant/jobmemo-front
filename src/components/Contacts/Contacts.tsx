@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getAllContacts } from '../../store/reducers/contacts';
-import ContactCard from './ContactCard/ContactCard';
+import Contact from './Contact/Contact';
 import './Contacts.scss';
 
 function Contacts() {
@@ -14,7 +14,7 @@ function Contacts() {
 
   // Get the contacts from the API and dispatch them to the store on first render
   useEffect(() => {
-    const fetchContacts = async () => {
+    const fetchContacts = () => {
       if (contacts.length === 0 && !noContacts) {
         dispatch(getAllContacts());
       }
@@ -42,7 +42,7 @@ function Contacts() {
           <span>Aucun contact pour le moment</span>
         ) : (
           contacts?.map((contact) => (
-            <ContactCard
+            <Contact
               key={contact.id}
               id={contact.id}
               firstName={contact.firstName}

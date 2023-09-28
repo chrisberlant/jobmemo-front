@@ -20,7 +20,8 @@ import ContactCreation from './components/ContactCreation/ContactCreation';
 import ContactDetails from './components/Contacts/ContactDetails/ContactDetails';
 import PageNotFound from './components/PageNotFound/PageNotFound';
 import PrivateRoutes from './Utils/PrivateRoutes';
-import Upload from './components/Upload/Upload';
+import DocumentUpload from './components/DocumentUpload/DocumentUpload';
+import Documents from './components/Documents/Documents';
 import { useAppDispatch } from './store/hook/redux';
 import { removeAllMessages } from './store/reducers/app';
 import './styles/reset.scss';
@@ -42,7 +43,6 @@ function AppRoutes() {
         <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/register" />
         <Route element={<ForgotPassword />} path="/forgotPassword" />
-        <Route element={<PageNotFound />} path="/404" />
         <Route element={<PrivateRoutes />}>
           <Route element={<Dashboard />} path="/dashboard" />
           <Route element={<Account />} path="/account" />
@@ -54,8 +54,10 @@ function AppRoutes() {
           <Route element={<ContactCreation />} path="/createContact" />
           <Route element={<CardDetails />} path="/card/:id" />
           <Route element={<CardCreation />} path="/addCard/:categorySlug" />
-          <Route element={<Upload />} path="/files" />
+          <Route element={<Documents />} path="/documents" />
+          <Route element={<DocumentUpload />} path="/document-upload" />
         </Route>
+        <Route element={<PageNotFound />} path="*" />
       </Routes>
     </div>
   );

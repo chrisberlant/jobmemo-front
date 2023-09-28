@@ -1,13 +1,13 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
-import { CardType, ContactType } from '../../@types/jobmemo';
+import { CardType, ContactDetailsType } from '../../@types/jobmemo';
 
 interface FormProps {
   className: string;
   inputNames: string[];
   handleSubmit: () => void;
-  inputValues: CardType | ContactType;
-  setInputValues: Dispatch<SetStateAction<CardType | ContactType>>;
+  inputValues: CardType | ContactDetailsType;
+  setInputValues: Dispatch<SetStateAction<CardType | ContactDetailsType>>;
 }
 
 // TODO FIX THIS LATER

@@ -77,7 +77,7 @@ export interface CardTable {
   isEmpty: boolean;
 }
 
-export interface ContactType {
+export interface ContactDetailsType {
   id: string;
   firstName: string;
   lastName: string;
@@ -90,8 +90,16 @@ export interface ContactType {
   color: string;
 }
 
-export interface Contacts {
-  items: ContactType[];
+export interface ContactType {
+  id: string;
+  firstName: string;
+  lastName: string;
+  enterprise: string;
+  occupation: string;
+}
+
+export interface ContactsType {
+  items: ContactDetailsType[];
   isLoading: boolean;
   isEmpty: boolean;
 }
@@ -119,4 +127,17 @@ export interface UploadFileType {
   title: string;
   type: string;
   file: File | null | undefined;
+}
+
+export interface DocumentType {
+  id: string;
+  title: string;
+  type: string;
+  url: string;
+}
+
+export interface DocumentsType {
+  items: DocumentType[];
+  isLoading: boolean;
+  isEmpty: boolean;
 }

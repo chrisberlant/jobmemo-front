@@ -55,8 +55,8 @@ function ContactDetails() {
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    dispatch(modifyContact(formData));
     navigate('/contacts');
+    dispatch(modifyContact(formData));
   };
 
   return (

@@ -1,21 +1,14 @@
 import { Link } from 'react-router-dom';
-import './ContactCard.scss';
+import { ContactType } from '../../../@types/jobmemo';
+import './Contact.scss';
 
-interface ContactProps {
-  id: string;
-  firstName: string;
-  lastName: string;
-  enterprise: string;
-  occupation: string;
-}
-
-function ContactCard({
+function Contact({
   id,
   firstName,
   lastName,
   enterprise,
   occupation,
-}: ContactProps) {
+}: ContactType) {
   return (
     <div className="contact">
       <h1>
@@ -30,4 +23,4 @@ function ContactCard({
   );
 }
 
-export default ContactCard;
+export default Contact;

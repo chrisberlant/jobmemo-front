@@ -15,8 +15,7 @@ function Login() {
   const navigate = useNavigate();
   const loginRef = useRef(null);
   const tl = useRef();
-  const error = useAppSelector((state) => state.user.error);
-  const message = useAppSelector((state) => state.user.message);
+  const [error, setError] = useState('');
   const [infos, setInfos] = useState({
     email: '',
     password: '',
@@ -36,15 +35,16 @@ function Login() {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    const dispatchResult = await dispatch(login(formData));
-    if (dispatchResult.meta.requestStatus === 'fulfilled') {
+    const request = await dispatch(login(formData));
+    if (request.meta.requestStatus === 'fulfilled') {
       navigate('/dashboard');
+    } else {
+      setError('Erreur lors de la connexion');
     }
   };
 
   return (
     <div className="login" ref={loginRef}>
-      {message && <span className="message">{message}</span>}
       <div className="box">
         <h2>Bienvenue</h2>
         <img className="logo" src={logo} alt="logo" />

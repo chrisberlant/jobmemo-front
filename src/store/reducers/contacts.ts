@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
-import { Contacts } from '../../@types/jobmemo';
+import { ContactsType } from '../../@types/jobmemo';
 import securedFetch from '../../Utils/securedFetch';
 import { setMessage, setError } from './app';
 
-const initialValue: Contacts = {
+const initialValue: ContactsType = {
   items: [],
   isLoading: false,
   isEmpty: false,

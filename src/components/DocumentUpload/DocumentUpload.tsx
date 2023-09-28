@@ -1,18 +1,20 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UploadFileType } from '../../@types/jobmemo';
 import securedFetch from '../../Utils/securedFetch';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
-import './Upload.scss';
+import './DocumentUpload.scss';
 
 function Upload() {
+  const navigate = useNavigate();
   const [infos, setInfos] = useState<UploadFileType>({
     title: '',
     type: 'Autre',
     file: null,
   });
 
-  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     if (!infos.file || !infos.title) {
       console.log('Entrer un nom de document et sélectionner un fichier');
@@ -36,9 +38,9 @@ function Upload() {
   };
 
   return (
-    <div className="upload-file">
+    <div className="document-upload">
       <span className="title">Envoi d&apos;un document</span>
-      <form className="upload-file-form" onSubmit={handleSubmit}>
+      <form className="document-upload-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="title">Titre du document : </label>
           <input
@@ -80,6 +82,13 @@ function Upload() {
           type="submit"
           className="button button--submit"
           value="Envoyer le document"
+        />
+        <input
+          type="button"
+          className="button button--cancel"
+          value="Annuler"
+          aria-label="Annuler"
+          onClick={() => navigate('/documents')}
         />
       </form>
     </div>

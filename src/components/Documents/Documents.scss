@@ -1,4 +1,4 @@
-.contacts {
+.documents {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -7,14 +7,14 @@
   padding: 16px;
   text-align: center;
 
-  .contacts-header {
+  .documents-header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 32px;
 
-    .add-contact-button {
+    .add-document-button {
       width: 40%;
       border: none;
       background: #4a65ff;
@@ -42,7 +42,7 @@
     }
   }
 
-  .contacts-container {
+  .documents-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -52,12 +52,12 @@
   
 
 @media screen and (max-width: 768px) {
-  .contacts {
-    .contacts-container {
+  .documents {
+    .documents-container {
       justify-content: center;
     }
-    .contacts-header {
-      .add-contact-button {
+    .documents-header {
+      .add-document-button {
         width: 70%;
       }
     }
