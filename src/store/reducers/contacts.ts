@@ -70,7 +70,7 @@ export const deleteContact = createAsyncThunk(
       dispatch(setError('Impossible de supprimer le contact'));
       throw new Error(deleteRequest.data);
     }
-    dispatch(setMessage('Contact supprimé de la corbeille'));
+    dispatch(setMessage('Contact supprimé'));
     return id;
   }
 );

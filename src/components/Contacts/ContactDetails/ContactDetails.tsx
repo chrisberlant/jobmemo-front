@@ -6,7 +6,7 @@ import securedFetch from '../../../Utils/securedFetch';
 import { modifyContact, deleteContact } from '../../../store/reducers/contacts';
 import './ContactDetails.scss';
 
-function ContactForm() {
+function ContactDetails() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ function ContactForm() {
     fetchContact();
   }, [contact, id, navigate]);
 
-  const handleContactDelete = async () => {
+  const handleContactDelete = () => {
     if (id) {
       dispatch(deleteContact(id));
       navigate('/contacts');
@@ -52,10 +52,10 @@ function ContactForm() {
     setInfos({ ...infos, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    await dispatch(modifyContact(formData));
+    dispatch(modifyContact(formData));
     navigate('/contacts');
   };
 
@@ -187,4 +187,4 @@ function ContactForm() {
   );
 }
 
-export default ContactForm;
+export default ContactDetails;

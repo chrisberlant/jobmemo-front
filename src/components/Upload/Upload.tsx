@@ -16,7 +16,7 @@ function Upload() {
 
     const form = event.target;
     const formData = new FormData();
-    // formData.append('title', title);
+    formData.append('title', title);
     formData.append('file', file);
     console.log(form);
     await securedFetch('/uploadFile', 'POST', formData);
