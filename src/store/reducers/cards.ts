@@ -229,13 +229,14 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     .addCase(restoreCard.fulfilled, (state, action) => {
       state.isLoading = false;
       const { id } = action.payload;
-      const cardToRestore = state.trashedItems.find((card) => card.id === id);
-      if (cardToRestore) {
-        cardToRestore.isDeleted = false;
-        state.items.push(cardToRestore);
-        const indexToRestore = state.trashedItems.indexOf(cardToRestore);
-        state.items.splice(indexToRestore, 1);
-      }
+      state.trashedItems = state.trashedItems.filter((card) => {
+        if (card.id === id) {
+          card.isDeleted = false;
+          state.items.push(card);
+          return false;
+        }
+        return true;
+      });
     });
 });
 

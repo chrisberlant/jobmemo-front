@@ -29,7 +29,7 @@ function Card({ item, index }: DashboardCard) {
                 />
                 <div className="company-logo" />
                 <div className="date-wrapper">
-                  <span>Crée le : </span>
+                  <span>Créée le : </span>
                   <span>
                     {item.createdAt
                       .toString()

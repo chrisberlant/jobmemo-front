@@ -42,17 +42,17 @@ function CardDetails() {
   });
   const [hover, setHover] = useState(1);
 
-  const sendSelectedCardTotrash = async () => {
+  const sendSelectedCardTotrash = () => {
     if (id) {
-      await dispatch(sendCardToTrash(id));
       navigate('/dashboard');
+      dispatch(sendCardToTrash(id));
     }
   };
 
-  const restoreSelectedCard = async () => {
+  const restoreSelectedCard = () => {
     if (id) {
-      await dispatch(restoreCard(id));
       navigate('/recycle-bin');
+      dispatch(restoreCard(id));
     }
   };
 

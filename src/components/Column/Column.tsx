@@ -13,12 +13,18 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
   const sortedItems = column.items?.sort((a, b) => a.index - b.index);
   return (
     <Droppable droppableId={droppableId} key={droppableId}>
-      {(provided) => {
+      {(provided, snapshot) => {
         return (
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
             className="column-content"
+            style={{
+              background:
+                snapshot.isDraggingOver && droppableId === 'Ma corbeille'
+                  ? '#E50000'
+                  : '',
+            }}
           >
             {!trashColumn &&
               sortedItems?.map((item: { id: React.Key }, index: number) => {
