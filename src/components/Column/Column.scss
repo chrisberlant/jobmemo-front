@@ -19,6 +19,10 @@
       calc(100% - 12px) 100%,
       0% 100%
       );
+
+    &.recycle-bin {
+      background: #E50000;
+    }
       
     &:hover {
       background: #000;

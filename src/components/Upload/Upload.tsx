@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
-import './Upload.scss';
 import securedFetch from '../../Utils/securedFetch';
+import './Upload.scss';
 
 function Upload() {
   const [title, setTitle] = useState<string>('');
@@ -9,14 +9,14 @@ function Upload() {
   const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!file || !title) {
-      console.log('Entrer un nom de document et sélectionner un fichier');
-      return;
-    }
+    // if (!file || !title) {
+    //   console.log('Entrer un nom de document et sélectionner un fichier');
+    //   return;
+    // }
 
     const form = event.target;
     const formData = new FormData();
-    formData.append('title', title);
+    // formData.append('title', title);
     formData.append('file', file);
     console.log(form);
     await securedFetch('/uploadFile', 'POST', formData);
@@ -33,7 +33,7 @@ function Upload() {
   return (
     <div className="upload">
       <h1>File Upload</h1>
-      <form id="form" onSubmit={handleSubmit} encType="multipart/form-data">
+      <form id="form" onSubmit={handleSubmit}>
         <div className="input-group">
           <label htmlFor="title">Titre du document</label>
           <input

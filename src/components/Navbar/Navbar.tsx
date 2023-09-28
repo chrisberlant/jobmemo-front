@@ -48,7 +48,7 @@ function Navbar() {
             <span>Mon compte</span>
           </NavLink>
           <NavLink
-            to="#"
+            to="/files"
             className="btn-navigation"
             onClick={() => setMobileMenu(false)}
           >
