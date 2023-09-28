@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
-import { authHandleFocus, authHandleBlur } from '../../Utils/animatedForm';
+import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import logo from '../../assets/images/logo.svg';
 import { useAppDispatch } from '../../store/hook/redux';
 import { createNewCard } from '../../store/reducers/cards';
@@ -58,8 +58,8 @@ function CardCreation() {
         <div className="input-wrap">
           <label htmlFor="title">Titre : </label>
           <input
-            onFocus={authHandleFocus}
-            onBlur={authHandleBlur}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             type="text"
             name="title"
             id="title"
@@ -88,8 +88,8 @@ function CardCreation() {
         <div className="input-wrap">
           <label htmlFor="enterpriseName">Entreprise : </label>
           <input
-            onFocus={authHandleFocus}
-            onBlur={authHandleBlur}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             type="text"
             name="enterpriseName"
             id="enterpriseName"
@@ -100,8 +100,8 @@ function CardCreation() {
         <div className="input-wrap">
           <label htmlFor="jobTitle">Intitulé du poste : </label>
           <input
-            onFocus={authHandleFocus}
-            onBlur={authHandleBlur}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             type="text"
             name="jobTitle"
             id="jobTitle"
@@ -112,8 +112,8 @@ function CardCreation() {
         <div className="input-wrap">
           <label htmlFor="offerUrl">Source / Lien de l&apos;annonce : </label>
           <input
-            onFocus={authHandleFocus}
-            onBlur={authHandleBlur}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             type="text"
             name="offerUrl"
             id="offerUrl"
@@ -141,8 +141,8 @@ function CardCreation() {
         <div className="input-wrap">
           <label htmlFor="salary">Salaire : </label>
           <input
-            onFocus={authHandleFocus}
-            onBlur={authHandleBlur}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             type="text"
             name="salary"
             id="salary"
@@ -153,8 +153,8 @@ function CardCreation() {
         <div className="input-wrap">
           <label htmlFor="comments">Commentaires : </label>
           <input
-            onFocus={authHandleFocus}
-            onBlur={authHandleBlur}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             name="comments"
             id="comments"
             onChange={handleChange}

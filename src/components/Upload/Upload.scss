@@ -1,4 +1,59 @@
-.upload {
+.upload-file {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  
+  .title {
+
+  }
+
+  .upload-file-form {
+    height: 100%;
+    width: 100%;
+    filter: drop-shadow(10px 10px 0px #e6e6e6);
+    display: flex;
+    padding: 12px;
+    padding-top: 20px;
+    background: white;
+    margin: 12px;
+    flex-direction: column;
+    }
+    
+    select {
+      width: 50%;
+      padding: 4px 0;
+      outline: none;
+      background: none;
+      border: none;
+      border-bottom: 1px solid #999;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    
+    .rating {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px; /* Espace entre l'étiquette et le champ d'entrée */
+      color: #999;
+      gap: 10px;
+
+      .star-rating {
+        display:none;
+      }
+
+      .star-element {
+        cursor: pointer;
+      }
+    
+  }
+}
+@media screen and (max-width: 768px) {
+
+  .card-creation {
+    width: 90%;
+  }
 }

@@ -114,3 +114,9 @@ export interface MenuItem {
   name: string;
   color: string;
 }
+
+export interface UploadFileType {
+  title: string;
+  type: string;
+  file: File | null | undefined;
+}

@@ -38,7 +38,6 @@ function Contacts() {
       </div>
 
       <div className="contacts-container">
-        {isLoading && <span>Chargement en cours</span>}
         {!isLoading && noContacts ? (
           <span>Aucun contact pour le moment</span>
         ) : (
