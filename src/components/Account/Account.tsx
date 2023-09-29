@@ -5,7 +5,6 @@ import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import { getUserInfos, modifyUserInfos } from '../../store/reducers/user';
 import logo from '../../assets/images/logo.svg';
-import { setError, setMessage } from '../../store/reducers/app';
 import './Account.scss';
 
 function Account() {
@@ -109,7 +108,7 @@ function Account() {
         type="button"
         className="button button--password"
         value="Changer le mot de passe"
-        onClick={() => navigate('/changePassword')}
+        onClick={() => navigate('/change-password')}
       />
       <input
         type="button"
@@ -117,7 +116,7 @@ function Account() {
         value="Se déconnecter"
         onClick={logOut}
       />
-      <Link to="/deleteAccount" className="delete-account">
+      <Link to="/delete-account" className="delete-account">
         Supprimer le compte
       </Link>
     </div>

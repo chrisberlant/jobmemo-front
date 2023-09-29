@@ -6,6 +6,12 @@
   align-items: center;
   margin-bottom: 10px;
   gap: 30px;
+
+  &--deleting {
+    @extend .column-content;
+    background: #E50000 ;
+    opacity: 0.6;
+  }
  
   .kanban-button {
     margin-top: 30px;

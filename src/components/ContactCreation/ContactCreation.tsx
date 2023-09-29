@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { createNewContact } from '../../store/reducers/contacts';
 import { useAppDispatch } from '../../store/hook/redux';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
+import { setError, setMessage } from '../../store/reducers/app';
 import './ContactCreation.scss';
 
 function CreateContact() {
@@ -23,14 +24,20 @@ function CreateContact() {
     setInfos({ ...infos, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    dispatch(createNewContact(formData));
-    navigate('/contacts');
+    const request = await dispatch(createNewContact(formData));
+    if (request.meta.requestStatus === 'fulfilled') {
+      navigate('/contacts');
+      setTimeout(() => {
+        dispatch(setMessage('Contact créé avec succès'));
+      }, 200);
+    } else {
+      dispatch(setError('Impossible de créer le contact'));
+    }
   };
 
-  // TODO fix width, compared to ContactForm
   return (
     <div className="contact-creation">
       <span className="title">Création dun nouveau contact</span>

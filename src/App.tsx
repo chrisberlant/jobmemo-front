@@ -42,18 +42,18 @@ function AppRoutes() {
         <Route element={<Login />} path="/" />
         <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/register" />
-        <Route element={<ForgotPassword />} path="/forgotPassword" />
+        <Route element={<ForgotPassword />} path="/forgot-password" />
         <Route element={<PrivateRoutes />}>
           <Route element={<Dashboard />} path="/dashboard" />
           <Route element={<Account />} path="/account" />
-          <Route element={<DeleteAccount />} path="/deleteAccount" />
-          <Route element={<ChangePassword />} path="/changePassword" />
+          <Route element={<DeleteAccount />} path="/delete-account" />
+          <Route element={<ChangePassword />} path="/change-password" />
           <Route element={<RecycleBin />} path="/recycle-bin" />
           <Route element={<Contacts />} path="/contacts" />
           <Route element={<ContactDetails />} path="/contact/:id" />
-          <Route element={<ContactCreation />} path="/createContact" />
+          <Route element={<ContactCreation />} path="/create-contact" />
           <Route element={<CardDetails />} path="/card/:id" />
-          <Route element={<CardCreation />} path="/addCard/:categorySlug" />
+          <Route element={<CardCreation />} path="/add-card/:categorySlug" />
           <Route element={<Documents />} path="/documents" />
           <Route element={<DocumentUpload />} path="/document-upload" />
         </Route>

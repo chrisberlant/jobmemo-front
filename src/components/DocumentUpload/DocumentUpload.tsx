@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UploadFileType } from '../../@types/jobmemo';
-import securedFetch from '../../Utils/securedFetch';
+// import securedFetch from '../../Utils/securedFetch';
+import { createNewDocument } from '../../store/reducers/documents';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
+import { useAppDispatch } from '../../store/hook/redux';
+import { setError, setMessage } from '../../store/reducers/app';
 import './DocumentUpload.scss';
 
 function Upload() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [infos, setInfos] = useState<UploadFileType>({
     title: '',
     type: 'Autre',
@@ -16,15 +20,20 @@ function Upload() {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!infos.file || !infos.title) {
-      console.log('Entrer un nom de document et sélectionner un fichier');
-      return;
+    if (!infos.title) return dispatch(setError('Le titre doit être renseigné'));
+    if (!infos.type) return dispatch(setError('Le type doit être renseigné'));
+    if (!infos.file)
+      return dispatch(setError('Le document doit être sélectionné'));
+    const formData = new FormData(e.target);
+    const request = await dispatch(createNewDocument(formData));
+    if (request.meta.requestStatus === 'fulfilled') {
+      navigate('/documents');
+      setTimeout(() => {
+        dispatch(setMessage('Document créé avec succès'));
+      }, 200);
+    } else {
+      dispatch(setError('Impossible de créer le document'));
     }
-    const formData = new FormData();
-    formData.append('title', infos.title);
-    formData.append('type', infos.type);
-    formData.append('file', infos.file);
-    await securedFetch('/uploadNewDocument', 'POST', formData);
   };
 
   const handleChange = (

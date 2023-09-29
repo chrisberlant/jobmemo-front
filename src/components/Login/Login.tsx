@@ -88,7 +88,7 @@ function Login() {
 
         <span>
           Mot de passe oublié ?
-          <Link to="/forgotPassword">Réinitialisez votre mot de passe</Link>
+          <Link to="/forgot-password">Réinitialisez votre mot de passe</Link>
         </span>
         <span>
           Pas de compte ? <Link to="/register">Créez votre compte</Link>

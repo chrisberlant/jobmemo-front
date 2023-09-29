@@ -87,7 +87,7 @@ export const sendCardToTrash = createAsyncThunk(
 
 export const restoreCard = createAsyncThunk(
   'cards/RESTORE_CARD',
-  async (id: string, { dispatch }) => {
+  async (id: string) => {
     const cardToRestore = new FormData();
     cardToRestore.append('id', id);
     const restorationRequest = await securedFetch(
@@ -96,12 +96,8 @@ export const restoreCard = createAsyncThunk(
       cardToRestore
     );
     if (restorationRequest.failed) {
-      dispatch(
-        setError('Impossible de restaurer la fiche depuis la corbeille')
-      );
       throw new Error(restorationRequest.data);
     }
-    dispatch(setMessage('Fiche restaurée avec succès'));
     return restorationRequest.data;
   }
 );
@@ -150,7 +146,6 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(moveCard.pending, (state) => {
       state.isLoading = true;
-      console.log('Fiche se déplaçant');
     })
     .addCase(moveCard.rejected, (state) => {
       state.isLoading = false;
@@ -227,10 +222,16 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(restoreCard.fulfilled, (state, action) => {
       state.isLoading = false;
-      const { id } = action.payload;
+      const { id, category } = action.payload;
+      // Get the highest index in the category where the card will be restored
+      const categoryCardsLength = state.items.filter(
+        (card) => card.category === category
+      ).length;
+
       state.trashedItems = state.trashedItems.filter((card) => {
         if (card.id === id) {
           card.isDeleted = false;
+          card.index = categoryCardsLength;
           state.items.push(card);
           return false;
         }

@@ -18,13 +18,11 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="column-content"
-            style={{
-              background:
-                snapshot.isDraggingOver && droppableId === 'Ma corbeille'
-                  ? '#E50000'
-                  : '',
-            }}
+            className={
+              snapshot.isDraggingOver && droppableId === 'Ma corbeille'
+                ? 'column-content--deleting'
+                : 'column-content'
+            }
           >
             {!trashColumn &&
               sortedItems?.map((item: { id: React.Key }, index: number) => {
@@ -32,7 +30,7 @@ function Column({ droppableId, column, trashColumn }: ColumnProps) {
               })}
             {provided.placeholder}
             {!trashColumn && (
-              <Link to={`/addCard/${column.className}`}>
+              <Link to={`/add-card/${column.className}`}>
                 <img
                   src={addCardIcon}
                   alt="Ajouter une fiche"

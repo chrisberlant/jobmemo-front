@@ -26,15 +26,14 @@ function Contacts() {
     <div className="contacts">
       <div className="contacts-header">
         <h1>Vos contacts :</h1>
-        {!isLoading && (
-          <button
-            type="button"
-            className="add-contact-button"
-            onClick={() => navigate('/createContact')}
-          >
-            Ajouter un nouveau contact
-          </button>
-        )}
+
+        <button
+          type="button"
+          className="add-contact-button"
+          onClick={() => navigate('/create-contact')}
+        >
+          Ajouter un nouveau contact
+        </button>
       </div>
 
       <div className="contacts-container">

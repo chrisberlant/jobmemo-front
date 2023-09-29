@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hook/redux';
 import securedFetch from '../../../Utils/securedFetch';
 import { modifyContact, deleteContact } from '../../../store/reducers/contacts';
 import './ContactDetails.scss';
+import { setError, setMessage } from '../../../store/reducers/app';
 
 function ContactDetails() {
   const { id } = useParams();
@@ -52,11 +53,18 @@ function ContactDetails() {
     setInfos({ ...infos, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    navigate('/contacts');
-    dispatch(modifyContact(formData));
+    const request = await dispatch(modifyContact(formData));
+    if (request.meta.requestStatus === 'fulfilled') {
+      navigate('/contacts');
+      setTimeout(() => {
+        dispatch(setMessage('Contact modifié avec succès'));
+      }, 200);
+    } else {
+      dispatch(setError('Impossible de modifier le contact'));
+    }
   };
 
   return (

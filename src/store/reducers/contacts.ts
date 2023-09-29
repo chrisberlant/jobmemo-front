@@ -24,34 +24,31 @@ export const getAllContacts = createAsyncThunk(
 
 export const createNewContact = createAsyncThunk(
   'contacts/CREATE_NEW_CONTACT',
-  async (infos: FormData, { dispatch }) => {
+  async (infos: FormData) => {
     const creationRequest = await securedFetch(
       '/createNewContact',
       'POST',
       infos
     );
     if (creationRequest.failed) {
-      dispatch(setError('Impossible de créer le contact'));
+      // dispatch(setError('Impossible de créer le contact'));
       throw new Error(creationRequest.data);
     }
-    dispatch(setMessage('Contact créé avec succès'));
     return creationRequest.data;
   }
 );
 
 export const modifyContact = createAsyncThunk(
   'contacts/MODIFY_CONTACT',
-  async (infos: FormData, { dispatch }) => {
+  async (infos: FormData) => {
     const modificationRequest = await securedFetch(
       '/modifyContact',
       'PATCH',
       infos
     );
     if (modificationRequest.failed) {
-      dispatch(setError('Impossible de modifier le contact'));
       throw new Error(modificationRequest.data);
     }
-    dispatch(setMessage('Contact modifié avec succès'));
     return modificationRequest.data;
   }
 );
@@ -116,11 +113,11 @@ const contactsReducer = createReducer(initialValue, (builder) => {
     .addCase(modifyContact.fulfilled, (state, action) => {
       state.isLoading = false;
       const updatedInfos = action.payload;
-      const contactIndexToUpdate = state.items.findIndex(
+      const contactToUpdate = state.items.find(
         (contact) => contact.id === updatedInfos.id
       );
-      if (contactIndexToUpdate) {
-        state.items[contactIndexToUpdate] = updatedInfos;
+      if (contactToUpdate) {
+        Object.assign(contactToUpdate, updatedInfos);
         console.log('Contact modifié');
       }
     })
@@ -137,8 +134,7 @@ const contactsReducer = createReducer(initialValue, (builder) => {
       state.items = state.items.filter(
         (contact) => contact.id !== action.payload
       );
-      console.log('Contact créé');
-      console.log(state.items);
+      console.log('Contact supprimé');
     });
 });
 
