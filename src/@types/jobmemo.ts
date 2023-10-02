@@ -1,4 +1,5 @@
 export interface NotificationType {
+  isLoading: boolean;
   text: string;
   error: boolean;
 }
@@ -72,7 +73,6 @@ export interface ColumnProps {
 export interface CardTable {
   items: CardType[];
   trashedItems: CardType[];
-  isLoading: boolean;
   loadedCards: boolean;
   isEmpty: boolean;
 }
@@ -100,7 +100,6 @@ export interface ContactType {
 
 export interface ContactsType {
   items: ContactDetailsType[];
-  isLoading: boolean;
   isEmpty: boolean;
 }
 
@@ -114,7 +113,6 @@ export interface UserInfosType {
 
 export interface UserType {
   infos: UserInfosType;
-  isLoading: boolean;
   changedPassword: string | null;
 }
 
@@ -138,6 +136,5 @@ export interface DocumentType {
 
 export interface DocumentsType {
   items: DocumentType[];
-  isLoading: boolean;
   isEmpty: boolean;
 }

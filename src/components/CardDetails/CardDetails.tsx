@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
 import securedFetch from '../../Utils/securedFetch';
-import { setError, setMessage } from '../../store/reducers/app';
+import { setMessage } from '../../store/reducers/app';
 import { CardType } from '../../@types/jobmemo';
 import {
   modifyCard,
@@ -43,32 +43,6 @@ function CardDetails() {
   });
   const [hover, setHover] = useState(1);
 
-  const sendSelectedCardTotrash = async () => {
-    if (id) {
-      const request = await dispatch(sendCardToTrash(id));
-      if (request.meta.requestStatus === 'fulfilled') {
-        navigate('/dashboard');
-        setTimeout(() => {
-          dispatch(setMessage('Fiche envoyée à la corbeille avec succès'));
-        }, 200);
-      }
-    }
-  };
-
-  const restoreSelectedCard = async () => {
-    if (id) {
-      const request = await dispatch(restoreCard(id));
-      if (request.meta.requestStatus === 'fulfilled') {
-        navigate('/recycle-bin');
-        setTimeout(() => {
-          dispatch(setMessage('Fiche restaurée avec succès'));
-        }, 200);
-      } else {
-        dispatch(setError('Impossible de restaurer la contact'));
-      }
-    }
-  };
-
   useEffect(() => {
     const fetchCard = async () => {
       if (card) {
@@ -87,6 +61,30 @@ function CardDetails() {
     fetchCard();
   }, [card, id, navigate]);
 
+  const sendSelectedCardTotrash = async () => {
+    if (id) {
+      const request = await dispatch(sendCardToTrash(id));
+      if (request.meta.requestStatus === 'fulfilled') {
+        navigate('/dashboard');
+        setTimeout(() => {
+          dispatch(setMessage('Fiche envoyée à la corbeille'));
+        }, 200);
+      }
+    }
+  };
+
+  const restoreSelectedCard = async () => {
+    if (id) {
+      const request = await dispatch(restoreCard(id));
+      if (request.meta.requestStatus === 'fulfilled') {
+        navigate('/recycle-bin');
+        setTimeout(() => {
+          dispatch(setMessage('Fiche restaurée avec succès'));
+        }, 200);
+      }
+    }
+  };
+
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -99,10 +97,13 @@ function CardDetails() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const request = await dispatch(modifyCard(formData));
-    if (request.meta.requestStatus === 'fulfilled') navigate('/dashboard');
+    if (request.meta.requestStatus === 'fulfilled') {
+      navigate('/dashboard');
+      setTimeout(() => {
+        dispatch(setMessage('Fiche modifiée avec succès'));
+      }, 200);
+    }
   };
-
-  // TODO vérifier statut isDeleted pour savoir si on propose de restaurer/supprimer
 
   return (
     <div className="card-details">
@@ -269,7 +270,9 @@ function CardDetails() {
           className="button button--cancel"
           value="Annuler"
           aria-label="Annuler"
-          onClick={() => navigate('/dashboard')}
+          onClick={() =>
+            navigate(card?.isDeleted ? '/recycle-bin' : '/dashboard')
+          }
         />
       </form>
     </div>

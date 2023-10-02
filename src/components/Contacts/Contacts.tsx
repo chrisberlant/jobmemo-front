@@ -8,7 +8,7 @@ import './Contacts.scss';
 function Contacts() {
   const contacts = useAppSelector((state) => state.contacts.items);
   const noContacts = useAppSelector((state) => state.contacts.isEmpty);
-  const isLoading = useAppSelector((state) => state.contacts.isLoading);
+  const isLoading = useAppSelector((state) => state.app.isLoading);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 

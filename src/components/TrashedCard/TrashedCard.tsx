@@ -3,7 +3,6 @@ import { TrashedCardType } from '../../@types/jobmemo';
 import { restoreCard } from '../../store/reducers/cards';
 import { useAppDispatch } from '../../store/hook/redux';
 import './TrashedCard.scss';
-import { setMessage } from '../../store/reducers/app';
 
 function TrashedCard({
   id,
@@ -15,6 +14,10 @@ function TrashedCard({
 }: TrashedCardType) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const handleRestoreCard = () => {
+    dispatch(restoreCard(id));
+  };
 
   return (
     <div className="trashed-card">
@@ -44,7 +47,7 @@ function TrashedCard({
           <button
             type="button"
             className="restore-card"
-            onClick={() => dispatch(restoreCard(id))}
+            onClick={handleRestoreCard}
           >
             Restaurer la fiche
           </button>

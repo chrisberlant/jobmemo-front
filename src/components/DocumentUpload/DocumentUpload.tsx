@@ -29,10 +29,8 @@ function Upload() {
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/documents');
       setTimeout(() => {
-        dispatch(setMessage('Document créé avec succès'));
+        dispatch(setMessage('Document ajouté avec succès'));
       }, 200);
-    } else {
-      dispatch(setError('Impossible de créer le document'));
     }
   };
 

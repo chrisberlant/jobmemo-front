@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hook/redux';
 import securedFetch from '../../../Utils/securedFetch';
 import { modifyContact, deleteContact } from '../../../store/reducers/contacts';
 import './ContactDetails.scss';
-import { setError, setMessage } from '../../../store/reducers/app';
+import { setMessage } from '../../../store/reducers/app';
 
 function ContactDetails() {
   const { id } = useParams();
@@ -14,6 +14,7 @@ function ContactDetails() {
   const contact = useAppSelector((state) => state.contacts.items).find(
     (searchedContact) => searchedContact.id === id
   );
+  const [contactIsFetched, setContactIsFetched] = useState(false);
 
   const [infos, setInfos] = useState({
     firstName: '',
@@ -39,13 +40,21 @@ function ContactDetails() {
         setInfos(fetchedContact.data);
       }
     };
-    fetchContact();
-  }, [contact, id, navigate]);
+    if (!contactIsFetched) {
+      fetchContact();
+      setContactIsFetched(true);
+    }
+  }, [contact, id, contactIsFetched, navigate]);
 
-  const handleContactDelete = () => {
+  const handleContactDelete = async () => {
     if (id) {
-      dispatch(deleteContact(id));
-      navigate('/contacts');
+      const request = await dispatch(deleteContact(id));
+      if (request.meta.requestStatus === 'fulfilled') {
+        navigate('/contacts');
+        setTimeout(() => {
+          dispatch(setMessage('Contact supprimé avec succès'));
+        }, 200);
+      }
     }
   };
 
@@ -62,8 +71,6 @@ function ContactDetails() {
       setTimeout(() => {
         dispatch(setMessage('Contact modifié avec succès'));
       }, 200);
-    } else {
-      dispatch(setError('Impossible de modifier le contact'));
     }
   };
 

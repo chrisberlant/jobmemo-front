@@ -1,37 +1,38 @@
-/* eslint-disable no-console */
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import { ContactsType } from '../../@types/jobmemo';
 import securedFetch from '../../Utils/securedFetch';
-import { setMessage, setError } from './app';
+import { setMessage, setError, setLoading } from './app';
 
 const initialValue: ContactsType = {
   items: [],
-  isLoading: false,
   isEmpty: false,
 };
 
 export const getAllContacts = createAsyncThunk(
   'contacts/GET_ALL_CONTACTS',
   async (_, { dispatch }) => {
+    dispatch(setLoading(true));
     const contactsRequest = await securedFetch('/allContacts');
     if (contactsRequest.failed) {
       dispatch(setError('Impossible de récupérer les contacts'));
       throw new Error(contactsRequest.data);
     }
+    dispatch(setLoading(false));
     return contactsRequest.data;
   }
 );
 
 export const createNewContact = createAsyncThunk(
   'contacts/CREATE_NEW_CONTACT',
-  async (infos: FormData) => {
+  async (infos: FormData, { dispatch }) => {
+    dispatch(setLoading(true));
     const creationRequest = await securedFetch(
       '/createNewContact',
       'POST',
       infos
     );
     if (creationRequest.failed) {
-      // dispatch(setError('Impossible de créer le contact'));
+      dispatch(setError('Impossible de créer le contact'));
       throw new Error(creationRequest.data);
     }
     return creationRequest.data;
@@ -40,7 +41,8 @@ export const createNewContact = createAsyncThunk(
 
 export const modifyContact = createAsyncThunk(
   'contacts/MODIFY_CONTACT',
-  async (infos: FormData) => {
+  async (infos: FormData, { dispatch }) => {
+    dispatch(setLoading(true));
     const modificationRequest = await securedFetch(
       '/modifyContact',
       'PATCH',
@@ -58,6 +60,7 @@ export const deleteContact = createAsyncThunk(
   async (id: string, { dispatch }) => {
     const contactToDelete = new FormData();
     contactToDelete.append('id', id);
+    dispatch(setLoading(true));
     const deleteRequest = await securedFetch(
       '/deleteContact',
       'DELETE',
@@ -67,74 +70,33 @@ export const deleteContact = createAsyncThunk(
       dispatch(setError('Impossible de supprimer le contact'));
       throw new Error(deleteRequest.data);
     }
-    dispatch(setMessage('Contact supprimé'));
     return id;
   }
 );
 
 const contactsReducer = createReducer(initialValue, (builder) => {
   builder
-    .addCase(getAllContacts.pending, (state) => {
-      state.isLoading = true;
-      console.log('Récupération des contacts');
-    })
-    .addCase(getAllContacts.rejected, (state) => {
-      console.log('Impossible de récupérer les contacts');
-      state.isLoading = false;
-    })
     .addCase(getAllContacts.fulfilled, (state, action) => {
-      state.isLoading = false;
       if (action.payload.length === 0) state.isEmpty = true;
       else state.items = action.payload;
-      console.log('Contacts récupérés');
-    })
-    .addCase(createNewContact.pending, (state) => {
-      state.isLoading = true;
-      console.log('Création du contact en cours');
-    })
-    .addCase(createNewContact.rejected, (state) => {
-      state.isLoading = false;
-      console.log('Requête de création de contact refusée');
     })
     .addCase(createNewContact.fulfilled, (state, action) => {
-      state.isLoading = false;
       state.isEmpty = false;
       state.items.push(action.payload);
-      console.log('Contact créé');
-    })
-    .addCase(modifyContact.pending, (state) => {
-      state.isLoading = true;
-      console.log('Modification du contact en cours');
-    })
-    .addCase(modifyContact.rejected, (state) => {
-      state.isLoading = false;
-      console.log('Requête de modification de contact refusée');
     })
     .addCase(modifyContact.fulfilled, (state, action) => {
-      state.isLoading = false;
       const updatedInfos = action.payload;
       const contactToUpdate = state.items.find(
         (contact) => contact.id === updatedInfos.id
       );
       if (contactToUpdate) {
         Object.assign(contactToUpdate, updatedInfos);
-        console.log('Contact modifié');
       }
     })
-    .addCase(deleteContact.pending, (state) => {
-      state.isLoading = true;
-      console.log('Suppression du contact en cours');
-    })
-    .addCase(deleteContact.rejected, (state) => {
-      state.isLoading = false;
-      console.log('Requête de suppression de contact refusée');
-    })
     .addCase(deleteContact.fulfilled, (state, action) => {
-      state.isLoading = false;
       state.items = state.items.filter(
         (contact) => contact.id !== action.payload
       );
-      console.log('Contact supprimé');
     });
 });
 

@@ -23,7 +23,7 @@ import PrivateRoutes from './Utils/PrivateRoutes';
 import DocumentUpload from './components/DocumentUpload/DocumentUpload';
 import Documents from './components/Documents/Documents';
 import { useAppDispatch } from './store/hook/redux';
-import { removeAllMessages } from './store/reducers/app';
+import { removeNotification } from './store/reducers/app';
 import './styles/reset.scss';
 import './styles/App.scss';
 
@@ -33,7 +33,7 @@ function AppRoutes() {
 
   useEffect(() => {
     // Remove every information or error message on page change
-    dispatch(removeAllMessages());
+    dispatch(removeNotification());
   }, [dispatch, location]);
 
   return (

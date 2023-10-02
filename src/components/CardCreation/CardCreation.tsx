@@ -5,6 +5,7 @@ import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import logo from '../../assets/images/logo.svg';
 import { useAppDispatch } from '../../store/hook/redux';
 import { createNewCard } from '../../store/reducers/cards';
+import { setMessage } from '../../store/reducers/app';
 import './CardCreation.scss';
 
 function randomColor(): string {
@@ -48,7 +49,12 @@ function CardCreation() {
     const formData = new FormData(form);
     formData.append('color', randomColor());
     const request = await dispatch(createNewCard(formData));
-    if (request.meta.requestStatus === 'fulfilled') navigate('/dashboard');
+    if (request.meta.requestStatus === 'fulfilled') {
+      navigate('/dashboard');
+      setTimeout(() => {
+        dispatch(setMessage('Fiche créée avec succès'));
+      }, 200);
+    }
   };
 
   return (

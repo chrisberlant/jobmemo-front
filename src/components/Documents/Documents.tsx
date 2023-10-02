@@ -8,7 +8,7 @@ import './Documents.scss';
 function Documents() {
   const documents = useAppSelector((state) => state.documents.items);
   const noDocuments = useAppSelector((state) => state.documents.isEmpty);
-  const isLoading = useAppSelector((state) => state.documents.isLoading);
+  const isLoading = useAppSelector((state) => state.app.isLoading);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
