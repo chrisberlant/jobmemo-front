@@ -49,6 +49,7 @@ export const modifyContact = createAsyncThunk(
       infos
     );
     if (modificationRequest.failed) {
+      dispatch(setError(modificationRequest.data));
       throw new Error(modificationRequest.data);
     }
     return modificationRequest.data;

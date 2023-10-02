@@ -108,8 +108,6 @@ export const restoreCard = createAsyncThunk(
 
 const cardsReducer = createReducer(initialValue, (builder) => {
   builder
-    .addCase(getAllCards.pending, (state) => {})
-    .addCase(getAllCards.rejected, (state) => {})
     .addCase(getAllCards.fulfilled, (state, action) => {
       state.items = action.payload.filter((card) => card.isDeleted === false);
       state.trashedItems = action.payload.filter(

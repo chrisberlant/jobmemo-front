@@ -61,7 +61,6 @@ const userReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(getUserInfos.fulfilled, (state, action) => {
       state.infos = action.payload;
-      console.log('Infos utilisateur récupérées');
     })
     .addCase(modifyUserInfos.fulfilled, (state, action) => {
       state.infos = action.payload;
