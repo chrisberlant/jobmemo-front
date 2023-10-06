@@ -4,8 +4,8 @@ import { handleFocus, handleBlur } from '../../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../../store/hook/redux';
 import securedFetch from '../../../Utils/securedFetch';
 import { modifyContact, deleteContact } from '../../../store/reducers/contacts';
-import './ContactDetails.scss';
 import { setMessage } from '../../../store/reducers/app';
+import './ContactDetails.scss';
 
 function ContactDetails() {
   const { id } = useParams();

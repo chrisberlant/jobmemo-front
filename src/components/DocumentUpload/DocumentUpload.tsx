@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UploadFileType } from '../../@types/jobmemo';
-// import securedFetch from '../../Utils/securedFetch';
+import { DocumentUploadType } from '../../@types/jobmemo';
 import { createNewDocument } from '../../store/reducers/documents';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import { useAppDispatch } from '../../store/hook/redux';
-import { setError, setMessage } from '../../store/reducers/app';
+import { setMessage } from '../../store/reducers/app';
 import './DocumentUpload.scss';
 
-function Upload() {
+function DocumentUpload() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [infos, setInfos] = useState<UploadFileType>({
+  const [infos, setInfos] = useState<DocumentUploadType>({
     title: '',
     type: 'Autre',
     file: null,
@@ -19,11 +18,6 @@ function Upload() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!infos.title) return dispatch(setError('Le titre doit être renseigné'));
-    if (!infos.type) return dispatch(setError('Le type doit être renseigné'));
-    if (!infos.file)
-      return dispatch(setError('Le document doit être sélectionné'));
     const formData = new FormData(e.target);
     const request = await dispatch(createNewDocument(formData));
     if (request.meta.requestStatus === 'fulfilled') {
@@ -57,6 +51,7 @@ function Upload() {
             name="title"
             id="title"
             onChange={handleChange}
+            required
           />
           <div className="line" />
         </div>
@@ -68,6 +63,7 @@ function Upload() {
               name="type"
               value={infos.type}
               onChange={handleChange}
+              required
             >
               <option value="CV">CV</option>
               <option value="Lettre de motivation">Lettre de motivation</option>
@@ -83,6 +79,7 @@ function Upload() {
             type="file"
             onChange={handleChange}
             accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .odt, .ods, .odp, .ott, .ots, .otp, .jpg, .jpeg, .png, .gif"
+            required
           />
         </div>
         <input
@@ -102,4 +99,4 @@ function Upload() {
   );
 }
 
-export default Upload;
+export default DocumentUpload;

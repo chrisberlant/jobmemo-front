@@ -22,6 +22,7 @@ import PageNotFound from './components/PageNotFound/PageNotFound';
 import PrivateRoutes from './Utils/PrivateRoutes';
 import DocumentUpload from './components/DocumentUpload/DocumentUpload';
 import Documents from './components/Documents/Documents';
+import DocumentDetails from './components/Documents/DocumentDetails/DocumentDetails';
 import { useAppDispatch } from './store/hook/redux';
 import { removeNotification } from './store/reducers/app';
 import './styles/reset.scss';
@@ -56,6 +57,7 @@ function AppRoutes() {
           <Route element={<CardCreation />} path="/add-card/:categorySlug" />
           <Route element={<Documents />} path="/documents" />
           <Route element={<DocumentUpload />} path="/document-upload" />
+          <Route element={<DocumentDetails />} path="/document/:id" />
         </Route>
         <Route element={<PageNotFound />} path="*" />
       </Routes>

@@ -12,7 +12,7 @@ function PrivateRoutes() {
       <div className="protected-page-content">
         <Outlet />
         <Notification />
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </>
   ) : (

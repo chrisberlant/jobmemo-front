@@ -52,7 +52,6 @@ export const modifyDocument = createAsyncThunk(
       dispatch(setError('Impossible de modifier le document'));
       throw new Error(modificationRequest.data);
     }
-    dispatch(setMessage('Document modifié avec succès'));
     return modificationRequest.data;
   }
 );

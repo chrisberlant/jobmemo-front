@@ -121,10 +121,15 @@ export interface MenuItem {
   color: string;
 }
 
-export interface UploadFileType {
+export interface DocumentUploadType {
   title: string;
   type: string;
   file: File | null | undefined;
+}
+
+export interface DocumentModificationType {
+  title: string;
+  type: string;
 }
 
 export interface DocumentType {
