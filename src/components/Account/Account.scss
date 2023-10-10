@@ -3,7 +3,8 @@
 .box-account {
 
   filter: drop-shadow(10px 10px 0px #e6e6e6);
-  width: 400px;
+  width: 40%;
+  min-width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
