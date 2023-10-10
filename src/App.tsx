@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Account from './components/Account/Account';
 import DeleteAccount from './components/Account/DeleteAccount/DeleteAccount';
 import ChangePassword from './components/Account/ChangePassword/ChangePassword';
@@ -40,25 +39,41 @@ function AppRoutes() {
   return (
     <div className="app">
       <Routes>
+        {/* Authentication route */}
         <Route element={<Login />} path="/" />
         <Route element={<Login />} path="/login" />
+        {/* Login creation route */}
         <Route element={<Register />} path="/register" />
-        <Route element={<ForgotPassword />} path="/forgot-password" />
+        {/* Protected routes, can only be accessed by authenticated user */}
         <Route element={<PrivateRoutes />}>
+          {/* Main page containing the cards */}
           <Route element={<Dashboard />} path="/dashboard" />
+          {/* Account informations */}
           <Route element={<Account />} path="/account" />
+          {/* Form definitely delete the account */}
           <Route element={<DeleteAccount />} path="/delete-account" />
+          {/* Form to change the password */}
           <Route element={<ChangePassword />} path="/change-password" />
+          {/* Page containing all the cards sent to recycle bin */}
           <Route element={<RecycleBin />} path="/recycle-bin" />
+          {/* Contacts list */}
           <Route element={<Contacts />} path="/contacts" />
+          {/* Contact's details based on its id */}
           <Route element={<ContactDetails />} path="/contact/:id" />
+          {/* Form to create a new contact */}
           <Route element={<ContactCreation />} path="/create-contact" />
+          {/* See and modify a card's details */}
           <Route element={<CardDetails />} path="/card/:id" />
+          {/* Form to create a new card using the category in url by default */}
           <Route element={<CardCreation />} path="/add-card/:categorySlug" />
+          {/* Documents list */}
           <Route element={<Documents />} path="/documents" />
+          {/* Form to upload a new document and its details */}
           <Route element={<DocumentUpload />} path="/document-upload" />
+          {/* See and modify a document's details */}
           <Route element={<DocumentDetails />} path="/document/:id" />
         </Route>
+        {/* If no page was found, send this error page */}
         <Route element={<PageNotFound />} path="*" />
       </Routes>
     </div>

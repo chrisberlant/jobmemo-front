@@ -13,12 +13,10 @@ function DeleteAccount() {
     if (confirmation === 'Je confirme') {
       try {
         await securedFetch('/deleteUser', 'DELETE');
-        alert('👏 votre compte a été supprimé');
         localStorage.clear();
         navigate('/login');
       } catch (error) {
         console.error(error);
-        alert("une erreur c'est produite");
       }
     } else {
       setFailedConfirmation(true);

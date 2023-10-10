@@ -45,7 +45,7 @@ function Account() {
       </Link>
       <form className="account-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
-          <label htmlFor="firstName">Nom : </label>
+          <label htmlFor="lastName">Nom : </label>
           <input
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -59,7 +59,7 @@ function Account() {
           <div className="line" />
         </div>
         <div className="input-wrap">
-          <label htmlFor="lastName">Prénom : </label>
+          <label htmlFor="firstName">Prénom : </label>
           <input
             onFocus={handleFocus}
             onBlur={handleBlur}

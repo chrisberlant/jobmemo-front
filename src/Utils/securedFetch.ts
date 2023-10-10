@@ -17,14 +17,18 @@ async function securedFetch(route: string, method?: string, body?: FormData) {
       failed = true;
       // If the API replies with invalid token or non existent token
       if (JSON.stringify(data).toLowerCase().includes('token')) {
+        if (response.status === 403) {
+          // If token is invalid, use the backend route to remove the cookie
+          await securedFetch('/logout');
+        }
+        // Remove the localStorage and redirect to login page
         localStorage.clear();
-        await securedFetch('/logout');
         window.location.href = '/login';
       }
     }
     return { data, failed };
-    // If there is server error
   } catch (error) {
+    // If there is server error
     failed = true;
     return { failed };
   }
