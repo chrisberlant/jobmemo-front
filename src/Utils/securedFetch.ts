@@ -1,6 +1,5 @@
 const baseUrl = 'http://localhost:3000';
 
-// This allows to fetch the API while providing the JWT
 async function securedFetch(route: string, method?: string, body?: FormData) {
   let failed = false;
   try {

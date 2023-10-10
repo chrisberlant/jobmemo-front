@@ -32,7 +32,6 @@ export const createNewCard = createAsyncThunk(
       dispatch(setError('Impossible de créer la fiche'));
       throw new Error(creationRequest.data);
     }
-    dispatch(setMessage('Fiche créée avec succès'));
     return creationRequest.data;
   }
 );
@@ -115,8 +114,6 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       );
       state.loadedCards = true;
     })
-    .addCase(createNewCard.pending, (state) => {})
-    .addCase(createNewCard.rejected, (state) => {})
     .addCase(createNewCard.fulfilled, (state, action) => {
       state.isEmpty = false;
       state.items.push(action.payload);
@@ -176,6 +173,8 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(sendCardToTrash.fulfilled, (state, action) => {
       const { id } = action.payload;
+      // TODO highest index ot trashed cards
+      // TODO change other cards' index
       state.items = state.items.filter((card) => {
         if (card.id === id) {
           card.isDeleted = true;

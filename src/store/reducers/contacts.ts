@@ -1,7 +1,7 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import { ContactsType } from '../../@types/jobmemo';
 import securedFetch from '../../Utils/securedFetch';
-import { setMessage, setError, setLoading } from './app';
+import { setError, setLoading } from './app';
 
 const initialValue: ContactsType = {
   items: [],

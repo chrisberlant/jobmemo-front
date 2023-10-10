@@ -1,7 +1,7 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
 import { UserType } from '../../@types/jobmemo';
-import { setMessage, setError } from './app';
+import { setMessage, setError, setLoading } from './app';
 
 const initialValue: UserType = {
   infos: {
@@ -27,11 +27,14 @@ export const login = createAsyncThunk(
 
 export const getUserInfos = createAsyncThunk(
   'user/GET_USER_INFOS',
-  async () => {
+  async (_, { dispatch }) => {
+    dispatch(setLoading(true));
     const getInfosRequest = await securedFetch('/getUserInfos');
     if (getInfosRequest.failed) {
+      dispatch(setError('Impossible de récupérer les informations'));
       throw new Error(getInfosRequest.data);
     }
+    dispatch(setLoading(false));
     return getInfosRequest.data;
   }
 );
