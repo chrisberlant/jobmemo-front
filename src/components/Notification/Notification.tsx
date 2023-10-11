@@ -10,11 +10,8 @@ function Notification() {
   const isError = useAppSelector((state) => state.app.error);
   const dispatch = useAppDispatch();
 
-  if (textToDisplay === '' && !isLoading) {
-    return null; // If there is nothing to display
-  }
-
   if (isLoading) {
+    // If something is loading
     return (
       <div className="loader">
         <ImSpinner9 size={30} color="#4a65ff" />
@@ -22,15 +19,20 @@ function Notification() {
     );
   }
 
-  return (
-    <div className="notification">
-      <span className={isError ? 'error' : 'message'}>{textToDisplay}</span>
-      <AiFillCloseCircle
-        className="close-button"
-        onClick={() => dispatch(removeNotification())}
-      />
-    </div>
-  );
+  if (textToDisplay) {
+    // If there is a message to display
+    return (
+      <div className="notification">
+        <span className={isError ? 'error' : 'message'}>{textToDisplay}</span>
+        <AiFillCloseCircle
+          className="close-button"
+          onClick={() => dispatch(removeNotification())}
+        />
+      </div>
+    );
+  }
+
+  return null; // By default nothing is displayed
 }
 
 export default Notification;

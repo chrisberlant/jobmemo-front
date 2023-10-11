@@ -55,6 +55,7 @@ export const modifyCard = createAsyncThunk(
 export const moveCard = createAsyncThunk(
   'cards/MOVE_CARD',
   async (infos: FormData, { dispatch }) => {
+    dispatch(setLoading(true));
     const cardMoveRequest = await securedFetch('/moveCard', 'PATCH', infos);
     if (cardMoveRequest.failed) {
       dispatch(setError('Impossible de déplacer la fiche'));
@@ -127,18 +128,19 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       }
     })
     .addCase(moveCard.fulfilled, (state, action) => {
-      const { card, oldCategory, oldIndex } = action.payload;
-      const { id, category, index } = card;
-      const cardMoved = state.items.find(
+      const { id, category: newCategory, index: newIndex } = action.payload;
+      const cardToMove = state.items.find(
         (searchedCard) => searchedCard.id === id
       );
+      console.log(JSON.stringify(cardToMove));
 
-      if (cardMoved) {
+      if (cardToMove) {
+        const { index: oldIndex, category: oldCategory } = cardToMove;
+        cardToMove.index = newIndex;
         // Update the state to decrement other cards' index from the old category
-        cardMoved.index = index;
-        cardMoved.category = category;
         // If the card changed category
-        if (oldCategory !== category) {
+        if (newCategory !== oldCategory) {
+          cardToMove.category = newCategory;
           state.items = state.items.map((otherCard) => {
             if (
               otherCard.category === oldCategory &&
@@ -156,8 +158,8 @@ const cardsReducer = createReducer(initialValue, (builder) => {
         // Update the state to increment other cards' index from the new category
         state.items = state.items.map((otherCard) => {
           if (
-            otherCard.category === category &&
-            otherCard.index >= index &&
+            otherCard.category === newCategory &&
+            otherCard.index >= newIndex &&
             otherCard.id !== id
           ) {
             return {
@@ -172,14 +174,13 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       state.loadedCards = true;
     })
     .addCase(sendCardToTrash.fulfilled, (state, action) => {
-      const { id } = action.payload;
-      const recycleBinLength = state.trashedItems.length;
+      const { id, index: newIndex } = action.payload;
       const cardToSendToTrash = state.items.find((card) => card.id === id);
 
       if (cardToSendToTrash) {
         const { category, index: oldIndex } = cardToSendToTrash;
         cardToSendToTrash.isDeleted = true;
-        cardToSendToTrash.index = recycleBinLength;
+        cardToSendToTrash.index = newIndex;
         state.items = state.items.filter((card) => card !== cardToSendToTrash);
         state.trashedItems.push(cardToSendToTrash);
 
@@ -192,19 +193,16 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       }
     })
     .addCase(restoreCard.fulfilled, (state, action) => {
-      const { id } = action.payload;
+      const { id, index: newIndex } = action.payload;
       const cardToRestore = state.trashedItems.find((card) => card.id === id);
 
       if (cardToRestore) {
-        const { category, index: oldIndex } = cardToRestore;
-        const categoryLength = state.items.filter(
-          (card) => card.category === category
-        ).length;
+        const { index: oldIndex } = cardToRestore;
 
         state.trashedItems = state.trashedItems.filter(
           (card) => card !== cardToRestore
         );
-        cardToRestore.index = categoryLength;
+        cardToRestore.index = newIndex;
         state.items.push(cardToRestore);
 
         state.trashedItems = state.trashedItems.map((card) => {

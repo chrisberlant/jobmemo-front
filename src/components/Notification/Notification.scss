@@ -7,14 +7,13 @@
   padding: 8px;
   display: flex;
   gap: 4px;
+  font-weight: bold;
 
   .error {
-    font-weight: bold;
     color: red;
   }
   
   .message {
-    font-weight: bold;
     color: green;
   }
 
