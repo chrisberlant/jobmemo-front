@@ -10,11 +10,12 @@ const initialValue: NotificationType = {
 export const setLoading = createAction<boolean>('app/SET_LOADING');
 export const setMessage = createAction<string>('app/SET_MESSAGE');
 export const setError = createAction<string>('app/SET_ERROR');
-export const removeNotification = createAction('app/REMOVE_ALL_MESSAGES');
+export const removeNotification = createAction('app/REMOVE_NOTIFICATION');
 
 const appReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(setLoading, (state, action) => {
+      if (action.payload === true) state.text = '';
       state.isLoading = action.payload;
     })
     .addCase(setMessage, (state, action) => {

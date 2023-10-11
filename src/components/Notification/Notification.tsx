@@ -14,7 +14,7 @@ function Notification() {
     return null; // If there is nothing to display
   }
 
-  if (textToDisplay === '' && isLoading) {
+  if (isLoading) {
     return (
       <div className="loader">
         <ImSpinner9 size={30} color="#4a65ff" />
