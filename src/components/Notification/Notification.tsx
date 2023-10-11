@@ -1,5 +1,5 @@
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { ImSpinner9 } from 'react-icons/Im';
+import { ImSpinner9 } from 'react-icons/im';
 import { useAppSelector, useAppDispatch } from '../../store/hook/redux';
 import { removeNotification } from '../../store/reducers/app';
 import './Notification.scss';

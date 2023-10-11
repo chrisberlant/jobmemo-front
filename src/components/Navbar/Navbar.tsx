@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { CiMenuBurger } from 'react-icons/ci';
-import { GiHamburgerMenu } from 'react-icons/Gi';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import logoWhite from '../../assets/images/logo-white.svg';
 import iconDashboard from '../../assets/icons/icon-dashboard.svg';
 import iconAccount from '../../assets/icons/icon-account.svg';
