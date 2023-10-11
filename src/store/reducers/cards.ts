@@ -173,33 +173,47 @@ const cardsReducer = createReducer(initialValue, (builder) => {
     })
     .addCase(sendCardToTrash.fulfilled, (state, action) => {
       const { id } = action.payload;
-      // TODO highest index ot trashed cards
-      // TODO change other cards' index
-      state.items = state.items.filter((card) => {
-        if (card.id === id) {
-          card.isDeleted = true;
-          state.trashedItems.push(card);
-          return false;
-        }
-        return true;
-      });
+      const recycleBinLength = state.trashedItems.length;
+      const cardToSendToTrash = state.items.find((card) => card.id === id);
+
+      if (cardToSendToTrash) {
+        const { category, index: oldIndex } = cardToSendToTrash;
+        cardToSendToTrash.isDeleted = true;
+        cardToSendToTrash.index = recycleBinLength;
+        state.items = state.items.filter((card) => card !== cardToSendToTrash);
+        state.trashedItems.push(cardToSendToTrash);
+
+        state.items = state.items.map((card) => {
+          if (card.category === category && card.index > oldIndex) {
+            return { ...card, index: card.index - 1 };
+          }
+          return card;
+        });
+      }
     })
     .addCase(restoreCard.fulfilled, (state, action) => {
-      const { id, category } = action.payload;
-      // Get the highest index in the category where the card will be restored
-      const categoryCardsLength = state.items.filter(
-        (card) => card.category === category
-      ).length;
+      const { id } = action.payload;
+      const cardToRestore = state.trashedItems.find((card) => card.id === id);
 
-      state.trashedItems = state.trashedItems.filter((card) => {
-        if (card.id === id) {
-          card.isDeleted = false;
-          card.index = categoryCardsLength;
-          state.items.push(card);
-          return false;
-        }
-        return true;
-      });
+      if (cardToRestore) {
+        const { category, index: oldIndex } = cardToRestore;
+        const categoryLength = state.items.filter(
+          (card) => card.category === category
+        ).length;
+
+        state.trashedItems = state.trashedItems.filter(
+          (card) => card !== cardToRestore
+        );
+        cardToRestore.index = categoryLength;
+        state.items.push(cardToRestore);
+
+        state.trashedItems = state.trashedItems.map((card) => {
+          if (card.index > oldIndex) {
+            return { ...card, index: card.index - 1 };
+          }
+          return card;
+        });
+      }
     });
 });
 
