@@ -26,8 +26,7 @@ function CreateContact() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const request = await dispatch(createNewContact(formData));
+    const request = await dispatch(createNewContact(infos));
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/contacts');
       setTimeout(() => {

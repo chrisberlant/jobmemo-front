@@ -14,6 +14,7 @@ function ContactDetails() {
   const contact = useAppSelector((state) => state.contacts.items).find(
     (searchedContact) => searchedContact.id === id
   );
+  console.log(contact);
   const [contactIsFetched, setContactIsFetched] = useState(false);
 
   const [infos, setInfos] = useState({
@@ -26,6 +27,7 @@ function ContactDetails() {
     enterprise: '',
     comments: '',
   });
+  console.log(infos);
 
   useEffect(() => {
     const fetchContact = async () => {
@@ -64,8 +66,7 @@ function ContactDetails() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const request = await dispatch(modifyContact(formData));
+    const request = await dispatch(modifyContact(infos));
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/contacts');
       setTimeout(() => {

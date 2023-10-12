@@ -1,6 +1,6 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
-import { CardTable, CardType } from '../../@types/jobmemo';
+import { AnyObjectType, CardTable, CardType } from '../../@types/jobmemo';
 import { setError, setLoading, setMessage } from './app';
 
 const initialValue: CardTable = {
@@ -26,7 +26,7 @@ export const getAllCards = createAsyncThunk<CardType[]>(
 
 export const createNewCard = createAsyncThunk(
   'cards/CREATE_NEW_CARD',
-  async (infos: FormData, { dispatch }) => {
+  async (infos: AnyObjectType, { dispatch }) => {
     const creationRequest = await securedFetch('/createNewCard', 'POST', infos);
     if (creationRequest.failed) {
       dispatch(setError('Impossible de créer la fiche'));
@@ -38,7 +38,7 @@ export const createNewCard = createAsyncThunk(
 
 export const modifyCard = createAsyncThunk(
   'cards/MODIFY_CARD',
-  async (infos: FormData, { dispatch }) => {
+  async (infos: AnyObjectType, { dispatch }) => {
     const modificationRequest = await securedFetch(
       '/modifyCard',
       'PATCH',
@@ -54,7 +54,7 @@ export const modifyCard = createAsyncThunk(
 
 export const moveCard = createAsyncThunk(
   'cards/MOVE_CARD',
-  async (infos: FormData, { dispatch }) => {
+  async (infos: AnyObjectType, { dispatch }) => {
     dispatch(setLoading(true));
     const cardMoveRequest = await securedFetch('/moveCard', 'PATCH', infos);
     if (cardMoveRequest.failed) {
@@ -69,14 +69,10 @@ export const moveCard = createAsyncThunk(
 export const sendCardToTrash = createAsyncThunk(
   'cards/SEND_CARD_TO_TRASH',
   async (id: string, { dispatch }) => {
-    const cardToTrash = new FormData();
-    cardToTrash.append('id', id);
     dispatch(setLoading(true));
-    const sendToTrashRequest = await securedFetch(
-      '/sendCardToTrash',
-      'PATCH',
-      cardToTrash
-    );
+    const sendToTrashRequest = await securedFetch('/sendCardToTrash', 'PATCH', {
+      id,
+    });
     if (sendToTrashRequest.failed) {
       dispatch(setError("Impossible d'envoyer la fiche à la corbeille"));
       throw new Error(sendToTrashRequest.data);
@@ -89,14 +85,10 @@ export const sendCardToTrash = createAsyncThunk(
 export const restoreCard = createAsyncThunk(
   'cards/RESTORE_CARD',
   async (id: string, { dispatch }) => {
-    const cardToRestore = new FormData();
-    cardToRestore.append('id', id);
     dispatch(setLoading(true));
-    const restorationRequest = await securedFetch(
-      '/restoreCard',
-      'PATCH',
-      cardToRestore
-    );
+    const restorationRequest = await securedFetch('/restoreCard', 'PATCH', {
+      id,
+    });
     if (restorationRequest.failed) {
       dispatch(setError('Impossible de restaurer la fiche'));
       throw new Error(restorationRequest.data);
@@ -132,7 +124,6 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       const cardToMove = state.items.find(
         (searchedCard) => searchedCard.id === id
       );
-      console.log(JSON.stringify(cardToMove));
 
       if (cardToMove) {
         const { index: oldIndex, category: oldCategory } = cardToMove;

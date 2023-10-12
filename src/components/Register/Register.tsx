@@ -34,10 +34,7 @@ function Register() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const form = e.target;
-    const formData = new FormData(form);
-    const request = await securedFetch('/register', 'POST', formData);
+    const request = await securedFetch('/register', 'POST', infos);
     if (request.failed) {
       setError(request.data);
       setInfos((prevInfos) => ({

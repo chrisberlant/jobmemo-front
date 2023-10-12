@@ -1,13 +1,23 @@
+import { AnyObjectType } from '../@types/jobmemo';
+
 const baseUrl = 'http://localhost:3000';
 
-async function securedFetch(route: string, method?: string, body?: FormData) {
+async function securedFetch(
+  route: string,
+  method?: string,
+  body?: AnyObjectType
+) {
   let failed = false;
   try {
     const response = await fetch(baseUrl + route, {
       method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       credentials: 'include', // Include the jwt cookie
-      ...(method && method !== 'GET' && { body }), // We provide a body only if the user provided a method parameter, and if it is not equal to GET
+      ...(method && method !== 'GET' && { body: JSON.stringify(body) }), // We provide a body only if the user provided a method parameter, and if it is not equal to GET
     });
+    console.log(body);
 
     const data = await response.json();
 

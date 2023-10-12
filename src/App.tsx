@@ -50,7 +50,7 @@ function AppRoutes() {
           <Route element={<Dashboard />} path="/dashboard" />
           {/* Account informations */}
           <Route element={<Account />} path="/account" />
-          {/* Form definitely delete the account */}
+          {/* Form to definitely delete the account */}
           <Route element={<DeleteAccount />} path="/delete-account" />
           {/* Form to change the password */}
           <Route element={<ChangePassword />} path="/change-password" />

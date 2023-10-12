@@ -1,5 +1,5 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
-import { ContactsType } from '../../@types/jobmemo';
+import { AnyObjectType, ContactsType } from '../../@types/jobmemo';
 import securedFetch from '../../Utils/securedFetch';
 import { setError, setLoading } from './app';
 
@@ -24,7 +24,7 @@ export const getAllContacts = createAsyncThunk(
 
 export const createNewContact = createAsyncThunk(
   'contacts/CREATE_NEW_CONTACT',
-  async (infos: FormData, { dispatch }) => {
+  async (infos: AnyObjectType, { dispatch }) => {
     dispatch(setLoading(true));
     const creationRequest = await securedFetch(
       '/createNewContact',
@@ -41,7 +41,7 @@ export const createNewContact = createAsyncThunk(
 
 export const modifyContact = createAsyncThunk(
   'contacts/MODIFY_CONTACT',
-  async (infos: FormData, { dispatch }) => {
+  async (infos: AnyObjectType, { dispatch }) => {
     dispatch(setLoading(true));
     const modificationRequest = await securedFetch(
       '/modifyContact',
@@ -59,14 +59,10 @@ export const modifyContact = createAsyncThunk(
 export const deleteContact = createAsyncThunk(
   'contacts/DELETE_CONTACT',
   async (id: string, { dispatch }) => {
-    const contactToDelete = new FormData();
-    contactToDelete.append('id', id);
     dispatch(setLoading(true));
-    const deleteRequest = await securedFetch(
-      '/deleteContact',
-      'DELETE',
-      contactToDelete
-    );
+    const deleteRequest = await securedFetch('/deleteContact', 'DELETE', {
+      id,
+    });
     if (deleteRequest.failed) {
       dispatch(setError('Impossible de supprimer le contact'));
       throw new Error(deleteRequest.data);

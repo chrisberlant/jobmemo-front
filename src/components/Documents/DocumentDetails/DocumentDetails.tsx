@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DocumentModificationType } from '../../../@types/jobmemo';
-import { modifyDocument } from '../../../store/reducers/documents';
+import {
+  modifyDocument,
+  deleteDocument,
+} from '../../../store/reducers/documents';
 import { handleFocus, handleBlur } from '../../../Utils/animatedForm';
 import { useAppDispatch, useAppSelector } from '../../../store/hook/redux';
 import { setMessage } from '../../../store/reducers/app';
-import { deleteContact } from '../../../store/reducers/contacts';
 import securedFetch from '../../../Utils/securedFetch';
 import './DocumentDetails.scss';
 
@@ -43,7 +45,7 @@ function DocumentDetails() {
 
   const handleDocumentDelete = async () => {
     if (id) {
-      const request = await dispatch(deleteContact(id));
+      const request = await dispatch(deleteDocument(id));
       if (request.meta.requestStatus === 'fulfilled') {
         navigate('/contacts');
         setTimeout(() => {
@@ -55,9 +57,7 @@ function DocumentDetails() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e.target);
-    const formData = new FormData(e.target);
-    const request = await dispatch(modifyDocument(formData));
+    const request = await dispatch(modifyDocument(infos));
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/documents');
       setTimeout(() => {

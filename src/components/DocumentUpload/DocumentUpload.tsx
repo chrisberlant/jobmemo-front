@@ -18,8 +18,7 @@ function DocumentUpload() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const request = await dispatch(createNewDocument(formData));
+    const request = await dispatch(createNewDocument(infos));
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/documents');
       setTimeout(() => {

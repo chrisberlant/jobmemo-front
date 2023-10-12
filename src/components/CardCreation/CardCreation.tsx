@@ -33,6 +33,7 @@ function CardCreation() {
     comments: '',
     salary: '',
     rating: 1,
+    color: 'black',
   });
   const [hover, setHover] = useState(1);
   const handleChange = (
@@ -45,10 +46,7 @@ function CardCreation() {
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    formData.append('color', randomColor());
-    const request = await dispatch(createNewCard(formData));
+    const request = await dispatch(createNewCard(infos));
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/dashboard');
       setTimeout(() => {

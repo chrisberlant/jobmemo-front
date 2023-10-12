@@ -31,12 +31,7 @@ function ChangePassword() {
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const request = await securedFetch(
-      '/modifyUserPassword',
-      'PATCH',
-      formData
-    );
+    const request = await securedFetch('/modifyUserPassword', 'PATCH', infos);
     if (request.failed) {
       setError(request.data);
       setInfos({ oldPassword: '', newPassword: '', confirmPassword: '' });

@@ -1,3 +1,7 @@
+export type AnyObjectType = {
+  [attribute: string]: any;
+};
+
 export interface NotificationType {
   isLoading: boolean;
   text: string;

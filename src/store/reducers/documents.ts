@@ -1,7 +1,7 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
-import { DocumentsType } from '../../@types/jobmemo';
+import { AnyObjectType, DocumentsType } from '../../@types/jobmemo';
 import securedFetch from '../../Utils/securedFetch';
-import { setMessage, setError, setLoading } from './app';
+import { setError, setLoading } from './app';
 
 const initialValue: DocumentsType = {
   items: [],
@@ -24,7 +24,7 @@ export const getAllDocuments = createAsyncThunk(
 
 export const createNewDocument = createAsyncThunk(
   'documents/CREATE_NEW_DOCUMENT',
-  async (infos: FormData, { dispatch }) => {
+  async (infos: AnyObjectType, { dispatch }) => {
     dispatch(setLoading(true));
     const creationRequest = await securedFetch(
       '/createNewDocument',
@@ -41,7 +41,7 @@ export const createNewDocument = createAsyncThunk(
 
 export const modifyDocument = createAsyncThunk(
   'documents/MODIFY_DOCUMENT',
-  async (infos: FormData, { dispatch }) => {
+  async (infos: AnyObjectType, { dispatch }) => {
     dispatch(setLoading(true));
     const modificationRequest = await securedFetch(
       '/modifyDocument',
@@ -59,14 +59,10 @@ export const modifyDocument = createAsyncThunk(
 export const deleteDocument = createAsyncThunk(
   'documents/DELETE_DOCUMENT',
   async (id: string, { dispatch }) => {
-    const documentToDelete = new FormData();
-    documentToDelete.append('id', id);
     dispatch(setLoading(true));
-    const deleteRequest = await securedFetch(
-      '/deleteDocument',
-      'DELETE',
-      documentToDelete
-    );
+    const deleteRequest = await securedFetch('/deleteDocument', 'DELETE', {
+      id,
+    });
     if (deleteRequest.failed) {
       dispatch(setError('Impossible de supprimer le document'));
       throw new Error(deleteRequest.data);

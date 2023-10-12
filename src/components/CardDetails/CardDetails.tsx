@@ -42,6 +42,7 @@ function CardDetails() {
     rating: 1,
   });
   const [hover, setHover] = useState(1);
+  console.log(infos);
 
   useEffect(() => {
     const fetchCard = async () => {
@@ -95,8 +96,7 @@ function CardDetails() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const request = await dispatch(modifyCard(formData));
+    const request = await dispatch(modifyCard(infos));
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/dashboard');
       setTimeout(() => {

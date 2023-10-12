@@ -6,7 +6,7 @@ import {
   appearanceAnimation,
 } from '../../Utils/animatedForm';
 import logo from '../../assets/images/logo.svg';
-import { useAppDispatch, useAppSelector } from '../../store/hook/redux';
+import { useAppDispatch } from '../../store/hook/redux';
 import { login } from '../../store/reducers/user';
 import './Login.scss';
 
@@ -33,9 +33,7 @@ function Login() {
   // Login form submit
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const request = await dispatch(login(formData));
+    const request = await dispatch(login(infos));
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/dashboard');
     } else {
