@@ -13,7 +13,6 @@ import './Kanban.scss';
 const onDragEnd = (result, dispatch, movingCardId: string) => {
   // Destructure the source and destination from the result object
   const { source, destination } = result;
-
   // Check if there is a destination for the dragged item
   if (!result.destination) return;
 

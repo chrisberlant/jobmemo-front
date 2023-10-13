@@ -17,7 +17,6 @@ async function securedFetch(
       credentials: 'include', // Include the jwt cookie
       ...(method && method !== 'GET' && { body: JSON.stringify(body) }), // We provide a body only if the user provided a method parameter, and if it is not equal to GET
     });
-    console.log(body);
 
     const data = await response.json();
 

@@ -2,7 +2,6 @@ import { ChangeEvent, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
-import logo from '../../assets/images/logo.svg';
 import { useAppDispatch } from '../../store/hook/redux';
 import { createNewCard } from '../../store/reducers/cards';
 import { setMessage } from '../../store/reducers/app';
@@ -29,11 +28,11 @@ function CardCreation() {
     enterpriseName: '',
     title: '',
     offerUrl: '',
-    contractType: '',
+    contractType: 'CDI',
     comments: '',
     salary: '',
     rating: 1,
-    color: 'black',
+    color: randomColor(),
   });
   const [hover, setHover] = useState(1);
   const handleChange = (

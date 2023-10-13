@@ -14,9 +14,7 @@ function ContactDetails() {
   const contact = useAppSelector((state) => state.contacts.items).find(
     (searchedContact) => searchedContact.id === id
   );
-  console.log(contact);
   const [contactIsFetched, setContactIsFetched] = useState(false);
-
   const [infos, setInfos] = useState({
     firstName: '',
     lastName: '',
@@ -27,7 +25,6 @@ function ContactDetails() {
     enterprise: '',
     comments: '',
   });
-  console.log(infos);
 
   useEffect(() => {
     const fetchContact = async () => {

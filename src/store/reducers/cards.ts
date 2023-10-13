@@ -29,7 +29,7 @@ export const createNewCard = createAsyncThunk(
   async (infos: AnyObjectType, { dispatch }) => {
     const creationRequest = await securedFetch('/createNewCard', 'POST', infos);
     if (creationRequest.failed) {
-      dispatch(setError('Impossible de créer la fiche'));
+      dispatch(setError(creationRequest.data));
       throw new Error(creationRequest.data);
     }
     return creationRequest.data;
@@ -45,7 +45,7 @@ export const modifyCard = createAsyncThunk(
       infos
     );
     if (modificationRequest.failed) {
-      dispatch(setError('Impossible de modifier la fiche'));
+      dispatch(setError(modificationRequest.data));
       throw new Error(modificationRequest.data);
     }
     return modificationRequest.data;
@@ -98,6 +98,21 @@ export const restoreCard = createAsyncThunk(
   }
 );
 
+export const deleteCard = createAsyncThunk(
+  'cards/DELETE_CARD',
+  async (id: string, { dispatch }) => {
+    dispatch(setLoading(true));
+    const deleteRequest = await securedFetch('/deleteCard', 'DELETE', {
+      id,
+    });
+    if (deleteRequest.failed) {
+      dispatch(setError('Impossible de supprimer la fiche'));
+      throw new Error(deleteRequest.data);
+    }
+    return id;
+  }
+);
+
 const cardsReducer = createReducer(initialValue, (builder) => {
   builder
     .addCase(getAllCards.fulfilled, (state, action) => {
@@ -128,9 +143,9 @@ const cardsReducer = createReducer(initialValue, (builder) => {
       if (cardToMove) {
         const { index: oldIndex, category: oldCategory } = cardToMove;
         cardToMove.index = newIndex;
-        // Update the state to decrement other cards' index from the old category
-        // If the card changed category
+
         if (newCategory !== oldCategory) {
+          // If the card changed category
           cardToMove.category = newCategory;
           state.items = state.items.map((otherCard) => {
             if (
@@ -140,28 +155,54 @@ const cardsReducer = createReducer(initialValue, (builder) => {
             ) {
               return {
                 ...otherCard,
-                index: otherCard.index - 1,
+                index: otherCard.index - 1, // Update the state to decrement index of the cards in the old category
+              };
+            }
+            if (
+              otherCard.category === newCategory &&
+              otherCard.index >= newIndex &&
+              otherCard.id !== id
+            ) {
+              return {
+                ...otherCard,
+                index: otherCard.index + 1, // Update the state to increment index of the cards in the new category
               };
             }
             return otherCard;
           });
-        }
-        // Update the state to increment other cards' index from the new category
-        state.items = state.items.map((otherCard) => {
-          if (
-            otherCard.category === newCategory &&
-            otherCard.index >= newIndex &&
-            otherCard.id !== id
-          ) {
-            return {
-              ...otherCard,
-              index: otherCard.index + 1,
-            };
+        } else if (newCategory === oldCategory) {
+          // If the card moved in the same category
+          if (newIndex > oldIndex) {
+            state.items = state.items.map((otherCard) => {
+              if (
+                otherCard.category === newCategory &&
+                otherCard.index <= newIndex &&
+                otherCard.id !== id
+              ) {
+                return {
+                  ...otherCard,
+                  index: otherCard.index - 1, // Update the state to decrement index of the cards in the category
+                };
+              }
+              return otherCard;
+            });
+          } else {
+            state.items = state.items.map((otherCard) => {
+              if (
+                otherCard.category === newCategory &&
+                otherCard.index >= newIndex &&
+                otherCard.id !== id
+              ) {
+                return {
+                  ...otherCard,
+                  index: otherCard.index + 1, // Update the state to increment index of the cards in the new category
+                };
+              }
+              return otherCard;
+            });
           }
-          return otherCard;
-        });
+        }
       }
-
       state.loadedCards = true;
     })
     .addCase(sendCardToTrash.fulfilled, (state, action) => {
@@ -203,6 +244,13 @@ const cardsReducer = createReducer(initialValue, (builder) => {
           return card;
         });
       }
+    })
+    .addCase(deleteCard.fulfilled, (state, action) => {
+      const id = action.payload;
+      const cardToDelete = state.trashedItems.find((card) => card.id === id);
+      state.trashedItems = state.trashedItems.filter(
+        (card) => card !== cardToDelete
+      );
     });
 });
 

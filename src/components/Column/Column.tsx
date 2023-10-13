@@ -6,9 +6,6 @@ import addCardIcon from '../../assets/icons/icon-add-card.svg';
 import { ColumnProps } from '../../@types/jobmemo';
 import './Column.scss';
 
-// Rendu de la colonne avec fonctions glissables et déposables à l'aide du composant Droppable de la bibliothèque react-beautiful-dnd. Le composant Column prend en charge deux props: droppableId et column.
-// Il utilise ensuite ces accessoires pour définir le droppableId du composant Droppable et restituer une liste de composants Card basée sur le tableau column.items
-
 function Column({ droppableId, column, trashColumn }: ColumnProps) {
   const sortedItems = column.items?.sort((a, b) => a.index - b.index);
   return (

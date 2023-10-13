@@ -10,6 +10,7 @@ import {
   modifyCard,
   sendCardToTrash,
   restoreCard,
+  deleteCard,
 } from '../../store/reducers/cards';
 import './CardDetails.scss';
 
@@ -29,7 +30,7 @@ function CardDetails() {
   } else if (trashedCard) {
     card = trashedCard;
   }
-
+  const [cardIsFetched, setCardIsFetched] = useState(false);
   const [infos, setInfos] = useState({
     category: '',
     jobTitle: '',
@@ -42,7 +43,6 @@ function CardDetails() {
     rating: 1,
   });
   const [hover, setHover] = useState(1);
-  console.log(infos);
 
   useEffect(() => {
     const fetchCard = async () => {
@@ -50,6 +50,7 @@ function CardDetails() {
         setInfos(card);
         setHover(card.rating);
       } else {
+        // Get card from API if not in the store
         const fetchedCard = await securedFetch(`/card/${id}`);
         if (fetchedCard.failed) {
           navigate('/404');
@@ -59,8 +60,11 @@ function CardDetails() {
         }
       }
     };
-    fetchCard();
-  }, [card, id, navigate]);
+    if (!cardIsFetched) {
+      fetchCard();
+      setCardIsFetched(true);
+    }
+  }, [card, id, cardIsFetched, navigate]);
 
   const sendSelectedCardTotrash = async () => {
     if (id) {
@@ -81,6 +85,18 @@ function CardDetails() {
         navigate('/recycle-bin');
         setTimeout(() => {
           dispatch(setMessage('Fiche restaurée avec succès'));
+        }, 200);
+      }
+    }
+  };
+
+  const deleteSelectedCard = async () => {
+    if (id) {
+      const request = await dispatch(deleteCard(id));
+      if (request.meta.requestStatus === 'fulfilled') {
+        navigate('/recycle-bin');
+        setTimeout(() => {
+          dispatch(setMessage('Fiche supprimée définitivement'));
         }, 200);
       }
     }
@@ -249,13 +265,22 @@ function CardDetails() {
           value="Modifier la fiche"
         />
         {card?.isDeleted ? (
-          <input
-            type="button"
-            className="button button--restore"
-            value="Restaurer la fiche"
-            aria-label="Restaurer la fiche"
-            onClick={restoreSelectedCard}
-          />
+          <>
+            <input
+              type="button"
+              className="button button--restore"
+              value="Restaurer la fiche"
+              aria-label="Restaurer la fiche"
+              onClick={restoreSelectedCard}
+            />
+            <input
+              type="button"
+              className="button button--delete"
+              value="Supprimer définitivement la fiche"
+              aria-label="Supprimer définitivement la fiche"
+              onClick={deleteSelectedCard}
+            />
+          </>
         ) : (
           <input
             type="button"
