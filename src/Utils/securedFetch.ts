@@ -12,10 +12,11 @@ async function securedFetch(
     const response = await fetch(baseUrl + route, {
       method,
       headers: {
+        // Tell the API that the data sent will be JSON
         'Content-Type': 'application/json',
       },
       credentials: 'include', // Include the jwt cookie
-      ...(method && method !== 'GET' && { body: JSON.stringify(body) }), // We provide a body only if the user provided a method parameter, and if it is not equal to GET
+      ...(method && method !== 'GET' && { body: JSON.stringify(body) }), // A body is provided only if the user provided a method parameter, and if it is not equal to GET
     });
 
     const data = await response.json();
