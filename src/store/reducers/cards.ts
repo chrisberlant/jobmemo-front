@@ -177,6 +177,7 @@ const cardsReducer = createReducer(initialValue, (builder) => {
               if (
                 otherCard.category === newCategory &&
                 otherCard.index <= newIndex &&
+                otherCard.index > oldIndex &&
                 otherCard.id !== id
               ) {
                 return {
@@ -191,11 +192,12 @@ const cardsReducer = createReducer(initialValue, (builder) => {
               if (
                 otherCard.category === newCategory &&
                 otherCard.index >= newIndex &&
+                otherCard.index < oldIndex &&
                 otherCard.id !== id
               ) {
                 return {
                   ...otherCard,
-                  index: otherCard.index + 1, // Update the state to increment index of the cards in the new category
+                  index: otherCard.index + 1, // Update the state to increment index of the cards in the category
                 };
               }
               return otherCard;
