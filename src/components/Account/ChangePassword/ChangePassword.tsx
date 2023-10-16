@@ -3,27 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { handleFocus, handleBlur } from '../../../Utils/animatedForm';
 import logo from '../../../assets/images/logo.svg';
 import logOut from '../../../Utils/logout';
-import '../Account.scss';
+import { setError, setMessage } from '../../../store/reducers/app';
+import { useAppDispatch } from '../../../store/hook/redux';
 import securedFetch from '../../../Utils/securedFetch';
+import '../Account.scss';
 
 function ChangePassword() {
-  const [changedPassword, setChangedPassword] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [infos, setInfos] = useState({
     oldPassword: '',
     newPassword: '',
     confirmPassword: '',
   });
-
-  useEffect(() => {
-    // If password has been succesfully changed
-    if (changedPassword) {
-      setTimeout(() => {
-        logOut();
-      }, 2000);
-    }
-  }, [changedPassword]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [event.target.name]: event.target.value });
@@ -33,13 +25,17 @@ function ChangePassword() {
     e.preventDefault();
     const request = await securedFetch('/modifyUserPassword', 'PATCH', infos);
     if (request.failed) {
-      setError(request.data);
+      dispatch(setError(request.data));
       setInfos({ oldPassword: '', newPassword: '', confirmPassword: '' });
     } else {
-      setError(null);
-      setChangedPassword(
-        'Mot de passe changé avec succès, vous allez être déconnecté.'
+      dispatch(
+        setMessage(
+          'Mot de passe changé avec succès, vous allez être déconnecté.'
+        )
       );
+      setTimeout(() => {
+        logOut();
+      }, 2000);
     }
   };
 
@@ -108,10 +104,6 @@ function ChangePassword() {
           value="Annuler"
         />
       </form>
-      {changedPassword && (
-        <span className="infoMessage">{changedPassword}</span>
-      )}
-      {error && <span className="errorMessage--password">{error}</span>}
     </div>
   );
 }

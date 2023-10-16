@@ -6,6 +6,7 @@ import {
   appearanceAnimation,
 } from '../../Utils/animatedForm';
 import logo from '../../assets/images/logo.svg';
+import { setError } from '../../store/reducers/app';
 import { useAppDispatch } from '../../store/hook/redux';
 import { login } from '../../store/reducers/user';
 import './Login.scss';
@@ -15,7 +16,6 @@ function Login() {
   const navigate = useNavigate();
   const loginRef = useRef(null);
   const tl = useRef();
-  const [error, setError] = useState('');
   const [infos, setInfos] = useState({
     email: '',
     password: '',
@@ -36,8 +36,6 @@ function Login() {
     const request = await dispatch(login(infos));
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/dashboard');
-    } else {
-      setError('Erreur lors de la connexion');
     }
   };
 
@@ -82,8 +80,6 @@ function Login() {
             />
           </div>
         </form>
-        {error && <span className="error">{error}</span>}
-
         <span>
           Mot de passe oublié ?
           <Link to="/forgot-password">Réinitialisez votre mot de passe</Link>

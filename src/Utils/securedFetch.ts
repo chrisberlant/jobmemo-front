@@ -1,11 +1,9 @@
-import { AnyObjectType } from '../@types/jobmemo';
-
 const baseUrl = 'http://localhost:3000';
 
 async function securedFetch(
   route: string,
   method?: string,
-  body?: AnyObjectType
+  body?: Record<string, any>
 ) {
   let failed = false;
   try {

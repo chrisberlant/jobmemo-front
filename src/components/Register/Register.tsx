@@ -7,14 +7,15 @@ import {
 } from '../../Utils/animatedForm';
 import logo from '../../assets/images/logo.svg';
 import securedFetch from '../../Utils/securedFetch';
+import { setError, setMessage } from '../../store/reducers/app';
+import { useAppDispatch } from '../../store/hook/redux';
 import './Register.scss';
 
 function Register() {
+  const dispatch = useAppDispatch();
   const registerRef = useRef(null);
   const navigate = useNavigate();
   const tl = useRef();
-  const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [infos, setInfos] = useState({
     firstName: '',
     lastName: '',
@@ -36,16 +37,17 @@ function Register() {
     e.preventDefault();
     const request = await securedFetch('/register', 'POST', infos);
     if (request.failed) {
-      setError(request.data);
+      dispatch(setError(request.data));
       setInfos((prevInfos) => ({
         ...prevInfos,
         password: '',
         confirmPassword: '',
       }));
     } else {
-      setError(null);
-      setMessage(
-        'Compte créé avec succès, vous allez être redirigé(e) vers la page de connexion.'
+      dispatch(
+        setMessage(
+          'Compte créé avec succès, vous allez être redirigé(e) vers la page de connexion.'
+        )
       );
       setTimeout(() => {
         navigate('/login');
@@ -145,9 +147,6 @@ function Register() {
           Déjà un compte ? <Link to="/login">Se connecter</Link>
         </span>
       </div>
-      {(error || message) && (
-        <span className="infoMessage">{error || message}</span>
-      )}
     </div>
   );
 }

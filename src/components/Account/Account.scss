@@ -76,27 +76,5 @@
     }
   }
   
-
-  .infoMessage {
-    color: #009000;
-    position: relative;
-    font-weight: bold;
-    
-    &--password {
-      @extend .infoMessage;
-      top: 6px;
-    }
-  }
-
-  .errorMessage {
-    color: red;
-    position: relative;
-    font-weight: bold;
-    
-    &--password {
-      @extend .errorMessage;
-      top: 6px;
-    }
-  }
 }
 

@@ -1,6 +1,6 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
-import { AnyObjectType, CardTable, CardType } from '../../@types/jobmemo';
+import { CardTable, CardType } from '../../@types/jobmemo';
 import { setError, setLoading, setMessage } from './app';
 
 const initialValue: CardTable = {
@@ -26,7 +26,7 @@ export const getAllCards = createAsyncThunk<CardType[]>(
 
 export const createNewCard = createAsyncThunk(
   'cards/CREATE_NEW_CARD',
-  async (infos: AnyObjectType, { dispatch }) => {
+  async (infos: Record<string, string>, { dispatch }) => {
     const creationRequest = await securedFetch('/createNewCard', 'POST', infos);
     if (creationRequest.failed) {
       dispatch(setError(creationRequest.data));
@@ -38,7 +38,7 @@ export const createNewCard = createAsyncThunk(
 
 export const modifyCard = createAsyncThunk(
   'cards/MODIFY_CARD',
-  async (infos: AnyObjectType, { dispatch }) => {
+  async (infos: Record<string, string | number>, { dispatch }) => {
     const modificationRequest = await securedFetch(
       '/modifyCard',
       'PATCH',
@@ -54,7 +54,7 @@ export const modifyCard = createAsyncThunk(
 
 export const moveCard = createAsyncThunk(
   'cards/MOVE_CARD',
-  async (infos: AnyObjectType, { dispatch }) => {
+  async (infos: Record<string, string | number>, { dispatch }) => {
     dispatch(setLoading(true));
     const cardMoveRequest = await securedFetch('/moveCard', 'PATCH', infos);
     if (cardMoveRequest.failed) {

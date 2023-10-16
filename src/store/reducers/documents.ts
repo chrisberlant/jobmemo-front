@@ -1,5 +1,5 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
-import { AnyObjectType, DocumentsType } from '../../@types/jobmemo';
+import { DocumentsType } from '../../@types/jobmemo';
 import securedFetch from '../../Utils/securedFetch';
 import { setError, setLoading } from './app';
 
@@ -24,7 +24,7 @@ export const getAllDocuments = createAsyncThunk(
 
 export const createNewDocument = createAsyncThunk(
   'documents/CREATE_NEW_DOCUMENT',
-  async (infos: AnyObjectType, { dispatch }) => {
+  async (infos: Record<string, string | File>, { dispatch }) => {
     dispatch(setLoading(true));
     const creationRequest = await securedFetch(
       '/createNewDocument',
@@ -41,7 +41,7 @@ export const createNewDocument = createAsyncThunk(
 
 export const modifyDocument = createAsyncThunk(
   'documents/MODIFY_DOCUMENT',
-  async (infos: AnyObjectType, { dispatch }) => {
+  async (infos: Record<string, string>, { dispatch }) => {
     dispatch(setLoading(true));
     const modificationRequest = await securedFetch(
       '/modifyDocument',

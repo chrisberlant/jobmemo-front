@@ -24,3 +24,9 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .kanban, .column {
+    margin-bottom: 100%;
+  }
+}

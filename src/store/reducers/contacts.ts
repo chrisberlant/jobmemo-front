@@ -1,5 +1,5 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
-import { AnyObjectType, ContactsType } from '../../@types/jobmemo';
+import { ContactsType } from '../../@types/jobmemo';
 import securedFetch from '../../Utils/securedFetch';
 import { setError, setLoading } from './app';
 
@@ -24,7 +24,7 @@ export const getAllContacts = createAsyncThunk(
 
 export const createNewContact = createAsyncThunk(
   'contacts/CREATE_NEW_CONTACT',
-  async (infos: AnyObjectType, { dispatch }) => {
+  async (infos: Record<string, string>, { dispatch }) => {
     dispatch(setLoading(true));
     const creationRequest = await securedFetch(
       '/createNewContact',
@@ -41,7 +41,7 @@ export const createNewContact = createAsyncThunk(
 
 export const modifyContact = createAsyncThunk(
   'contacts/MODIFY_CONTACT',
-  async (infos: AnyObjectType, { dispatch }) => {
+  async (infos: Record<string, string>, { dispatch }) => {
     dispatch(setLoading(true));
     const modificationRequest = await securedFetch(
       '/modifyContact',

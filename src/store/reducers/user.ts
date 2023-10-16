@@ -1,6 +1,6 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
-import { UserType, AnyObjectType } from '../../@types/jobmemo';
+import { UserType } from '../../@types/jobmemo';
 import { setMessage, setError, setLoading } from './app';
 
 const initialValue: UserType = {
@@ -16,9 +16,10 @@ const initialValue: UserType = {
 
 export const login = createAsyncThunk(
   'user/LOGIN',
-  async (credentials: AnyObjectType) => {
+  async (credentials: Record<string, string>, { dispatch }) => {
     const loginRequest = await securedFetch('/login', 'POST', credentials);
     if (loginRequest.failed) {
+      dispatch(setError(loginRequest.data));
       throw new Error(loginRequest.data);
     }
     return loginRequest.data;
@@ -41,7 +42,7 @@ export const getUserInfos = createAsyncThunk(
 
 export const modifyUserInfos = createAsyncThunk(
   'user/MODIFY_USER_INFOS',
-  async (infos: AnyObjectType, { dispatch }) => {
+  async (infos: Record<string, string>, { dispatch }) => {
     const modificationRequest = await securedFetch(
       '/modifyUserInfos',
       'PATCH',
