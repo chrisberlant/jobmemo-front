@@ -186,6 +186,7 @@ function CardDetails() {
             type="text"
             name="offerUrl"
             id="offerUrl"
+            value={infos.offerUrl}
             onChange={handleChange}
           />
           <div className="line" />
@@ -194,9 +195,10 @@ function CardDetails() {
           <div className="select-input">
             <label htmlFor="contractType">Type de contrat : </label>
             <select
-              id="contractType"
               className="contractType"
               name="contractType"
+              id="contractType"
+              value={infos.contractType}
               onChange={handleChange}
             >
               <option value="CDI">CDI</option>
@@ -242,7 +244,7 @@ function CardDetails() {
                   id={`rating${currentRating}`}
                   type="radio"
                   name="rating"
-                  value={currentRating}
+                  value={infos.rating}
                   onChange={handleChange}
                   onClick={() => setInfos({ ...infos, rating: currentRating })}
                 />

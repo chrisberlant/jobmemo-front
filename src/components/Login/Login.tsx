@@ -36,6 +36,9 @@ function Login() {
     const request = await dispatch(login(infos));
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/dashboard');
+    } else {
+      setInfos({ ...infos, password: '' });
+      console.log(infos);
     }
   };
 
@@ -53,6 +56,7 @@ function Login() {
               type="email"
               name="email"
               id="email"
+              value={infos.email}
               onChange={handleChange}
               required
             />
@@ -66,7 +70,7 @@ function Login() {
               type="password"
               name="password"
               id="password"
-              autoComplete="off"
+              value={infos.password}
               onChange={handleChange}
               required
             />

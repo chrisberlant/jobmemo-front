@@ -1,6 +1,6 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import { DocumentsType } from '../../@types/jobmemo';
-import securedFetch from '../../Utils/securedFetch';
+import securedFetch, { baseUrl } from '../../Utils/securedFetch';
 import { setError, setLoading } from './app';
 
 const initialValue: DocumentsType = {
@@ -24,18 +24,19 @@ export const getAllDocuments = createAsyncThunk(
 
 export const createNewDocument = createAsyncThunk(
   'documents/CREATE_NEW_DOCUMENT',
-  async (infos: Record<string, string | File>, { dispatch }) => {
+  async (infos: FormData, { dispatch }) => {
     dispatch(setLoading(true));
-    const creationRequest = await securedFetch(
-      '/createNewDocument',
-      'POST',
-      infos
-    );
-    if (creationRequest.failed) {
+    const creationRequest = await fetch(`${baseUrl}/createNewDocument`, {
+      method: 'POST',
+      credentials: 'include',
+      body: infos,
+    });
+    if (!creationRequest.ok) {
       dispatch(setError('Impossible de créer le document'));
-      throw new Error(creationRequest.data);
+      throw new Error('Impossible de créer le document');
     }
-    return creationRequest.data;
+    const data = await creationRequest.json();
+    return data;
   }
 );
 
@@ -67,7 +68,6 @@ export const deleteDocument = createAsyncThunk(
       dispatch(setError('Impossible de supprimer le document'));
       throw new Error(deleteRequest.data);
     }
-    // dispatch(setMessage('Document supprimé'));
     return id;
   }
 );

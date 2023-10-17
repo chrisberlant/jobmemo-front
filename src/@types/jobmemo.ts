@@ -121,17 +121,6 @@ export interface MenuItem {
   color: string;
 }
 
-export interface DocumentUploadType {
-  title: string;
-  type: string;
-  file: File | null | undefined;
-}
-
-export interface DocumentModificationType {
-  title: string;
-  type: string;
-}
-
 export interface DocumentType {
   id: string;
   title: string;

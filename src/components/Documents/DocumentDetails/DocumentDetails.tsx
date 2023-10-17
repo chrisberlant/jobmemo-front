@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DocumentModificationType } from '../../../@types/jobmemo';
 import {
   modifyDocument,
   deleteDocument,
@@ -19,9 +18,9 @@ function DocumentDetails() {
     (searchedDocument) => searchedDocument.id === id
   );
   const [documentIsFetched, setDocumentIsFetched] = useState(false);
-  const [infos, setInfos] = useState<DocumentModificationType>({
+  const [infos, setInfos] = useState({
     title: '',
-    type: 'Autre',
+    type: '',
   });
 
   useEffect(() => {
@@ -47,9 +46,9 @@ function DocumentDetails() {
     if (id) {
       const request = await dispatch(deleteDocument(id));
       if (request.meta.requestStatus === 'fulfilled') {
-        navigate('/contacts');
+        navigate('/documents');
         setTimeout(() => {
-          dispatch(setMessage('Contact supprimé avec succès'));
+          dispatch(setMessage('Document supprimé avec succès'));
         }, 200);
       }
     }

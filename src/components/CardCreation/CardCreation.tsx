@@ -69,6 +69,7 @@ function CardCreation() {
             type="text"
             name="title"
             id="title"
+            value={infos.title}
             onChange={handleChange}
           />
           <div className="line" />
@@ -99,6 +100,7 @@ function CardCreation() {
             type="text"
             name="enterpriseName"
             id="enterpriseName"
+            value={infos.enterpriseName}
             onChange={handleChange}
           />
           <div className="line" />
@@ -111,6 +113,7 @@ function CardCreation() {
             type="text"
             name="jobTitle"
             id="jobTitle"
+            value={infos.jobTitle}
             onChange={handleChange}
           />
           <div className="line" />
@@ -123,6 +126,7 @@ function CardCreation() {
             type="text"
             name="offerUrl"
             id="offerUrl"
+            value={infos.offerUrl}
             onChange={handleChange}
           />
           <div className="line" />
@@ -134,6 +138,7 @@ function CardCreation() {
               id="contractType"
               className="contractType"
               name="contractType"
+              value={infos.contractType}
               onChange={handleChange}
             >
               <option value="CDI">CDI</option>
@@ -152,6 +157,7 @@ function CardCreation() {
             type="text"
             name="salary"
             id="salary"
+            value={infos.salary}
             onChange={handleChange}
           />
           <div className="line" />
@@ -161,8 +167,10 @@ function CardCreation() {
           <input
             onFocus={handleFocus}
             onBlur={handleBlur}
+            type="text"
             name="comments"
             id="comments"
+            value={infos.comments}
             onChange={handleChange}
           />
           <div className="line" />

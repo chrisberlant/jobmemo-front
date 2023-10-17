@@ -72,7 +72,7 @@ function CreateContact() {
           <input
             id="occupation"
             name="occupation"
-            value={infos?.occupation}
+            value={infos.occupation}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -84,7 +84,7 @@ function CreateContact() {
           <input
             id="email"
             name="email"
-            value={infos?.email}
+            value={infos.email}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -96,7 +96,7 @@ function CreateContact() {
           <input
             id="phone"
             name="phone"
-            value={infos?.phone}
+            value={infos.phone}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -108,7 +108,7 @@ function CreateContact() {
           <input
             id="linkedinProfile"
             name="linkedinProfile"
-            value={infos?.linkedinProfile}
+            value={infos.linkedinProfile}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -120,7 +120,7 @@ function CreateContact() {
           <input
             id="enterprise"
             name="enterprise"
-            value={infos?.enterprise}
+            value={infos.enterprise}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -133,7 +133,7 @@ function CreateContact() {
             id="comments"
             name="comments"
             type="textarea"
-            value={infos?.comments}
+            value={infos.comments}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={handleChange}
