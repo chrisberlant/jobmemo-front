@@ -3,7 +3,7 @@ const baseUrl = 'http://localhost:3000';
 async function securedFetch(
   route: string,
   method?: string,
-  body?: Record<string, string | number | File>
+  body?: Record<string, string | number>
 ) {
   let failed = false;
   try {

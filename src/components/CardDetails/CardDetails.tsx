@@ -261,7 +261,6 @@ function CardDetails() {
         <input
           type="submit"
           className="button button--submit"
-          aria-label="Modifier la fiche"
           value="Modifier la fiche"
         />
         {card?.isDeleted ? (
@@ -270,14 +269,12 @@ function CardDetails() {
               type="button"
               className="button button--restore"
               value="Restaurer la fiche"
-              aria-label="Restaurer la fiche"
               onClick={restoreSelectedCard}
             />
             <input
               type="button"
               className="button button--delete"
               value="Supprimer définitivement la fiche"
-              aria-label="Supprimer définitivement la fiche"
               onClick={deleteSelectedCard}
             />
           </>
@@ -286,7 +283,6 @@ function CardDetails() {
             type="button"
             className="button button--delete"
             value="Supprimer la fiche"
-            aria-label="Supprimer la fiche"
             onClick={sendSelectedCardTotrash}
           />
         )}
@@ -294,7 +290,6 @@ function CardDetails() {
           type="button"
           className="button button--cancel"
           value="Annuler"
-          aria-label="Annuler"
           onClick={() =>
             navigate(card?.isDeleted ? '/recycle-bin' : '/dashboard')
           }

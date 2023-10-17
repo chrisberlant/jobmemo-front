@@ -26,7 +26,7 @@ export const getAllCards = createAsyncThunk<CardType[]>(
 
 export const createNewCard = createAsyncThunk(
   'cards/CREATE_NEW_CARD',
-  async (infos: Record<string, string>, { dispatch }) => {
+  async (infos: Record<string, string | number>, { dispatch }) => {
     const creationRequest = await securedFetch('/createNewCard', 'POST', infos);
     if (creationRequest.failed) {
       dispatch(setError(creationRequest.data));

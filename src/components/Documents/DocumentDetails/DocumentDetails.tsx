@@ -118,21 +118,18 @@ function DocumentDetails() {
           type="button"
           className="button button--download"
           value="Télécharger le document"
-          aria-label="Télécharger le document"
           // onClick={handleDocumentDownload}
         />
         <input
           type="button"
           className="button button--delete"
           value="Supprimer le document"
-          aria-label="Supprimer le document"
           onClick={handleDocumentDelete}
         />
         <input
           type="button"
           className="button button--cancel"
           value="Annuler"
-          aria-label="Annuler"
           onClick={() => navigate('/documents')}
         />
       </form>

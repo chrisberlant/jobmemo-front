@@ -90,7 +90,6 @@ function DocumentUpload() {
           type="button"
           className="button button--cancel"
           value="Annuler"
-          aria-label="Annuler"
           onClick={() => navigate('/documents')}
         />
       </form>

@@ -19,7 +19,10 @@ function randomColor(): string {
 
 function CardCreation() {
   const { categorySlug } = useParams();
-  const category = categorySlug?.replace(/^/, 'Mes ');
+  let category = '';
+  if (categorySlug) {
+    category = categorySlug?.replace(/^/, 'Mes ');
+  }
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [infos, setInfos] = useState({
@@ -200,7 +203,6 @@ function CardCreation() {
           name="cancel-button"
           className="button button--cancel"
           value="Annuler"
-          aria-label="Annuler"
           onClick={() => navigate('/dashboard')}
         />
       </form>

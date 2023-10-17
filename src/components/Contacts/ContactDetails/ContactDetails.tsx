@@ -185,14 +185,12 @@ function ContactDetails() {
           type="button"
           className="button button--delete"
           value="Supprimer le contact"
-          aria-label="Supprimer le contact"
           onClick={handleContactDelete}
         />
         <input
           type="button"
           className="button button--cancel"
           value="Annuler"
-          aria-label="Annuler"
           onClick={() => navigate('/contacts')}
         />
       </form>

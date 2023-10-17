@@ -145,14 +145,12 @@ function CreateContact() {
           name="submit-button"
           className="button button--submit"
           value="Créer le contact"
-          aria-label="Créer le contact"
         />
         <input
           type="button"
           name="cancel-button"
           className="button button--cancel"
           value="Annuler"
-          aria-label="Annuler"
           onClick={() => navigate('/contacts')}
         />
       </form>
