@@ -2,11 +2,11 @@ import { NavLink } from 'react-router-dom';
 import './Footer.scss';
 
 function Footer() {
-  return (
-    <div className="footer">
-      {/* <NavLink to="#">Nous contacter</NavLink> */}
-    </div>
-  );
+  // return (
+  //   <footer className="footer">
+  //     <NavLink to="#">Nous contacter</NavLink>
+  //   </footer>
+  // );
 }
 
 export default Footer;

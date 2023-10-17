@@ -14,8 +14,8 @@ function Navbar() {
   const [mobileMenu, setMobileMenu] = useState(false);
 
   return (
-    <div className={mobileMenu ? 'navbar--mobile' : 'navbar'}>
-      <div className="navbar-content">
+    <header className={mobileMenu ? 'navbar--mobile' : 'navbar'}>
+      <nav className="navbar-content">
         <div className="brand-wrapper">
           <img src={logoWhite} alt="logo jobmemo" />
           <h2>Jobmemo</h2>
@@ -70,7 +70,7 @@ function Navbar() {
             <span>Mes contacts</span>
           </NavLink>
         </div>
-      </div>
+      </nav>
       <button
         type="button"
         className="display-mobile-menu"
@@ -79,7 +79,7 @@ function Navbar() {
       >
         {mobileMenu ? <GiHamburgerMenu /> : <CiMenuBurger />}
       </button>
-    </div>
+    </header>
   );
 }
 

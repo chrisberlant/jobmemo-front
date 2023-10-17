@@ -18,7 +18,7 @@ import CardDetails from './components/CardDetails/CardDetails';
 import ContactCreation from './components/ContactCreation/ContactCreation';
 import ContactDetails from './components/Contacts/ContactDetails/ContactDetails';
 import PageNotFound from './components/PageNotFound/PageNotFound';
-import PrivateRoutes from './Utils/PrivateRoutes';
+import PrivateRoutes from './components/PrivateRoutes/PrivateRoutes';
 import DocumentUpload from './components/DocumentUpload/DocumentUpload';
 import Documents from './components/Documents/Documents';
 import DocumentDetails from './components/Documents/DocumentDetails/DocumentDetails';

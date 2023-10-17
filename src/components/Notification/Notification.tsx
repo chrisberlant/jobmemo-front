@@ -26,6 +26,7 @@ function Notification() {
         <span className={isError ? 'error' : 'message'}>{textToDisplay}</span>
         <AiFillCloseCircle
           className="close-button"
+          aria-label="Fermer la notification"
           onClick={() => dispatch(removeNotification())}
         />
       </div>
