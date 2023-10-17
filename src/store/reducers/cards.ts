@@ -1,6 +1,6 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
 import securedFetch from '../../Utils/securedFetch';
-import { CardTable, CardType } from '../../@types/jobmemo';
+import { CardTable, CardType, IdObjectType } from '../../@types/jobmemo';
 import { setError, setLoading, setMessage } from './app';
 
 const initialValue: CardTable = {
