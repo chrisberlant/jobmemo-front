@@ -7,20 +7,19 @@ async function securedFetch(
 ) {
   let failed = false;
 
-  // Create the FormData to send
-  const formData = new FormData();
-  if (infos) {
-    Object.keys(infos).forEach((key) => {
-      formData.append(key, infos[key]);
-    });
-  }
-
   try {
     const options: RequestInit = {
       method,
       credentials: 'include', // Include the jwt cookie
     };
     if (method && method !== 'GET') {
+      // Create the FormData to send
+      const formData = new FormData();
+      if (infos) {
+        Object.keys(infos).forEach((key) => {
+          formData.append(key, infos[key]);
+        });
+      }
       options.body = formData; // Add a body if method is provided and it is not equal to GET
     }
 
