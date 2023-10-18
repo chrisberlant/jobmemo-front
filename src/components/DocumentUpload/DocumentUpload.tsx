@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DocumentUploadFormType } from '../../@types/jobmemo';
 import { createNewDocument } from '../../store/reducers/documents';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
 import { useAppDispatch } from '../../store/hook/redux';
@@ -9,19 +10,15 @@ import './DocumentUpload.scss';
 function DocumentUpload() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [infos, setInfos] = useState({
+  const [infos, setInfos] = useState<DocumentUploadFormType>({
     title: '',
     type: 'Autre',
+    file: null,
   });
-  const [file, setFile] = useState<File>();
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('title', infos.title);
-    formData.append('type', infos.type);
-    if (file instanceof File) formData.append('file', file);
-    const request = await dispatch(createNewDocument(formData));
+    const request = await dispatch(createNewDocument(infos));
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/documents');
       setTimeout(() => {
@@ -37,7 +34,7 @@ function DocumentUpload() {
   ) => {
     if (e.target.name === 'file' && e.target instanceof HTMLInputElement) {
       if (e.target.files) {
-        setFile(e.target.files[0]);
+        setInfos({ ...infos, file: e.target.files[0] });
       }
     } else setInfos({ ...infos, [e.target.name]: e.target.value });
   };

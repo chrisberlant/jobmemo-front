@@ -1,6 +1,6 @@
 import { createReducer, createAsyncThunk } from '@reduxjs/toolkit';
-import { DocumentsType } from '../../@types/jobmemo';
-import securedFetch, { baseUrl } from '../../Utils/securedFetch';
+import { DocumentsType, DocumentUploadFormType } from '../../@types/jobmemo';
+import securedFetch from '../../Utils/securedFetch';
 import { setError, setLoading } from './app';
 
 const initialValue: DocumentsType = {
@@ -24,19 +24,18 @@ export const getAllDocuments = createAsyncThunk(
 
 export const createNewDocument = createAsyncThunk(
   'documents/CREATE_NEW_DOCUMENT',
-  async (infos: FormData, { dispatch }) => {
+  async (infos: DocumentUploadFormType, { dispatch }) => {
     dispatch(setLoading(true));
-    const creationRequest = await fetch(`${baseUrl}/createNewDocument`, {
-      method: 'POST',
-      credentials: 'include',
-      body: infos,
-    });
-    if (!creationRequest.ok) {
+    const creationRequest = await securedFetch(
+      '/createNewDocument',
+      'POST',
+      infos
+    );
+    if (creationRequest.failed) {
       dispatch(setError('Impossible de créer le document'));
       throw new Error('Impossible de créer le document');
     }
-    const data = await creationRequest.json();
-    return data;
+    return creationRequest.data;
   }
 );
 

@@ -132,3 +132,9 @@ export interface DocumentsType {
   items: DocumentType[];
   isEmpty: boolean;
 }
+
+export interface DocumentUploadFormType {
+  title: string;
+  type: string;
+  file: File | null;
+}

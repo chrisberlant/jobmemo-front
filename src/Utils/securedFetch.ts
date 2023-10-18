@@ -3,19 +3,28 @@ export const baseUrl = 'http://localhost:3000';
 async function securedFetch(
   route: string,
   method?: string,
-  body?: Record<string, string | number>
+  infos?: Record<string, string | File>
 ) {
   let failed = false;
-  try {
-    const response = await fetch(baseUrl + route, {
-      method,
-      headers: {
-        // Tell the API that the data sent will be JSON
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include', // Include the jwt cookie
-      ...(method && method !== 'GET' && { body: JSON.stringify(body) }), // A body is provided only if the user provided a method parameter, and if it is not equal to GET
+
+  // Create the FormData to send
+  const formData = new FormData();
+  if (infos) {
+    Object.keys(infos).forEach((key) => {
+      formData.append(key, infos[key]);
     });
+  }
+
+  try {
+    const options: RequestInit = {
+      method,
+      credentials: 'include', // Include the jwt cookie
+    };
+    if (method && method !== 'GET') {
+      options.body = formData; // Add a body if method is provided and it is not equal to GET
+    }
+
+    const response = await fetch(baseUrl + route, options);
 
     const data = await response.json();
 
