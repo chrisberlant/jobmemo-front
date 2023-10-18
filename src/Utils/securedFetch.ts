@@ -1,4 +1,4 @@
-export const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://localhost:3000';
 
 async function securedFetch(
   route: string,
@@ -25,7 +25,6 @@ async function securedFetch(
     }
 
     const response = await fetch(baseUrl + route, options);
-
     const data = await response.json();
 
     // If request failed

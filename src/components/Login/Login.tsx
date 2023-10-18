@@ -6,7 +6,6 @@ import {
   appearanceAnimation,
 } from '../../Utils/animatedForm';
 import logo from '../../assets/images/logo.svg';
-import { setError } from '../../store/reducers/app';
 import { useAppDispatch } from '../../store/hook/redux';
 import { login } from '../../store/reducers/user';
 import './Login.scss';
@@ -37,8 +36,8 @@ function Login() {
     if (request.meta.requestStatus === 'fulfilled') {
       navigate('/dashboard');
     } else {
+      // Erase the password from input if login rejected
       setInfos({ ...infos, password: '' });
-      console.log(infos);
     }
   };
 

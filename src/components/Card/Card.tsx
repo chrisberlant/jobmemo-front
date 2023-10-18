@@ -9,7 +9,6 @@ function Card({ item, index }: DashboardCard) {
   const [checked, setChecked] = useState<boolean>(false);
   const handleChange = () => {
     setChecked(!checked);
-    console.log(item.title, item.id, 'is checked');
   };
 
   return (
