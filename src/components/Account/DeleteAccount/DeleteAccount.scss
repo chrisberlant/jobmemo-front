@@ -35,7 +35,8 @@
     .confirmation-input {
 
       &--failed {
-        border: red solid;
+        background-color: rgba(255, 0, 0, 0.2);
+        color: black;
       }
 
     }

@@ -68,9 +68,9 @@ function DeleteAccount() {
             name="confirmation"
             id="confirmation"
             className={
-              !failedConfirmation
-                ? 'confirmation-input'
-                : 'confirmation-input--failed'
+              failedConfirmation
+                ? 'confirmation-input--failed'
+                : 'confirmation-input'
             }
             value={confirmation}
             onChange={handleConfirmationChange}

@@ -41,3 +41,13 @@
     transform: rotate(720deg);
   }
 } 
+
+@media screen and (max-width: 768px) {
+  .notification {
+    position: fixed;
+    z-index: 2;
+    left: 8px;
+    right: auto;
+    bottom: 10px;
+  }
+}
