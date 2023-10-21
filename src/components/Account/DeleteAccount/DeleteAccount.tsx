@@ -19,7 +19,6 @@ function DeleteAccount() {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // setError('test');
     if (confirmation === 'Je confirme') {
       const deleteRequest = await securedFetch('/deleteUser', 'DELETE', infos);
       if (deleteRequest.failed) {
