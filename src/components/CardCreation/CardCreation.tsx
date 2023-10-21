@@ -188,6 +188,7 @@ function CardCreation() {
                   name="rating"
                   value={currentRating}
                   onChange={handleChange}
+                  aria-label={`Noter ${currentRating} sur 5`}
                   onClick={() => setInfos({ ...infos, rating: currentRating })}
                 />
                 <FaStar
