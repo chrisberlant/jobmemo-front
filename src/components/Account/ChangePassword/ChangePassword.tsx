@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { handleFocus, handleBlur } from '../../../Utils/animatedForm';
 import logo from '../../../assets/images/logo.svg';
@@ -17,11 +17,11 @@ function ChangePassword() {
     confirmPassword: '',
   });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const request = await securedFetch('/modifyUserPassword', 'PATCH', infos);
     if (request.failed) {

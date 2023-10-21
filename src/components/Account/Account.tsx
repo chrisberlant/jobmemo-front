@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logOut from '../../Utils/logout';
 import { handleFocus, handleBlur } from '../../Utils/animatedForm';
@@ -28,11 +28,11 @@ function Account() {
     }
   }, [userInfos, dispatch]);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInfos({ ...infos, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(modifyUserInfos(infos));
   };

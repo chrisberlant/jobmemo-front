@@ -2,29 +2,52 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import logo from '../../../assets/images/logo.svg';
 import securedFetch from '../../../Utils/securedFetch';
+import { setError, setMessage } from '../../../store/reducers/app';
+import { handleBlur, handleFocus } from '../../../Utils/animatedForm';
+import logOut from '../../../Utils/logout';
+import { useAppDispatch } from '../../../store/hook/redux';
 import './DeleteAccount.scss';
 
 function DeleteAccount() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [confirmation, setConfirmation] = useState('');
+  const [infos, setInfos] = useState({
+    password: '',
+  });
   const [failedConfirmation, setFailedConfirmation] = useState(false);
 
-  const handleDelete = async () => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // setError('test');
     if (confirmation === 'Je confirme') {
-      try {
-        await securedFetch('/deleteUser', 'DELETE');
-        localStorage.clear();
-        navigate('/login');
-      } catch (error) {
-        console.error(error);
+      const deleteRequest = await securedFetch('/deleteUser', 'DELETE', infos);
+      if (deleteRequest.failed) {
+        dispatch(setError(deleteRequest.data));
+      } else {
+        dispatch(
+          setMessage(
+            "Compte supprimé avec succès, vous allez être redirigé vers l'accueil."
+          )
+        );
+        setTimeout(() => {
+          logOut();
+        }, 2000);
       }
     } else {
+      dispatch(setError('La phrase de confirmation est incorrecte'));
       setFailedConfirmation(true);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmation(e.target.value);
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInfos({ password: event.target.value });
+  };
+
+  const handleConfirmationChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmation(event.target.value);
   };
 
   return (
@@ -33,22 +56,46 @@ function DeleteAccount() {
         <img className="logo" src={logo} alt="logo" />
       </Link>
       <h3>Voulez-vous vraiment supprimer votre compte ?</h3>
-      <form className="form">
-        <span>Entrer ci-dessous la phrase : Je confirme</span>
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="input-wrap">
+          <label htmlFor="confirmation">
+            <span>Entrer ci-dessous la phrase : Je confirme</span>
+          </label>
+          <input
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            type="text"
+            name="confirmation"
+            id="confirmation"
+            className={
+              !failedConfirmation
+                ? 'confirmation-input'
+                : 'confirmation-input--failed'
+            }
+            value={confirmation}
+            onChange={handleConfirmationChange}
+            required
+          />
+          <div className="line" />
+        </div>
+        <div className="input-wrap">
+          <label htmlFor="password">Mot de passe : </label>
+          <input
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            type="password"
+            name="password"
+            id="password"
+            value={infos.password}
+            onChange={handlePasswordChange}
+            required
+          />
+          <div className="line" />
+        </div>
         <input
-          className={
-            !failedConfirmation
-              ? 'confirmation-input'
-              : 'confirmation-input--failed'
-          }
-          value={confirmation}
-          onChange={handleChange}
-        />
-        <input
-          type="button"
+          type="submit"
           value="Supprimer le compte"
-          className="button button--delete-account"
-          onClick={handleDelete}
+          className="button button--delete"
         />
       </form>
       <span>Attention cette action est irréversible</span>
