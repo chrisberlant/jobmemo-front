@@ -11,6 +11,10 @@
   padding: 32px;
   background: #fff;
 
+  h3 {
+    margin-bottom: 20px;
+  }
+
   span {
     margin: 4px;
     font-size: 14px;
@@ -29,7 +33,7 @@
     align-items: center;
     
     .button--delete {
-      width: 60%;
+      width: 70%;
     }
     
     .confirmation-input {
