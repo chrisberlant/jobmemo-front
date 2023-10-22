@@ -19,8 +19,10 @@ function DocumentDetails() {
   );
   const [documentIsFetched, setDocumentIsFetched] = useState(false);
   const [infos, setInfos] = useState({
+    id: '',
     title: '',
     type: '',
+    url: '',
   });
 
   useEffect(() => {
@@ -29,11 +31,11 @@ function DocumentDetails() {
         setInfos(document);
       } else {
         // Get document infos from API if not in the store
-        const fetchedContact = await securedFetch(`/document/${id}`);
-        if (fetchedContact.failed) {
+        const fetchedDocument = await securedFetch(`/document/${id}`);
+        if (fetchedDocument.failed) {
           navigate('/404');
         }
-        setInfos(fetchedContact.data);
+        setInfos(fetchedDocument.data);
       }
     };
     if (!documentIsFetched) {
@@ -71,6 +73,10 @@ function DocumentDetails() {
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
     setInfos({ ...infos, [e.target.name]: e.target.value });
+  };
+
+  const downloadDocument = async () => {
+    await securedFetch(`/download/${infos.id}`);
   };
 
   return (
@@ -117,7 +123,7 @@ function DocumentDetails() {
           type="button"
           className="button button--download"
           value="Télécharger le document"
-          // onClick={handleDocumentDownload}
+          onClick={downloadDocument}
         />
         <input
           type="button"
