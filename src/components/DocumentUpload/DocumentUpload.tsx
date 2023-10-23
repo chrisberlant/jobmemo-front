@@ -41,7 +41,7 @@ function DocumentUpload() {
 
   return (
     <div className="document-upload">
-      <span className="title">Envoi d&apos;un document</span>
+      <h3 className="component-title">Envoi d&apos;un document</h3>
       <form className="document-upload-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="title">Titre du document : </label>

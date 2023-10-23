@@ -38,6 +38,7 @@ function CardCreation() {
     color: randomColor(),
   });
   const [hover, setHover] = useState(1);
+
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -59,7 +60,7 @@ function CardCreation() {
 
   return (
     <div className="card-creation">
-      <span className="title">Création d&apos;une fiche</span>
+      <h3 className="component-title">Création d&apos;une fiche</h3>
       <form className="card-creation-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="title">Titre : </label>
@@ -187,8 +188,8 @@ function CardCreation() {
                   type="radio"
                   name="rating"
                   value={currentRating}
-                  onChange={handleChange}
                   aria-label={`Noter ${currentRating} sur 5`}
+                  onChange={handleChange}
                   onClick={() => setInfos({ ...infos, rating: currentRating })}
                 />
                 <FaStar

@@ -25,7 +25,7 @@ function Documents() {
   return (
     <div className="documents">
       <div className="documents-header">
-        <h1>Vos Documents :</h1>
+        <h3 className="component-title">Mes documents :</h3>
         {!isLoading && (
           <button
             type="button"

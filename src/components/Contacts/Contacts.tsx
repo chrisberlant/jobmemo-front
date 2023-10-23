@@ -25,7 +25,7 @@ function Contacts() {
   return (
     <div className="contacts">
       <div className="contacts-header">
-        <h1>Vos contacts :</h1>
+        <h3 className="component-title">Mes contacts :</h3>
 
         <button
           type="button"

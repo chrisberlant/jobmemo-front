@@ -42,7 +42,7 @@ function CardDetails() {
     salary: '',
     rating: 1,
   });
-  const [hover, setHover] = useState(1);
+  const [hover, setHover] = useState(infos.rating);
 
   useEffect(() => {
     const fetchCard = async () => {
@@ -123,7 +123,7 @@ function CardDetails() {
 
   return (
     <div className="card-details">
-      <span className="title">Détails de la fiche</span>
+      <h3 className="component-title">Détails de la fiche</h3>
       <form className="card-details-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="title">Titre : </label>
@@ -244,7 +244,8 @@ function CardDetails() {
                   id={`rating${currentRating}`}
                   type="radio"
                   name="rating"
-                  value={infos.rating}
+                  value={currentRating}
+                  aria-label={`Noter ${currentRating} sur 5`}
                   onChange={handleChange}
                   onClick={() => setInfos({ ...infos, rating: currentRating })}
                 />

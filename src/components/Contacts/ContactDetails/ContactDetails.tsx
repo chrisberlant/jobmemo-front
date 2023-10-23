@@ -74,7 +74,7 @@ function ContactDetails() {
 
   return (
     <div className="contact-details">
-      <span className="title">Détails du contact</span>
+      <h3 className="component-title">D&eacute;tails du contact</h3>
       <form className="contact-details-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="lastName">Nom : </label>

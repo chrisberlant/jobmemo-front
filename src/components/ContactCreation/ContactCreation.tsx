@@ -39,7 +39,7 @@ function CreateContact() {
 
   return (
     <div className="contact-creation">
-      <span className="title">Création dun nouveau contact</span>
+      <h3 className="component-title">Cr&eacute;ation dun nouveau contact</h3>
       <form className="contact-creation-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="lastName">Nom : </label>

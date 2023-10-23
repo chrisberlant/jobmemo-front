@@ -1,12 +1,8 @@
 .card-creation {
-  width: 50%;
+  min-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .title {
-
-  }
 
   .card-creation-form {
     height: 100%;
@@ -36,7 +32,7 @@
       align-items: center;
       font-size: 13px;
       font-weight: 600;
-      margin-bottom: 4px; /* Espace entre l'étiquette et le champ d'entrée */
+      margin-bottom: 4px;
       color: #999;
       gap: 10px;
 
@@ -51,7 +47,8 @@
   }
 }
 @media screen and (max-width: 768px) {
+
   .card-creation {
-    width: 90%;
+    min-width: 90%;
   }
 }

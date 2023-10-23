@@ -42,6 +42,7 @@ function Account() {
       <Link to="/dashboard">
         <img className="logo" src={logo} alt="logo" />
       </Link>
+      <h3 className="component-title">&Eacute;dition du profil</h3>
       <form className="account-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="lastName">Nom : </label>

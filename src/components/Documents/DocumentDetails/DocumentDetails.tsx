@@ -81,7 +81,7 @@ function DocumentDetails() {
 
   return (
     <div className="document-details">
-      <span className="title">D&eacute;tails d&apos;un document</span>
+      <h3 className="component-title">&Eacute;dition d&apos;un document</h3>
       <form className="document-details-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="title">Titre du document : </label>

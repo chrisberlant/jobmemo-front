@@ -1,9 +1,8 @@
 .contact-details {
-
-  .title {
-    text-align: center;
-    display: block;
-  }
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .contact-details-form {
     filter: drop-shadow(10px 10px 0px #e6e6e6);
@@ -15,7 +14,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 350px;
+    width: 100%;
 
     .input-wrap {
       width: 100%;
@@ -42,16 +41,12 @@
         font-weight: 700;
       }
 
-      .line {
-        background-color: #4a65ff;
-        height: 2px;
-        width: 100%;
-        position: absolute;
-        transform: scaleX(0);
-        bottom: 0;
-        transform-origin: left;
-      }
     }
+  }
+}
 
+@media screen and (max-width: 768px) {
+  .contact-details {
+    min-width: 90%;
   }
 }

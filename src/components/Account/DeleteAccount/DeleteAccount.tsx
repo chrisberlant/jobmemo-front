@@ -54,11 +54,11 @@ function DeleteAccount() {
       <Link to="/dashboard">
         <img className="logo" src={logo} alt="logo" />
       </Link>
-      <h3>Voulez-vous vraiment supprimer votre compte ?</h3>
+      <h3 className="component-title">Suppression du compte</h3>
       <form className="form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="confirmation">
-            <span>Entrer ci-dessous la phrase : Je confirme</span>
+            <span>Entrer ci-dessous la phrase : &quot;Je confirme&quot;</span>
           </label>
           <input
             onFocus={handleFocus}

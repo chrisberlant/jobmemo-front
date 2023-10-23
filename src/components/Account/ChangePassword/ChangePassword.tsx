@@ -44,6 +44,7 @@ function ChangePassword() {
       <Link to="/dashboard">
         <img className="logo" src={logo} alt="logo" />
       </Link>
+      <h3 className="component-title">Modification du mot de passe</h3>
       <form className="account-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label htmlFor="oldPassword">Ancien mot de passe : </label>
